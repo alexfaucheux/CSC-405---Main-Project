@@ -9,9 +9,10 @@ from datetime import datetime
 
 #Class for each object of interest
 class OOI:
-    def __init__(name, riseTime):
+    def __init__(name, riseTime, duration):
         self.name = name
         self.riseTime = riseTime
+        self.duration = duration
 
 #Subclass for ISS passes that adds a passnumber variable
 class ISSPass(OOI):
