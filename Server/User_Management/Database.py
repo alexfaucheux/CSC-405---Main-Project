@@ -1,15 +1,13 @@
-# Python code to demonstrate table creation and
-# insertions with SQL 
-
-# importing module
 import sqlite3
 import datetime
 
 class UserDB():
     def __init__(self, filename):
+        # Opens connection to database file
         self.connection = sqlite3.connect(filename)
         self.crsr = self.connection.cursor()
 
+    # Creates fresh table.  Currently only creates one with specific user keys.
     def create_table(self):
         sql_command = """CREATE TABLE users (  
          email VARCHAR(100) PRIMARY KEY,
@@ -20,7 +18,8 @@ class UserDB():
 
         self.crsr.execute(sql_command)
 
-
+    # Adds new user to database.
+    # Fails if primary key already exists inside database
     def insert(self, email, password, first_name, last_name, joinDate=datetime.datetime.now()):
         try:
             cmd = """INSERT INTO users VALUES ("{}", "{}", "{}", "{}", "{}");""".format(email, password, first_name, last_name, joinDate)
@@ -30,14 +29,17 @@ class UserDB():
         except:
             return 0
 
+    # Gets password associated with email
     def fetch_userPASS(self, email):
         self.crsr.execute('SELECT pass FROM users WHERE email = "{}"'.format(email))
         return self.crsr.fetchall()
 
+    # Returns data on all users
     def fetchall(self):
         self.crsr.execute('SELECT * FROM users')
         return self.crsr.fetchall()
 
+    # Checks to see if email is available to add as primary key
     def checkAvail(self, email):
         self.crsr.execute('SELECT email FROM users WHERE email = "{}"'.format(email))
         row = self.crsr.fetchall()
@@ -45,7 +47,7 @@ class UserDB():
             return 0
         return 1
 
-
+    # Closes database
     def exit(self):
         # To save the changes in the files.
         self.connection.commit()

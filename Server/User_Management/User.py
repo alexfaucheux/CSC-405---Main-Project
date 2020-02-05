@@ -1,18 +1,18 @@
 from Database import UserDB
 
-database = UserDB("user_info.db")
-data = database.fetchall()
-for i in data:
-    print(data)
+# Opens existing database
+database = UserDB("user_info.db"))
 
 print("\n")
 
+# Creates User
 def create_user():
     fname = input("Enter first name: ")
     lname = input("Enter last name: ")
     email = input("Enter email: ")
     avail = database.checkAvail(email)
 
+    # Email not valid
     while avail == 0 or "@gmail.com" not in email:
         print("Invalid email. Either user already exists or email address not supported \n(ei, valid:someone@gmail.com)")
         email = input("\n\nEnter a valid email address: ")
@@ -21,6 +21,7 @@ def create_user():
     password = input("Enter new password: ")
     password2 = input("Confirm password: ")
 
+    # Password not valid
     while password != password2:
         print("Passwords do not match\n\n")
         password = input("Enter new password: ")
@@ -28,6 +29,7 @@ def create_user():
 
     database.insert(email, password, fname, lname)
 
+# Login for user
 def login():
     email = input("Enter username/email: ")
     avail = database.checkAvail(email)
@@ -35,8 +37,7 @@ def login():
     real_password = database.fetch_userPASS(email)[0][0]
     entered_password = input("Enter password: ")
 
-
-
+    # Username or password are invalid
     while entered_password != real_password or avail == 1 or "@gmail.com" not in email:
         print("Invalid username or password.  Try again.")
         email = input("\nEnter username/email: ")
