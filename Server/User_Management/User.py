@@ -1,4 +1,4 @@
-from server.Database import UserDB
+from Database import UserDB
 
 database = UserDB("user_info.db")
 data = database.fetchall()
