@@ -1,9 +1,7 @@
 from Database import UserDB
 
 # Opens existing database
-database = UserDB("user_info.db"))
-
-print("\n")
+database = UserDB("user_info.db")
 
 # Creates User
 def create_user():
@@ -34,7 +32,11 @@ def login():
     email = input("Enter username/email: ")
     avail = database.checkAvail(email)
 
-    real_password = database.fetch_userPASS(email)[0][0]
+    real_password = 0
+
+    if avail == 0:
+        real_password = database.fetch_userPASS(email)[0][0]
+
     entered_password = input("Enter password: ")
 
     # Username or password are invalid
