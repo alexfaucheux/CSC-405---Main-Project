@@ -4,6 +4,7 @@ import urllib.parse
 import json
 from datetime import datetime
 
+#Class to hold the weather data object
 class CurrentWeatherData:
 
     def __init__(self, sunset, sunrise, temp, m_phase, clouds, wind, wind_dir, vis, current):
@@ -30,6 +31,15 @@ class CurrentWeatherData:
 
         #Return all the weather data as a string
         return "Current Conditions for Ruston, LA:" + "\n" + str(self.current) + ", " + str(self.temp) + "F" + "\n" + "Sunrise: " + strSunrise + "\n" + "Sunset: " + strSunset + "\n" + "Moon Phase: " + str(self.m_phase) + "\n" + "Cloud Cover: " + str(self.clouds) + "%" + "\n" + "Wind: " + str(self.wind) + " mph from " + str(self.wind_dir) + " degrees" + "\n" + "Visibility: " + str(self.vis) + " miles"
+
+#Class to hold the next day's weather object (unfinished)
+class Forecast(CurrentWeatherData):
+
+    def __init__(self, CurrentWeatherData, rain_chance):
+        self.rain_chance = rain_chance
+
+    def __str__(self):
+        return "NEXT DAY FORECAST:" + super(Forecast, self) + "\n" + "Chance of Rain: " + str(self.rain_chance*100)
 
 def parseRequest():
     
@@ -73,7 +83,6 @@ def parseRequest():
 
     #Current conditions
     current = (weatherjson["currently"]["summary"])
-
     #Temporary format
     currentWeather = CurrentWeatherData(sunset, sunrise, temp, m_phase, cloud, wind, wind_dir, vis, current)
     print(currentWeather)
