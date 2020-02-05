@@ -23,10 +23,12 @@ class ISSPass(OOI):
         
     #String format of the class, mainly for debugging.
     def __str__(self):
+        #Turns the raw seconds into a datetime type and the passNum into a string for concatanation
         datetimeDuration = datetime.fromtimestamp(self.duration)
         datetimeRiseTime = datetime.fromtimestamp(self.riseTime)
         strPassNum = str(self.passNum)
 
+        #Gets a string from each datetime
         strRiseTime = datetimeRiseTime.strftime("%I:%M %p on %b %d %Y")
         strDuration = datetimeDuration.strftime("%M:%S")
         return "Pass number " + strPassNum + " will occur at " + strRiseTime + " over Ruston, LA for a duration of " + strDuration
@@ -49,22 +51,28 @@ def parseISS ():
 
     #Iterates through each pass, recording them in the list 'passes'
     while (passCount < passNum):
+        ### Debugging text
         print( "The ISS will pass over Ruston, LA ", passNum ," times.")
         print("Pass number ", passCount + 1, ": ",ISSData['response'][passCount])
-        
+        ###
+        #
+        #Saves the pass number, duration, and risetime to a temporary pass variable
         currentPass.passNum = passCount + 1
         currentPass.duration = ISSData['response'][passCount]['duration']
         currentPass.riseTime = ISSData['response'][passCount]['risetime']
         
+        #Adds the pass to the list 
         passes.append(currentPass)
-        tempRise = datetime.fromtimestamp(ISSData['response'][passCount]['risetime'])
+        
+        #Debug text
         print(currentPass, "\n")
+        
+        #Iterate counter
         passCount = passCount+1
 
     return passes
     
 
-
+# Declares a list for the function and fills it. Temporary, just for the purpose of getting the function up and running
 ISSPassList = {}
-
 ISSPassList = parseISS()
