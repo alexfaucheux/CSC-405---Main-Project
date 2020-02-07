@@ -43,7 +43,7 @@ while True:
             user = User()
             response = user.login(username, password)
             print(response)
-            print
+            print(" ")
 
         elif len(form_data) == 4:
             fname = form_data[0][6:]
@@ -55,5 +55,5 @@ while True:
             user = User()
             response = user.create(fname, lname, username, password)
             print(response)
-            print
+            print(" ")
 
