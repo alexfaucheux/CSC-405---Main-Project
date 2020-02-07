@@ -18,6 +18,11 @@ class UserDB():
 
         self.crsr.execute(sql_command)
 
+    def drop_table(self):
+        sql_command = """DROP TABLE users"""
+
+        self.crsr.execute(sql_command)
+
     # Adds new user to database.
     # Fails if primary key already exists inside database
     def insert(self, email, password, first_name, last_name, joinDate=datetime.datetime.now()):

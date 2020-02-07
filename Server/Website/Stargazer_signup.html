@@ -69,7 +69,7 @@
       margin-left: .5em;
     }
   </style>
-  <title>Login Page</title>
+  <title>Signup Page</title>
 </head>
 
 <!-- Setting background image -->
@@ -86,13 +86,21 @@
   <button style="background-color:black; border-color:white; color:white" onclick="window.location.href = 'file:Stargazer_image_database.html';">Image Database</button>
   <button style="background-color:black; border-color:white; color:white" onclick="window.location.href = 'file:Stargazer_live_feed.html';">Live Feed</button>
   <button style="background-color:black; border-color:white; color:white" onclick="window.location.href = 'file:Stargazer_contact_us.html';">Contact Us</button>
-  <button style="background-color:black; border-color:white; color:white" onclick="window.location.href = 'file:Stargazer_signup.html';">Signup</button>
+  <button style="background-color:black; border-color:white; color:white" onclick="window.location.href = 'file:Stargazer_login.html';">Login</button>
 </div>
 
 
 <form action="http://localhost:8000/" method="post">
   <ul>
-    <p style="color: white;">Sign in:</p>
+    <p style="color: white;">Create User:</p>
+    <li>
+      <label for="fname">First Name:</label>
+      <input name="fname" type="text" id="fname">
+    </li>
+    <li>
+      <label for="lname">Last Name:</label>
+      <input name="lname" type="text" id="lname">
+    </li>
     <li>
       <label for="mail">Username:</label>
       <input name="username" type="email" id="mail" >
@@ -102,7 +110,7 @@
       <input  name="password" type="text" id="pass">
     </li>
     <li class="button">
-      <button type="submit">Login</button>
+      <button type="submit">Signup</button>
     </li>
   </ul>
 </form>
