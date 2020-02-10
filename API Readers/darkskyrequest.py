@@ -43,51 +43,62 @@ class Forecast(CurrentWeatherData):
 
 def parseRequest():
     
-    #Using Vienna Street in Ruston as the location
-    weather = urllib.request.urlopen("https://api.darksky.net/forecast/9b4b1b1398764e02d892ee09dca2328e/32.5314,-92.6379")
-
-    #(For consistency)
-    weathertxt = weather.read()
-    weatherjson = json.loads(weathertxt)
-
-    #Retreive basic weather data needed for Stargazer App
-    cloud = (weatherjson["currently"]["cloudCover"]) #0-1, needs to be converted to a percent
-    vis = (weatherjson["currently"]["visibility"]) #Visibility in Miles
-    wind = (weatherjson["currently"]["windSpeed"]) #MPH
-    wind_dir = (weatherjson["currently"]["windBearing"]) #Compass direction of which the wind is blowing FROM
-    temp = (weatherjson["currently"]["temperature"]) #Fahrenheit
+    #Error handling
+    weather_error = False
     
-    #Retrieve sunset and sunrise times in UNIX format
-    sunrise = (weatherjson["daily"]["data"][0]["sunriseTime"])
-    sunset = (weatherjson["daily"]["data"][0]["sunsetTime"])
-
-    #retrieve Moon Phase data and convert it 
-    m_phase = (weatherjson["daily"]["data"][0]["moonPhase"])
+    #Using Vienna Street in Ruston as the location, try to pull from the API
+    try:
+        weather = urllib.request.urlopen("https://api.darksky.net/forecast/9b4b1b1398764e02d892ee09dca2328e/32.5314,-92.6379")
+    #Exception, get the error
+    except:
+        urllib.error.URLError as e: weather = e.read().decode("utf8", 'ignore')
+        weather_error = True
     
-    if m_phase < 0.25:
-        m_phase = "Waxing Crescent"
-    elif m_phase == 0.25:
-        m_phase = "First Quarter"
-    elif m_phase > 0.25 and m_phase < 0.5:
-        m_phase = "Waxing Gibbous"
-    elif m_phase == 0.5:
-        m_phase = "Full Moon"
-    elif m_phase > 0.5 and m_phase < 0.75:
-        m_phase = "Waning Gibbous"
-    elif m_phase == 0.75:
-        m_phase = "Last Quarter"
-    elif m_phase > 0.75:
-        m_phase = "Waning Crescent"
-    elif m_phase == 0:
-        m_phase = "New Moon"
+    #If not False (True):
+    if not weather_error:    
+        #(For consistency)
+        weathertxt = weather.read()
+        weatherjson = json.loads(weathertxt)
 
-    #Current conditions
-    current = (weatherjson["currently"]["summary"])
-    #Temporary format
-    currentWeather = CurrentWeatherData(sunset, sunrise, temp, m_phase, cloud, wind, wind_dir, vis, current)
-    print(currentWeather)
+        #Retreive basic weather data needed for Stargazer App
+        cloud = (weatherjson["currently"]["cloudCover"]) #0-1, needs to be converted to a percent
+        vis = (weatherjson["currently"]["visibility"]) #Visibility in Miles
+        wind = (weatherjson["currently"]["windSpeed"]) #MPH
+        wind_dir = (weatherjson["currently"]["windBearing"]) #Compass direction of which the wind is blowing FROM
+        temp = (weatherjson["currently"]["temperature"]) #Fahrenheit
 
+        #Retrieve sunset and sunrise times in UNIX format
+        sunrise = (weatherjson["daily"]["data"][0]["sunriseTime"])
+        sunset = (weatherjson["daily"]["data"][0]["sunsetTime"])
 
+        #retrieve Moon Phase data and convert it 
+        m_phase = (weatherjson["daily"]["data"][0]["moonPhase"])
+
+        #Moon phase data is returned as a decimal 0-1.
+        if m_phase < 0.25:
+            m_phase = "Waxing Crescent"
+        elif m_phase == 0.25:
+            m_phase = "First Quarter"
+        elif m_phase > 0.25 and m_phase < 0.5:
+            m_phase = "Waxing Gibbous"
+        elif m_phase == 0.5:
+            m_phase = "Full Moon"
+        elif m_phase > 0.5 and m_phase < 0.75:
+            m_phase = "Waning Gibbous"
+        elif m_phase == 0.75:
+            m_phase = "Last Quarter"
+        elif m_phase > 0.75:
+            m_phase = "Waning Crescent"
+        elif m_phase == 0:
+            m_phase = "New Moon"
+
+        #Current conditions
+        current = (weatherjson["currently"]["summary"])
+        #Temporary format
+        currentWeather = CurrentWeatherData(sunset, sunrise, temp, m_phase, cloud, wind, wind_dir, vis, current)
+        print(currentWeather)
+    else:
+        print("Error retrieving weather data")
 """
 In the future, we will encapsulate this program within a while loop that will make calls based on comparing the current time value to the last known sunset/sunrise values for the current day.
 For example (psuedocode):
