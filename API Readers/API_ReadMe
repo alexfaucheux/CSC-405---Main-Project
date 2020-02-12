@@ -1,0 +1,47 @@
+API Guideline ReadMe
+
+<ISS data via open-notify>
+Json classes:
+'request' = the data about the location requested
+>'altitude' = height queried
+>'datetime' = time queried
+>'latitude' = latitude queried
+>'longitude' = longitdue queried
+>'passes' = number of passes over area queried.
+
+'response' = details on the multitude of passes over the location
+>'duration' = how long a pass will last
+>'risetime' = what time it will first appear.
+
+Example Query
+"http://api.open-notify.org/iss-pass.json?lat=32.532471&lon=-92.639061" 
+#Queries the api with the general location of ruston
+
+Example data manip
+#Where ISSData is a json file taken from the API and passCount is an iteritive integer
+ISSData['response'][passCount]['duration'] 
+#Returns the duration of the pass corresponding with passCount
+
+
+
+<DarkSky API Guide>
+Json classes used:
+#Returns mostly the same types of variables but split into larger categories based on the time you want measurements to be for
+'daily' # the daily averages and projected statuses
+>'data' #subclass of daily that specifies partiuclar data
+>>'sunriseTime' #timestamp that the sunrises on a day
+>>'sunsetTime' #timestamp that the sun sets on a day
+>>'moonPhase' #returns a decimal number between 0-1 that corresponds to moon phases. 0 is a full moon, after that < .25 is waxing crescent, .25 is first quarter,
+		.25 until .5 is waxing gibbous, .5 is a full moon, and then the process is reversed until 1 but with waning replacing waxing.
+'currently' #the status at the time the query is processed
+>'cloudcover' # returns a decimal between 0-1 on the cloud coverage 
+>'visibility' #returns the vis in miles
+>'windSpeed' #returns the windspeed in MPH
+>'windBearing' #returns the compass direction of the wind 
+>'temp' #gives the temperature in Fahrenheit
+>'summery' # gives the current conditions as a string summary.
+
+
+Example Query
+"https://api.darksky.net/forecast/9b4b1b1398764e02d892ee09dca2328e/32.5314,-92.6379"
+#Queries the api with the key, latitude, and longitude
