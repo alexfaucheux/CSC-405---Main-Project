@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!-- Setting background image -->
+<body style="background-image: url('backgroundSite1.jpg');background-repeat: no-repeat;background-size: cover;">
+{% extends "template.html" %}
+{% block content %}
+<!-- Initializing header -->
+<h1 style="border: 2px solid; border-color:black; color:white;">Stargazer</h1>
+
+
+<div style="text-align: center; border: 6px solid">
+  <button onclick="window.location.href = 'file:Stargazer_website.html';">Forecast/Home</button>
+  <button onclick="window.location.href = 'file:Stargazer_image_database.html';">Image Database</button>
+  <button onclick="window.location.href = 'file:Stargazer_live_feed.html';">Live Feed</button>
+  <button onclick="window.location.href = 'file:Stargazer_contact_us.html';">Contact Us</button>
+
+</div>
+
+
+<p style="color: white;">Live Feed:</p>
+
+<p style="text-align:center; border: 2px solid; border-color:black; color:white;"><img src="dayskygif2.gif"></p>
+
+
+{% endblock %}
+</body>
+</html>
