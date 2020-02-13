@@ -49,11 +49,11 @@ def parseISS ():
     passNum = int(ISSData['request']['passes'])
     passCount = 0
     currentPass = ISSPass(0,0,0)
+    print("The ISS will pass over Ruston, LA ", passNum, " times.")
 
     #Iterates through each pass, recording them in the list 'passes'
     while (passCount < passNum):
         ### Debugging text
-        print( "The ISS will pass over Ruston, LA ", passNum ," times.")
         print("Pass number ", passCount + 1, ": ",ISSData['response'][passCount])
         ###
         #
