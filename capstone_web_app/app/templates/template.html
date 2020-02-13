@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        {% if title %}
+        <title>{{ title }} - Stargazer</title>
+        {% else %}
+        <title>Welcome to Stargazer</title>
+        {% endif %}
+    <!--    <link rel="stylesheet" href="{{ url_for('static',     filename='css/template.css') }}">-->
+    </head>
+    <body>
+        <div>
+            Stargazer:
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/signup">Signup</a>
+            <a href="/images">Images</a>
+            <a href="/live_feed">Live Feed</a>
+            <a href="/contact">Contact</a>
+        </div>
+        <hr>
+        {% block content %} {% endblock %}
+    </body>
+</html>
