@@ -1,3 +1,5 @@
+{# PARENT TEMPLATE #}
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
@@ -7,19 +9,23 @@
         {% else %}
         <title>Welcome to Stargazer</title>
         {% endif %}
-    <!--    <link rel="stylesheet" href="{{ url_for('static',     filename='css/template.css') }}">-->
+        {#<link rel="stylesheet" href="{{ url_for('static',  filename='css/template.css') }}">#}
     </head>
-    <body>
+
+    {# SETS BACKGROUND PICTURE #}
+    <body style="background-image: url('/static/images/backgroundSite1.jpg'); background-repeat: no-repeat; background-size: cover;">
         <div>
-            Stargazer:
-            <a href="/">Home</a>
-            <a href="/login">Login</a>
-            <a href="/signup">Signup</a>
-            <a href="/images">Images</a>
-            <a href="/live_feed">Live Feed</a>
-            <a href="/contact">Contact</a>
+            {# CREATES DESIRED BUTTON #}
+            {% if buttons %}
+                {% for link, name in buttons %}
+                <button style="background-color: black; border-color: white;">
+                    <a style="color: white; text-decoration: none" href={{ url_for(link) }}>{{ name }}</a>
+                </button>
+                {% endfor %}
+            {% endif %}
         </div>
         <hr>
-        {% block content %} {% endblock %}
+        {% block content %}
+        {% endblock %}
     </body>
 </html>

@@ -1,8 +1,10 @@
-{% extends "template.html" %}
+{# PAGE USED TO LOG A USER IN #}
 
+{% extends "template.html" %}
 {% block content %}
-  <h1>Sign in</h1>
-  <form action="" method="post" novalidate>
+
+    <h1 style="color: white">Sign in</h1>
+    <form action="" method="post" style="color: white" novalidate >
         {{ form.hidden_tag() }}
         <p>
             {{ form.username.label }}<br>
@@ -13,6 +15,11 @@
             {{ form.password(size=32) }}
         </p>
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
+        <p>
+            {{ form.submit() }}
+            Don't have an account?
+            <a style="color: deepskyblue" href={{ url_for("signup") }}>Create One</a>
+        </p>`
     </form>
+
 {% endblock %}

@@ -1,28 +1,29 @@
+{# USED TO DISPLAY IMAGES IN DATABASE #}
+
 {% extends "template.html" %}
 {% block content %}
 
-<!-- Setting background image -->
-  <body style="background-image: url('backgroundSite1.jpg');background-repeat: no-repeat;background-size: cover;">
-
-    <p style="color: white;">Images of Special Astrological Events:</p>
+    <p style="color: white;">
+        Images of Special Astrological Events:
+    </p>
 
     <div class="row">
-      <div class="column">
-        <img src="/static/images/comet.png">
-        <img src="/static/images/meteor.jpg">
-      </div>
-      <div class="column">
-        <img src="/static/images/moon.jpg">
-        <img src="/static/images/stars.jpg">
-      </div>
-      <div class="column">
-        <img src="/static/images/stars.jpg">
-        <img src="/static/images/comet.png">
-      </div>
-      <div class="column">
-        <img src="/static/images/moon.jpg">
-        <img src="/static/images/meteor.jpg">
-      </div>
+        <div class="column">
+            <img src="/static/images/comet.png">
+            <img src="/static/images/meteor.jpg">
+        </div>
+        <div class="column">
+            <img src="/static/images/moon.jpg">
+            <img src="/static/images/stars.jpg">
+        </div>
+        <div class="column">
+            <img src="/static/images/stars.jpg">
+            <img src="/static/images/comet.png">
+        </div>
+        <div class="column">
+            <img src="/static/images/moon.jpg">
+            <img src="/static/images/meteor.jpg">
+        </div>
     </div>
-  </body>
+
 {% endblock %}

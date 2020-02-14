@@ -8,6 +8,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
+    signup = SubmitField('Create Account')
 
 
 class RegisterForm(FlaskForm):
