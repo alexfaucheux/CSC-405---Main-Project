@@ -15,7 +15,7 @@ Json classes:
 
 Example Query
 "http://api.open-notify.org/iss-pass.json?lat=32.532471&lon=-92.639061" 
-#Queries the api with the general location of ruston
+#Queries the api with the general location of Ruston
 
 Example data manip
 #Where ISSData is a json file taken from the API and passCount is an iteritive integer
@@ -29,19 +29,19 @@ Json classes used:
 #Returns mostly the same types of variables but split into larger categories based on the time you want measurements to be for
 'daily' # the daily averages and projected statuses
 >'data' #subclass of daily that specifies partiuclar data
->>'sunriseTime' #timestamp that the sunrises on a day
+>>'sunriseTime' #timestamp that the sun rises on a day
 >>'sunsetTime' #timestamp that the sun sets on a day
->>'moonPhase' #returns a decimal number between 0-1 that corresponds to moon phases. 0 is a full moon, after that < .25 is waxing crescent, .25 is first quarter,
-		.25 until .5 is waxing gibbous, .5 is a full moon, and then the process is reversed until 1 but with waning replacing waxing.
-'currently' #the status at the time the query is processed
+>>'moonPhase' #returns a decimal number between 0-1 that corresponds to the lunation number of the moon phases. 0 is a new moon, after that < .25 is waxing crescent, .25 is first quarter,
+		>.25 is waxing gibbous, .5 is a full moon, <.75 is a waning crescent, .75 is a last quarter, and >.75 is a waning crescent.
+'currently' #the weather status at the time the query is processed
 >'cloudcover' # returns a decimal between 0-1 on the cloud coverage 
->'visibility' #returns the vis in miles
->'windSpeed' #returns the windspeed in MPH
+>'visibility' #returns the visibility in miles
+>'windSpeed' #returns the wind speed in MPH
 >'windBearing' #returns the compass direction of the wind 
 >'temp' #gives the temperature in Fahrenheit
->'summery' # gives the current conditions as a string summary.
+>'summary' # gives the current conditions as a string summary.
 
 
 Example Query
-"https://api.darksky.net/forecast/9b4b1b1398764e02d892ee09dca2328e/32.5314,-92.6379"
+"https://api.darksky.net/forecast/[Secret Key Here]/32.5314,-92.6379"
 #Queries the api with the key, latitude, and longitude
