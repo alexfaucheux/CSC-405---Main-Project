@@ -52,8 +52,8 @@ def parseRequest():
     try:
         weather = urllib.request.urlopen("https://api.darksky.net/forecast/9b4b1b1398764e02d892ee09dca2328e/32.5314,-92.6379")
     #Exception, get the error
-    except:
-        urllib.error.URLError as e: weather = e.read().decode("utf8", 'ignore')
+    except urllib.error.URLError as e:
+        weather = e.read().decode("utf8", 'ignore')
         weather_error = True
     
     #If not False (True):
