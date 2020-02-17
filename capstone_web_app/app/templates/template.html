@@ -40,6 +40,9 @@
         </div>
 
         <hr>
+        {% block content %}
+        {% endblock %}
+
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
@@ -47,9 +50,8 @@
             <li style="color: white">{{ message }}</li>
             {% endfor %}
         </ul>
+
         {% endif %}
         {% endwith %}
-        {% block content %}
-        {% endblock %}
     </body>
 </html>
