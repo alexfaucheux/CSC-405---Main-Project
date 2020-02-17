@@ -1,6 +1,11 @@
 {# PAGE USED TO LOG A USER IN #}
 
 {% extends "template.html" %}
+
+{% block css %}
+{#    <link rel="stylesheet" href="{{ url_for('static',  filename='css/forms.css') }}">#}
+{% endblock %}
+
 {% block content %}
 
     <h1 style="color: white">Sign in</h1>
@@ -9,12 +14,18 @@
         <p>
             {{ form.username.label }}<br>
             {{ form.username(size=32) }}
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
             {{ form.password.label }}<br>
             {{ form.password(size=32) }}
+             {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.remember_me.label }} {{ form.remember_me() }}</p>
         <p>
             {{ form.submit() }}
             Don't have an account?

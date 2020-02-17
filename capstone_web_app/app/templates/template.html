@@ -9,22 +9,46 @@
         {% else %}
         <title>Welcome to Stargazer</title>
         {% endif %}
-        {#<link rel="stylesheet" href="{{ url_for('static',  filename='css/template.css') }}">#}
+
+        <link rel="stylesheet" href="{{ url_for('static',  filename='css/navigation.css') }}">
+
+        {% block css %}
+        {% endblock %}
+
     </head>
 
     {# SETS BACKGROUND PICTURE #}
-    <body style="background-image: url('/static/images/backgroundSite1.jpg'); background-repeat: no-repeat; background-size: cover;">
-        <div>
+    <body style="background-image: url({{ url_for('static', filename='images/backgroundSite1.jpg') }}); background-repeat: no-repeat; background-size: cover;">
+        <div class = "topnav">
             {# CREATES DESIRED BUTTON #}
-            {% if buttons %}
-                {% for link, name in buttons %}
-                <button style="background-color: black; border-color: white;">
-                    <a style="color: white; text-decoration: none" href={{ url_for(link) }}>{{ name }}</a>
-                </button>
+            {% if links %}
+                {% for link in links %}
+                    {% if (link == 'login' and current_user.is_anonymous) or
+                            (link == 'logout' and not current_user.is_anonymous) %}
+                        {% if not current_user.is_anonymous %}
+                            <p style="color: white; position: absolute; right: 100px">Currently logged in as: {{ current_user.fname }} {{ current_user.lname }}</p>
+                        {% endif %}
+
+                        <a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a>
+
+                    {% elif link != 'login' and link != 'logout' %}
+                        <a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a>
+
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         </div>
+
         <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li style="color: white">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         {% block content %}
         {% endblock %}
     </body>

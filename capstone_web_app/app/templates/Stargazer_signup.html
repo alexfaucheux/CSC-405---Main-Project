@@ -1,34 +1,54 @@
 {# PAGE USED TO REGISTER ACCOUNT #}
 
 {% extends "template.html" %}
+
+{% block css %}
+{#      <link rel="stylesheet" href="{{ url_for('static',  filename='css/forms.css') }}">#}
+{% endblock %}
+
 {% block content %}
 
     <h1 style="color: white">Register</h1>
     <form action="" method="post" style="color: white" novalidate>
         {{ form.hidden_tag() }}
         <p>
-        {{ form.fname.label }}<br>
-        {{ form.fname(size=32) }}
+            {{ form.fname.label }}<br>
+            {{ form.fname(size=32) }}
+            {% for error in form.fname.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
 
         <p>
-        {{ form.lname.label }}<br>
-        {{ form.lname(size=32) }}
+            {{ form.lname.label }}<br>
+            {{ form.lname(size=32) }}
+            {% for error in form.lname.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
 
         <p>
-        {{ form.username.label }}<br>
-        {{ form.username(size=32)}}
+            {{ form.username.label }}<br>
+            {{ form.username(size=32)}}
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
 
         <p>
-        {{ form.password.label }}<br>
-        {{ form.password(size=32) }}
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
 
         <p>
-        {{ form.password_confirm.label }}<br>
-        {{ form.password_confirm(size=32) }}
+            {{ form.password_confirm.label }}<br>
+            {{ form.password_confirm(size=32) }}
+            {% for error in form.password_confirm.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
 
         <p>{{ form.submit() }}</p>

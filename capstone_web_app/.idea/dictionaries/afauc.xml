@@ -5,6 +5,7 @@
       <w>endfor</w>
       <w>fname</w>
       <w>lname</w>
+      <w>sqlalchemy</w>
     </words>
   </dictionary>
 </component>
