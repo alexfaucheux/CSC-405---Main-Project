@@ -6,6 +6,7 @@
       <w>endblock</w>
       <w>endfor</w>
       <w>fname</w>
+      <w>imgs</w>
       <w>lname</w>
       <w>sqlalchemy</w>
     </words>

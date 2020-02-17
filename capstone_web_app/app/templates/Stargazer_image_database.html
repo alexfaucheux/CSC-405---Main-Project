@@ -6,24 +6,26 @@
     <p style="color: white;">
         Images of Special Astrological Events:
     </p>
-
-    <div class="row">
-        <div class="column">
-            <img src={{ url_for('static',  filename='images/comet.png') }}>
-            <img src={{ url_for('static',  filename='images/meteor.jpg') }}>
+    {% if images %}
+        <div class="row">
+            <div class="column">
+                {% for image in images %}
+                <img src={{ url_for('static',  filename=image.image_url) }}>
+                {% endfor %}
+            </div>
+           {# <div class="column">
+                <img src={{ url_for('static',  filename=images[2].image_url) }}>
+                <img src={{ url_for('static',  filename=images[3].image_url) }}>
+            </div>
+            <div class="column">
+                <img src={{ url_for('static',  filename='images/stars.jpg') }}>
+                <img src={{ url_for('static',  filename='images/comet.png') }}>
+            </div>
+            <div class="column">
+                <img src={{ url_for('static',  filename='images/moon.jpg') }}>
+                <img src={{ url_for('static',  filename='images/meteor.jpg') }}>
+            </div>#}
         </div>
-        <div class="column">
-            <img src={{ url_for('static',  filename='images/moon.jpg') }}>
-            <img src={{ url_for('static',  filename='images/stars.jpg') }}>
-        </div>
-        <div class="column">
-            <img src={{ url_for('static',  filename='images/stars.jpg') }}>
-            <img src={{ url_for('static',  filename='images/comet.png') }}>
-        </div>
-        <div class="column">
-            <img src={{ url_for('static',  filename='images/moon.jpg') }}>
-            <img src={{ url_for('static',  filename='images/meteor.jpg') }}>
-        </div>
-    </div>
+    {% endif %}
 
 {% endblock %}

@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user
 from app import app, db
 from app.forms import LoginForm, RegisterForm
-from app.models import User, Weather
+from app.models import User, Image, Weather
 
 links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us', \
          'login': 'Login', 'logout': 'Logout'}
@@ -57,7 +57,8 @@ def signup():
 
 @app.route("/images")
 def images():
-    return render_template("Stargazer_image_database.html", title='Images', links=links)
+    imgs = Image.query.all()
+    return render_template("Stargazer_image_database.html", title='Images', links=links, images=imgs)
 
 
 @app.route("/live_feed")
