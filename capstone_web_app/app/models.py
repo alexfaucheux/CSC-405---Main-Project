@@ -23,11 +23,6 @@ class User(UserMixin, db.Model):
         return '<User {}>'.format(self.username)
 
 
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
-
-
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String, unique=True)
@@ -38,3 +33,26 @@ class Image(db.Model):
 class UserImage(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True, primary_key=True)
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'), index=True, primary_key=True)
+
+
+class Weather(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_stored = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    sunset = db.Column(db.DateTime)
+    sunrise = db.Column(db.DateTime)
+    temp = db.Column(db.DECIMAL)
+    m_phase = db.Column(db.DECIMAL)
+    clouds = db.Column(db.DECIMAL)
+    wind = db.Column(db.DECIMAL)
+    wind_dir = db.Column(db.DECIMAL)
+    vis = db.Column(db.DECIMAL)
+    current = db.Column(db.String)
+
+    def __repr__(self):
+        return '<Date {}>'.format(self.date)
+
+
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
