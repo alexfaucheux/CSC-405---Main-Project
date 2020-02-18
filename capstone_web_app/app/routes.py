@@ -4,21 +4,32 @@ from app import app, db
 from app.forms import LoginForm, RegisterForm
 from app.models import User, Image, Weather
 from API_Readers import darkskyrequest
+from datetime import datetime, timedelta
 
 links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
          'login': 'Login', 'logout': 'Logout'}
 
 
 @app.route("/")
-def home():
+@app.route("/<up>")
+def home(up=None):
     weather1 = Weather.query.get(1)
+    if up is None:
+        return redirect(url_for("update", weather_data=weather1))
     return render_template("Stargazer_website.html", title='Home', links=links, weather=weather1)
 
 
-@app.route("/update-weather")
+@app.route("/update-weather/")
 def update():
-    darkskyrequest.parseRequest()
-    return redirect(url_for("home"))
+    date_stored = Weather.query.get(1).date_stored
+    date = datetime.now()
+
+    # Updates hourly during day, every 20 minutes during night time
+    if (20 > date.hour > 7 and date >= date_stored + timedelta(hours=1)) or \
+            (20 <= date.hour <= 7 and date >= date_stored + timedelta(minutes=20)):
+        darkskyrequest.parseRequest()
+
+    return redirect(url_for("home", up="index"))
 
 
 @app.route("/login", methods=['GET', 'POST'])
