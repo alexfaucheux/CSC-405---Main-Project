@@ -15,7 +15,7 @@ links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact'
 def home(up=None):
     weather1 = Weather.query.get(1)
     if up is None:
-        return redirect(url_for("update", weather_data=weather1))
+        return redirect(url_for("update"))
     return render_template("Stargazer_website.html", title='Home', links=links, weather=weather1)
 
 
