@@ -8,12 +8,14 @@ from app import app,db
 from app.models import Weather
 
 def parseRequest():
-    #Attempts to delete any preexisting weather data before updation.
-
-    var = Weather.query.filter_by(id=1).all()
-    db.session.delete(var)
-    db.session.commit()
-    print("Deletion successful!")
+    
+    #Attempts to delete any pre-existing weather data before updating the database.    
+    try:
+        var = Weather.query.filter_by(id=1).all()
+        db.session.delete(var)
+        db.session.commit()
+    except Exception as err:
+        print("Unable to find Weather object for deletion (Perhaps one hasn't been created?)")
 
     #Error handling
     weather_error = False
@@ -75,12 +77,13 @@ def parseRequest():
 
         #Current conditions
         current = (weatherjson["currently"]["summary"])
-        #Temporary format
+        
+        #Take the parsed data and send it to the Weather class in "models" and save it to the database
         currentWeather = Weather(id=1, date_stored = time, sunset=sunset, sunrise=sunrise, temp=temp, m_phase = m_phase, clouds=clouds, wind=wind, wind_dir=wind_dir, vis=vis, current=current)
         db.session.add(currentWeather)
         db.session.commit()
     else:
         print("Error retrieving weather data")
 
-parseRequest()
+#parseRequest()
     
