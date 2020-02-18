@@ -5,7 +5,10 @@
 {% block content %}
     <h1 style="border: 2px solid; border-color:black; color:white;">Stargazer</h1>
     <div style="color: white; background: #100a2c">
-        <p>Last Updated: {{ weather.date_stored.strftime('%A, %b %d @ %I:%M:%S %p') }}</p>
+        <p>
+            Last Updated: {{ weather.date_stored.strftime('%A, %b %d @ %I:%M:%S %p') }}
+            <a style="color: white" href="{{ url_for("update") }}">update</a>
+        </p>
         <p>Sunrise: {{ weather.sunrise.strftime('%I:%M %p') }} </p>
         <p>Sunset: {{ weather.sunset.strftime('%I:%M %p') }} </p>
         <p>Temperature: {{ weather.temp }} &#176;F</p>

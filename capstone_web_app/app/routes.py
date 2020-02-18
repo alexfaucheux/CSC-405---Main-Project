@@ -3,8 +3,9 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
 from app.forms import LoginForm, RegisterForm
 from app.models import User, Image, Weather
+from API_Readers import darkskyrequest
 
-links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us', \
+links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
          'login': 'Login', 'logout': 'Logout'}
 
 
@@ -13,6 +14,11 @@ def home():
     weather1 = Weather.query.get(1)
     return render_template("Stargazer_website.html", title='Home', links=links, weather=weather1)
 
+
+@app.route("/update-weather")
+def update():
+    darkskyrequest.parseRequest()
+    return redirect(url_for("home"))
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -62,6 +68,7 @@ def images():
     imgs = Image.query.all()
     return render_template("Stargazer_image_database.html", title='Images', links=links, images=imgs)
 
+
 @app.route("/like/<int:image_id>/<action>")
 @login_required
 def like_action(image_id, action):
@@ -75,6 +82,7 @@ def like_action(image_id, action):
         db.session.commit()
 
     return redirect(request.referrer)
+
 
 @app.route("/live_feed")
 def live_feed():

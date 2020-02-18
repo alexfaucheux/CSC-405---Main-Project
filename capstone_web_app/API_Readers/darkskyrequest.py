@@ -89,4 +89,5 @@ def parseRequest():
         print("Error retrieving weather data")
 
 
-parseRequest()
+if __name__ == "__main__":
+    parseRequest()
