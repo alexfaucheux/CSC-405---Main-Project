@@ -11,10 +11,11 @@ from app.models import Weather
 def parseRequest():
     # Attempts to delete any pre-existing weather data before updating the database.
     try:
-        var = Weather.query.filter_by(id=1).all()
+        var = Weather.query.filter_by(id=1).first()
         db.session.delete(var)
         db.session.commit()
-    except Exception as err:
+        print("Deleted 1 entry")
+    except:
         print("Unable to find Weather object for deletion (Perhaps one hasn't been created?)")
 
     # Error handling
@@ -87,4 +88,4 @@ def parseRequest():
     else:
         print("Error retrieving weather data")
 
-# parseRequest()
+parseRequest()
