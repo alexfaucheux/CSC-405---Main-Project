@@ -88,4 +88,5 @@ def parseRequest():
     else:
         print("Error retrieving weather data")
 
+
 parseRequest()
