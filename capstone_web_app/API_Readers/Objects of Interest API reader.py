@@ -18,12 +18,9 @@ class OOI:
 
 # Subclass for ISS passes that adds a passnumber variable
 class ISSPass(OOI):
-    def __init__(self, passNum, duration, riseTime, name):
+    def __init__(self, passNum, duration, riseTime, name="ISS Pass"):
         super().__init__(name, riseTime, duration)
         self.passNum = passNum
-        self.duration = duration
-        self.riseTime = riseTime
-        self.name = "ISS Pass"
 
     # String format of the class, mainly for debugging.
     def __str__(self):
@@ -66,7 +63,7 @@ def parseISS():
         currentPass.duration = ISSData['response'][passCount]['duration']
         currentPass.riseTime = ISSData['response'][passCount]['risetime']
 
-        # Adds the pass to the list 
+        # Adds the pass to the list
         passes.append(currentPass)
 
         # Debug text
