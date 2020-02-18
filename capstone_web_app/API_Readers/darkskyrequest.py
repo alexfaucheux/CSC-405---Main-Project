@@ -9,12 +9,11 @@ from app.models import Weather
 
 def parseRequest():
     #Attempts to delete any preexisting weather data before updation.
-    try:
-        var = Weather.query.by_filter(id=1).all()
-        db.session.delete(var)
-        db.session.commit()
-    except:
-        pass
+
+    var = Weather.query.filter_by(id=1).all()
+    db.session.delete(var)
+    db.session.commit()
+    print("Deletion successful!")
 
     #Error handling
     weather_error = False
@@ -49,6 +48,9 @@ def parseRequest():
         time = datetime.fromtimestamp(time)
         sunrise = datetime.fromtimestamp(sunrise)
         sunset = datetime.fromtimestamp(sunset)
+
+        #Converting clouds to percentage
+        clouds = clouds * 100
 
         #retrieve Moon Phase data and convert it 
         m_phase = (weatherjson["daily"]["data"][0]["moonPhase"])

@@ -10,7 +10,9 @@ links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact'
 
 @app.route("/")
 def home():
-    return render_template("Stargazer_website.html", title='Home', links=links)
+    weather1 = Weather.query.filter_by(id=1).first()
+    return render_template("Stargazer_website.html", title='Home', links=links, weather=weather1)
+
 
 
 @app.route("/login", methods=['GET', 'POST'])

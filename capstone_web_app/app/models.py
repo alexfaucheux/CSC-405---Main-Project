@@ -65,12 +65,12 @@ class Weather(db.Model):
     date_stored = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     sunset = db.Column(db.DateTime)
     sunrise = db.Column(db.DateTime)
-    temp = db.Column(db.DECIMAL)
+    temp = db.Column(db.FLOAT)
     m_phase = db.Column(db.String)
-    clouds = db.Column(db.DECIMAL)
-    wind = db.Column(db.DECIMAL)
-    wind_dir = db.Column(db.DECIMAL)
-    vis = db.Column(db.DECIMAL)
+    clouds = db.Column(db.FLOAT)
+    wind = db.Column(db.FLOAT)
+    wind_dir = db.Column(db.FLOAT)
+    vis = db.Column(db.FLOAT)
     current = db.Column(db.String)
 
     def __repr__(self):
