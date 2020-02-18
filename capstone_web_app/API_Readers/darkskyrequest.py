@@ -11,7 +11,7 @@ from app.models import Weather
 def parseRequest():
     # Attempts to delete any pre-existing weather data before updating the database.
     try:
-        var = Weather.query.filter_by(id=1).first()
+        var = Weather.query.get(1)
         db.session.delete(var)
         db.session.commit()
         print("Deleted 1 entry")
