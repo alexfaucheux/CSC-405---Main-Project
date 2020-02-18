@@ -1,9 +1,20 @@
 {# HOME PAGE #}
 
 {% extends "template.html" %}
-{% block content %}
 
+{% block content %}
     <h1 style="border: 2px solid; border-color:black; color:white;">Stargazer</h1>
+    <span style="color: white; ">
+    <p>Time of Call: {{ weather.date_stored }}</p>
+    <p>Sunrise: {{ weather.sunrise }} </p>
+    <p>Sunset: {{ weather.sunset }} </p>
+    <p>Temperature: {{ weather.temp }} &#176;F</p>
+    <p>Moon Phase: {{ weather.m_phase }}</p>
+    <p>Cloud Coverage: {{ weather.clouds }} %</p>
+    <p>Winds: {{ weather.wind }} mph</p>
+    <p>Wind Direction: {{ weather.wind_dir }}</p>
+    <p>Visibility: {{ weather.vis }} miles</p>
+        <p>Current Condition: {{ weather.current }}</p></span>
     <img src="{{ url_for('static',  filename='images/darksky_api_example.jpg') }}" style="width:1250px; height:500px;">
 
 {% endblock %}

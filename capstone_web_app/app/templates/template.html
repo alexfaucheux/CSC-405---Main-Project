@@ -4,14 +4,18 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
+
+        {# Define title for website #}
         {% if title %}
         <title>{{ title }} - Stargazer</title>
         {% else %}
         <title>Welcome to Stargazer</title>
         {% endif %}
 
+        {# CSS link for navigation header #}
         <link rel="stylesheet" href="{{ url_for('static',  filename='css/navigation.css') }}">
 
+        {# Block to insert css for child templates #}
         {% block css %}
         {% endblock %}
 
@@ -20,18 +24,23 @@
     {# SETS BACKGROUND PICTURE #}
     <body style="background-image: url({{ url_for('static', filename='images/backgroundSite1.jpg') }}); background-repeat: no-repeat; background-size: cover;">
         <div class = "topnav">
-            {# CREATES DESIRED BUTTON #}
+            {# CREATES DESIRED BUTTONS #}
+            {# links is a dictionary with link:name pair, where "link" is the name of the view function in routes.py #}
             {% if links %}
                 {% for link in links %}
+                    {# current_user.is_anonymous == current user not logged in #}
                     {% if (link == 'login' and current_user.is_anonymous) or
                             (link == 'logout' and not current_user.is_anonymous) %}
                         {% if not current_user.is_anonymous %}
+                            {# Displays who is currently logged in on top right of navigation bar #}
                             <p style="color: white; position: absolute; right: 100px">Currently logged in as: {{ current_user.fname }} {{ current_user.lname }}</p>
                         {% endif %}
 
+                        {# Display a button on the top right of the header #}
                         <a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a>
 
                     {% elif link != 'login' and link != 'logout' %}
+                        {# Display a button on the top left of header #}
                         <a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a>
 
                     {% endif %}
@@ -40,9 +49,11 @@
         </div>
 
         <hr>
+        {# Block for child templates to insert their code in #}
         {% block content %}
         {% endblock %}
 
+        {# Used to display flashed messages from routes.py. No real use except for debugging and error handling #}
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>

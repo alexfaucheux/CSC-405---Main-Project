@@ -1,29 +1,45 @@
 {# USED TO DISPLAY IMAGES IN DATABASE #}
 
 {% extends "template.html" %}
-{% block content %}
 
+{# insert css #}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',  filename='css/Image_database.css') }}">
+{% endblock %}
+
+{% block content %}
     <p style="color: white;">
         Images of Special Astrological Events:
     </p>
 
-    <div class="row">
-        <div class="column">
-            <img src={{ url_for('static',  filename='images/comet.png') }}>
-            <img src={{ url_for('static',  filename='images/meteor.jpg') }}>
-        </div>
-        <div class="column">
-            <img src={{ url_for('static',  filename='images/moon.jpg') }}>
-            <img src={{ url_for('static',  filename='images/stars.jpg') }}>
-        </div>
-        <div class="column">
-            <img src={{ url_for('static',  filename='images/stars.jpg') }}>
-            <img src={{ url_for('static',  filename='images/comet.png') }}>
-        </div>
-        <div class="column">
-            <img src={{ url_for('static',  filename='images/moon.jpg') }}>
-            <img src={{ url_for('static',  filename='images/meteor.jpg') }}>
-        </div>
-    </div>
+    {# class img is modified using the imported css file;
+       made to make all images the same size and go vertically down;
+       no idea how to make them space out though #}
+    {% if images %}
+    <div class="img">
+        {% for image in images %}
+{#            <img src="{{ url_for('static',  filename=image.image_url) }}" >#}
+            {# Display image as background image #}
+            <div class="img" style="background-image:url('{{ url_for('static',  filename=image.image_url) }}');">
+
+                {# Display like or unlike button beside image;
+                   will not display if user is not logged in #}
+                {% if not current_user.is_anonymous %}
+                    {% if not current_user.has_liked_image(image) %}
+                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="like")}}">Like</a>
+                    {% else %}
+                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="dislike")}}">Unlike</a>
+                    {% endif %}
+
+                {% endif %}
+
+                {# Display like counter beside like button #}
+                <p style="position: relative; left: 200px; color: white; background: black">
+                    {{ image.likes.count() }} likes
+                </p>
+            </div>
+        {% endfor %}
+
+    {% endif %}
 
 {% endblock %}

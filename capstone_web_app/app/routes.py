@@ -1,8 +1,8 @@
-from flask import render_template, redirect, url_for, flash
-from flask_login import current_user, login_user, logout_user
+from flask import render_template, redirect, url_for, flash, request
+from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
 from app.forms import LoginForm, RegisterForm
-from app.models import User
+from app.models import User, Image, Weather
 
 links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us', \
          'login': 'Login', 'logout': 'Logout'}
@@ -10,7 +10,9 @@ links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact'
 
 @app.route("/")
 def home():
-    return render_template("Stargazer_website.html", title='Home', links=links)
+    weather1 = Weather.query.filter_by(id=1).first()
+    return render_template("Stargazer_website.html", title='Home', links=links, weather=weather1)
+
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -57,8 +59,22 @@ def signup():
 
 @app.route("/images")
 def images():
-    return render_template("Stargazer_image_database.html", title='Images', links=links)
+    imgs = Image.query.all()
+    return render_template("Stargazer_image_database.html", title='Images', links=links, images=imgs)
 
+@app.route("/like/<int:image_id>/<action>")
+@login_required
+def like_action(image_id, action):
+    image = Image.query.filter_by(id=image_id).first()
+    if action == "like":
+        current_user.like_image(image)
+        db.session.commit()
+
+    elif action == "dislike":
+        current_user.dislike_image(image)
+        db.session.commit()
+
+    return redirect(request.referrer)
 
 @app.route("/live_feed")
 def live_feed():
