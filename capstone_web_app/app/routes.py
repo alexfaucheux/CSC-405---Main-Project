@@ -1,5 +1,5 @@
-from flask import render_template, redirect, url_for, flash
-from flask_login import current_user, login_user, logout_user
+from flask import render_template, redirect, url_for, flash, request
+from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
 from app.forms import LoginForm, RegisterForm
 from app.models import User, Image, Weather
@@ -60,6 +60,19 @@ def images():
     imgs = Image.query.all()
     return render_template("Stargazer_image_database.html", title='Images', links=links, images=imgs)
 
+@app.route("/like/<int:image_id>/<action>")
+@login_required
+def like_action(image_id, action):
+    image = Image.query.filter_by(id=image_id).first()
+    if action == "like":
+        current_user.like_image(image)
+        db.session.commit()
+
+    elif action == "dislike":
+        current_user.dislike_image(image)
+        db.session.commit()
+
+    return redirect(request.referrer)
 
 @app.route("/live_feed")
 def live_feed():

@@ -1,31 +1,34 @@
 {# USED TO DISPLAY IMAGES IN DATABASE #}
 
 {% extends "template.html" %}
-{% block content %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',  filename='css/Image_database.css') }}">
+{% endblock %}
+
+{% block content %}
     <p style="color: white;">
         Images of Special Astrological Events:
     </p>
     {% if images %}
-        <div class="row">
-            <div class="column">
-                {% for image in images %}
-                <img src={{ url_for('static',  filename=image.image_url) }}>
-                {% endfor %}
+    <div class="img">
+        {% for image in images %}
+{#            <img src="{{ url_for('static',  filename=image.image_url) }}" >#}
+            <div class="img" style="background-image:url('{{ url_for('static',  filename=image.image_url) }}');">
+                {% if not current_user.is_anonymous %}
+                    {% if not current_user.has_liked_image(image) %}
+                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="like")}}">Like</a>
+                    {% else %}
+                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="dislike")}}">Unlike</a>
+                    {% endif %}
+                {% endif %}
+
+                <p style="position: relative; left: 200px; color: white; background: black">
+                    {{ image.likes.count() }} likes
+                </p>
             </div>
-           {# <div class="column">
-                <img src={{ url_for('static',  filename=images[2].image_url) }}>
-                <img src={{ url_for('static',  filename=images[3].image_url) }}>
-            </div>
-            <div class="column">
-                <img src={{ url_for('static',  filename='images/stars.jpg') }}>
-                <img src={{ url_for('static',  filename='images/comet.png') }}>
-            </div>
-            <div class="column">
-                <img src={{ url_for('static',  filename='images/moon.jpg') }}>
-                <img src={{ url_for('static',  filename='images/meteor.jpg') }}>
-            </div>#}
-        </div>
+        {% endfor %}
+
     {% endif %}
 
 {% endblock %}

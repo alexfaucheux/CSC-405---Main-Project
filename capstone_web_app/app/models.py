@@ -14,6 +14,25 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     images_liked = db.relationship('UserImage', backref='user', lazy='dynamic')
 
+    def like_image(self, image):
+        if not self.has_liked_image(image):
+            liked_image = UserImage(user_id=self.id, image_id=image.id)
+            db.session.add(liked_image)
+
+    def dislike_image(self, image):
+        if self.has_liked_image(image):
+            liked_image = UserImage.query.filter_by(
+                user_id=self.id,
+                image_id=image.id
+            ).first()
+            db.session.delete(liked_image)
+
+    def has_liked_image(self, image):
+        return UserImage.query.filter_by(
+            user_id=self.id,
+            image_id=image.id
+        ).count() > 0
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
