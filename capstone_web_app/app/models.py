@@ -66,7 +66,7 @@ class Weather(db.Model):
     sunset = db.Column(db.DateTime)
     sunrise = db.Column(db.DateTime)
     temp = db.Column(db.DECIMAL)
-    m_phase = db.Column(db.DECIMAL)
+    m_phase = db.Column(db.String)
     clouds = db.Column(db.DECIMAL)
     wind = db.Column(db.DECIMAL)
     wind_dir = db.Column(db.DECIMAL)
