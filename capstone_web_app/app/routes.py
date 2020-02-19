@@ -99,9 +99,20 @@ def live_feed():
     return render_template("Stargazer_live_feed.html", title='Live Feed', links=links)
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
     form = ContactUsForm()
+
+    if form.is_submitted():
+        first_name = form.fname.data
+        last_name = form.lname.data
+        email = form.username.data
+        text = form.text.data
+
+        ''' INSERT LOGIC FOR EMAIL HERE '''
+
+        flash("Successfully sent!")  # Displays on bottom of home page
+        return redirect(url_for("home"))
     return render_template("Stargazer_contact_us.html", title='Contact Us', links=links, form=form)
 
 # @app.route('/user/<username>')
