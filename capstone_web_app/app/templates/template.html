@@ -22,7 +22,7 @@
     </head>
 
     {# SETS BACKGROUND PICTURE #}
-    <body style="background-image: url({{ url_for('static', filename='images/backgroundSite1.jpg') }}); background-repeat: no-repeat; background-size: cover;">
+    <body style="background-image: url({{ url_for('static', filename='images/backgroundSite1.jpg') }}); background-repeat: no-repeat; background-size: cover; background-attachment: fixed; background-color: black">
         <div class = "topnav">
             {# CREATES DESIRED BUTTONS #}
             {# links is a dictionary with link:name pair, where "link" is the name of the view function in routes.py #}
