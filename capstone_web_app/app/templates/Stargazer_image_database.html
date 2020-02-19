@@ -5,13 +5,40 @@
 {# insert css #}
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static',  filename='css/Image_database.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',  filename='css/Image_gallery.css') }}">
 {% endblock %}
 
 {% block content %}
     <p style="color: white;">
+        Featured Images:
+    </p>
+    {# creates images on website #}
+    <div class="gallery">
+      <div class="image-box active">
+        <img src="../static/images/img-1.jpg">
+      </div>
+
+      <div class="image-box">
+        <img src="../static/images/img-2.jpg">
+      </div>
+
+      <div class="image-box">
+        <img src="../static/images/img-3.jpg">
+      </div>
+
+      <div class="image-box">
+        <img src="../static/images/img-4.jpg">
+      </div>
+
+      <div class="image-box">
+        <img src="../static/images/img-5.jpg">
+      </div>
+
+    </div>
+
+    <p style="color: white;">
         Images of Special Astrological Events:
     </p>
-
     {# class img is modified using the imported css file;
        made to make all images the same size and go vertically down;
        no idea how to make them space out though #}
