@@ -3,13 +3,10 @@ import urllib.parse
 import urllib.error
 import json
 from datetime import datetime
-from app import app, db
-from app.models import Weather
+#from app import app, db
+#from app.models import Weather
 import unittest
 import sys
-
-#logfile for errors and unit testing
-sys.stdout = open("log.txt", "w")
 
 class DarkSkyTesting(unittest.TestCase):
 
@@ -29,4 +26,8 @@ class DarkSkyTesting(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    print(unittest.main())
+    #logfile for errors and unit testing
+    with open("log.txt", "w") as sys.stdout:
+        DarkSky_Test = unittest.TestLoader().loadTestsFromTestCase(DarkSkyTesting)
+        unittest.TextTestRunner(stream=sys.stdout).run(DarkSky_Test)
+

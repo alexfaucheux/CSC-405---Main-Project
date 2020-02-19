@@ -18,7 +18,9 @@ DEBUG_MODE = True
 def parseRequest():
 
     if DEBUG_MODE:
-        unittest.main()
+        with open("log.txt", "w") as sys.stdout:
+            DarkSky_Test = unittest.TestLoader().loadTestsFromTestCase(DarkSkyTesting)
+            unittest.TextTestRunner(stream=sys.stdout).run(DarkSky_Test)
     
     # Attempts to delete any pre-existing weather data before updating the database.
     try:
