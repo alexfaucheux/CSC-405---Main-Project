@@ -6,9 +6,20 @@ import json
 from datetime import datetime
 from app import app, db
 from app.models import Weather
+from testing import *
+import sys
 
+#logfile for errors and unit testing
+sys.stdout = open("log.txt", "w")
+
+#if true, runs unit testing on calls
+DEBUG_MODE = True
 
 def parseRequest():
+
+    if DEBUG_MODE:
+        unittest.main()
+    
     # Attempts to delete any pre-existing weather data before updating the database.
     try:
         var = Weather.query.get(1)
