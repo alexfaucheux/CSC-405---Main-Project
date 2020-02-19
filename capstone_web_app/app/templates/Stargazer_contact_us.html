@@ -1,6 +1,11 @@
 {# PAGE WITH CONTACT INFO #}
 
 {% extends "template.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',  filename='css/contactus.css') }}">
+{% endblock %}
+
 {% block content %}
 
   <h1 style="color: white;">Contact Us:</h1>
@@ -9,5 +14,23 @@
   <p style="color: white;">Jonah Landry: jhl014@latech.edu </p>
   <p style="color: white;">Ammar Essajee: aie003@latech.edu</p>
   <p style="color: white;">Alex Faucheux: aaf015@latech.edu </p>
+<div class="container">
+  <form action="action_page.php">
 
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="email">Last Name</label>
+    <input type="text" id="email" name="email" placeholder="Your e-mail">
+
+    <label for="subject">Subject</label>
+    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+    <input type="submit" value="Submit">
+
+  </form>
+</div>
 {% endblock %}

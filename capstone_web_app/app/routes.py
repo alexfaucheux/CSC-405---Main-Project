@@ -85,6 +85,15 @@ def live_feed():
 def contact():
     return render_template("Stargazer_contact_us.html", title='Contact Us', links=links)
 
+# @app.route('/user/<username>')
+# @login_required
+# def user():
+#     user = User.query.filter_by(username=username).first_or_404()
+#     posts = [
+#         {'author': user, 'body': 'Test post #1'},
+#         {'author': user, 'body': 'Test post #2'}
+#     ]
+#     return render_template('user.html', title=user, links=links)
 
 if __name__ == "__main__":
     app.run(debug=True)
