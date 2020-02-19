@@ -103,7 +103,7 @@ def live_feed():
 def contact():
     form = ContactUsForm()
 
-    if form.is_submitted():
+    if form.validate_on_submit():
         first_name = form.fname.data
         last_name = form.lname.data
         email = form.username.data
