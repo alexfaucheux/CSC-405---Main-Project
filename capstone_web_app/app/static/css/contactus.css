@@ -18,6 +18,7 @@ input[type=submit] {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-right: 1000px
 }
 
 /* When moving the mouse over the submit button, add a darker green color */
