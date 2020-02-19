@@ -24,7 +24,6 @@ def update():
     date_stored = Weather.query.get(1).date_stored
     date = datetime.now()
 
-    print("HI")
     if (20 > date.hour > 7 and date >= date_stored + timedelta(hours=1)) or \
             ((date.hour >= 20 or date.hour <= 7) and date >= date_stored + timedelta(minutes=20)):
         darkskyrequest.parseRequest()
