@@ -11,7 +11,7 @@ from app.models import Weather
 def parseRequest():
     # Attempts to delete any pre-existing weather data before updating the database.
     try:
-        var = Weather.query.filter_by(id=1).all()
+        var = Weather.query.get(1)
         db.session.delete(var)
         db.session.commit()
     except Exception as err:
@@ -87,4 +87,6 @@ def parseRequest():
     else:
         print("Error retrieving weather data")
 
-# parseRequest()
+
+if __name__ == "__main__":
+    parseRequest()
