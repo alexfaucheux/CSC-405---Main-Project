@@ -85,7 +85,7 @@ def parseRequest():
         db.session.add(currentWeather)
         db.session.commit()
     else:
-        print("Error retrieving weather data")
+        print(weather)
 
 
 if __name__ == "__main__":
