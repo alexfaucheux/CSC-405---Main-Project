@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegisterForm
+from app.forms import LoginForm, RegisterForm, ContactUsForm
 from app.models import User, Image, Weather
 from datetime import datetime, timedelta
 from API_Readers import darkskyrequest
@@ -101,7 +101,8 @@ def live_feed():
 
 @app.route("/contact")
 def contact():
-    return render_template("Stargazer_contact_us.html", title='Contact Us', links=links)
+    form = ContactUsForm()
+    return render_template("Stargazer_contact_us.html", title='Contact Us', links=links, form=form)
 
 # @app.route('/user/<username>')
 # @login_required
