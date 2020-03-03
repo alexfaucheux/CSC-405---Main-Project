@@ -44,11 +44,25 @@
                         {% endif %}
 
                         {# Display a button on the top right of the header #}
-                        <a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a>
+                        <li><a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a></li>
 
                     {% elif link != 'login' and link != 'logout' %}
-                        {# Display a button on the top left of header #}
-                        <a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a>
+                        {# for all buttons except profile: #}
+                        {% if link != 'profile' %}
+                            {# Display a button on the top left of header #}
+                           <li><a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a></li>
+                        {% elif link == 'profile' %}
+                            {# Create dropdown button for 'profile' #}
+                            <li class="dropdown">
+                                <a href="javascript:void(0)" class="dropbtn">Profile</a>
+                                <div class="dropdown-content">
+                                    <a href="#details">Details</a>
+                                    <a href="#about">About</a>
+                                    <a href="#sign-out">Sign out</a>
+                                </div>
+                            </li>
+                        {% endif %}
+
 
                     {% endif %}
                 {% endfor %}

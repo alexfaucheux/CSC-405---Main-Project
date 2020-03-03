@@ -6,7 +6,7 @@ from app.models import User, Image, Weather
 from datetime import datetime, timedelta
 from API_Readers import darkskyrequest
 
-links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us', \
+links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us', 'profile': 'Profile', \
          'login': 'Login', 'logout': 'Logout'}
 
 
