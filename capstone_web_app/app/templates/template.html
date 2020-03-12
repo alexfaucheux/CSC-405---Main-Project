@@ -37,32 +37,31 @@
                 {% for link in links %}
                     {# current_user.is_anonymous == current user not logged in #}
                     {% if (link == 'login' and current_user.is_anonymous) or
-                            (link == 'logout' and not current_user.is_anonymous) %}
+                            (link == 'profile' and not current_user.is_anonymous) %}
                         {% if not current_user.is_anonymous %}
                             {# Displays who is currently logged in on top right of navigation bar #}
                             <p style="color: white; position: absolute; right: 100px">Currently logged in as: {{ current_user.fname }} {{ current_user.lname }}</p>
-                        {% endif %}
 
-                        {# Display a button on the top right of the header #}
-                        <li><a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a></li>
-
-                    {% elif link != 'login' and link != 'logout' %}
-                        {# for all buttons except profile: #}
-                        {% if link != 'profile' %}
-                            {# Display a button on the top left of header #}
-                           <li><a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a></li>
-                        {% elif link == 'profile' %}
                             {# Create dropdown button for 'profile' #}
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropbtn">Profile</a>
                                 <div class="dropdown-content">
-                                    <a href="#details">Details</a>
-                                    <a href="#about">About</a>
-                                    <a href="#sign-out">Sign out</a>
+                                    <a href={{ url_for('profile') }}>Account Details</a>
+                                    <a href={{ url_for('profile') }}>Account Settings</a>
+                                    <a href={{ url_for('logout') }}>{{ links['logout'] }}</a>
                                 </div>
                             </li>
+                        {% else %}
+                            {# Display a button on the top right of the header #}
+                            <li><a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a></li>
+
                         {% endif %}
 
+
+
+                    {% elif link != 'login' and link != 'profile' and link != 'logout' %}
+                        {# Display a button on the top left of header #}
+                       <li><a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a></li>
 
                     {% endif %}
                 {% endfor %}

@@ -115,15 +115,11 @@ def contact():
         return redirect(url_for("home"))
     return render_template("Stargazer_contact_us.html", title='Contact Us', links=links, form=form)
 
-# @app.route('/user/<username>')
-# @login_required
-# def user():
-#     user = User.query.filter_by(username=username).first_or_404()
-#     posts = [
-#         {'author': user, 'body': 'Test post #1'},
-#         {'author': user, 'body': 'Test post #2'}
-#     ]
-#     return render_template('user.html', title=user, links=links)
+
+@app.route("/profile")
+def profile():
+    return render_template("Profile.html", title="Profile", links=links)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

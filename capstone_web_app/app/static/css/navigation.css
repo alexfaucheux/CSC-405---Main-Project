@@ -25,11 +25,14 @@ li a:hover, .dropdown:hover .dropbtn {
 
 li.dropdown {
   display: inline-block;
+  position: absolute;
+  right: 8px
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
+  right: 0;
   background-color: #898989;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
