@@ -7,8 +7,8 @@ class Camera(BaseCamera):
     video_source = 0
 
     def __init__(self):
-        if os.environ.get('ZWO ASI120MC Camera'):
-            Camera.set_video_source(int(os.environ['ZWO ASI120MC Camera']))
+        if os.environ.get('OPENCV_CAMERA_SOURCE'):
+            Camera.set_video_source(int(os.environ['OPENCV_CAMERA_SOURCE']))
         super(Camera, self).__init__()
 
     @staticmethod
