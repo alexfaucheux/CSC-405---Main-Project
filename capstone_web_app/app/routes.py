@@ -4,6 +4,7 @@ from app import app, db
 from app.forms import LoginForm, RegisterForm, ContactUsForm
 from app.models import User, Image, Weather
 from app.camera_opencv import Camera
+from app.email_server import Email
 from datetime import datetime, timedelta
 from API_Readers import darkskyrequest
 
@@ -124,7 +125,8 @@ def contact():
         email = form.username.data
         text = form.text.data
 
-        ''' INSERT LOGIC FOR EMAIL HERE '''
+        user_email = Email(first_name + " " + last_name, email)
+        user_email.send_customer_email(text)
 
         flash("Successfully sent!")  # Displays on bottom of home page
         return redirect(url_for("home"))
