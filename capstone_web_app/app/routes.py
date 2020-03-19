@@ -1,10 +1,12 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, Response
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
 from app.forms import LoginForm, RegisterForm, ContactUsForm
 from app.models import User, Image, Weather
+from app.camera_opencv import Camera
 from datetime import datetime, timedelta
 from API_Readers import darkskyrequest
+
 
 links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us', 'profile': 'Profile', \
          'login': 'Login', 'logout': 'Logout'}
@@ -94,9 +96,22 @@ def like_action(image_id, action):
     return redirect(request.referrer)
 
 
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
 @app.route("/live_feed")
 def live_feed():
     return render_template("Stargazer_live_feed.html", title='Live Feed', links=links)
+
+
+@app.route("/video_feed")
+def video_feed():
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route("/contact", methods=["GET", "POST"])
