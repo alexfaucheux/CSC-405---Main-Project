@@ -2,8 +2,10 @@ import os
 import cv2
 from app.base_camera import BaseCamera
 
-
+# Class used to capture frames from camera
 class Camera(BaseCamera):
+    # 0 == native
+    # >0 == peripheral
     video_source = 0
 
     def __init__(self):

@@ -9,6 +9,9 @@ except ImportError:
         from _thread import get_ident
 
 
+''' API DOWNLOADED FROM GITHUB AND USED IN camera_opencv.py '''
+
+
 class CameraEvent(object):
     """An Event-like class that signals all active clients when a new frame is
     available.
