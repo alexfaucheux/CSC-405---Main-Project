@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, Response
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegisterForm, ContactUsForm
+from app.forms import LoginForm, RegisterForm, ContactUsForm, AccountForm
 from app.models import User, Image, Weather
 from app.camera_opencv import Camera
 from app.email_server import Email
@@ -108,6 +108,25 @@ def signup():
     return render_template("Stargazer_signup.html", title='Create Account', links=links, form=form)
 
 
+''' ENDPOINT FOR ACCOUNT PAGE '''
+
+
+@app.route("/account", methods=['GET', 'POST'])
+def account():
+    form = AccountForm()
+
+    if form.validate_on_submit():
+        if form.new_password.data:
+            current_user.set_password(form.new_password.data)
+        if form.new_username.data:
+            current_user.username = form.new_username.data
+        db.session.commit()
+        return redirect(url_for("home"))
+
+    # Displays profile page
+    return render_template("account.html", title="Account Settings", links=links, form=form)
+
+
 ''' ENDPOINT FOR IMAGE GALLERY PAGE '''
 
 
@@ -149,6 +168,8 @@ def gen(camera):
 
 
 ''' ENDPOINT FOR LIVE FEED PAGE '''
+
+
 @app.route("/live_feed")
 def live_feed():
     # Display Live Feed page
@@ -156,6 +177,8 @@ def live_feed():
 
 
 ''' ENDPOINT FOR VIDEO FEED '''
+
+
 @app.route("/video_feed")
 def video_feed():
     # a continuous response from the generator function
@@ -164,6 +187,8 @@ def video_feed():
 
 
 ''' ENDPOINT FOR CONTACT US PAGE '''
+
+
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     # Create contact form
@@ -190,13 +215,11 @@ def contact():
     return render_template("Stargazer_contact_us.html", title='Contact Us', links=links, form=form)
 
 
-''' ENDPOINT FOR PROFILE PAGE '''
-@app.route("/profile")
-def profile():
-    # Displays profile page
-    return render_template("Profile.html", title="Profile", links=links)
+def check_current_password(password):
+    return current_user.check_password(password)
 
 
 # Testing code
 if __name__ == "__main__":
-    app.run(debug=True)
+    print(User)
+    #app.run(debug=True)
