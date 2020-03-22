@@ -1,12 +1,29 @@
 {# PAGE USED TO BROADCAST LIVE FEED #}
 
-{% extends "template.html" %}
+
+{% extends 'bootstrap/base.html' and 'template.html' %}
+
 {% block content %}
+    <div class="page-header">
+      <h1 style="color: aqua">Live Feed:</h1>
+    </div>
 
-    <h1 style="color: white;">Live Feed:</h1>
-    <p style="text-align: center; border: 2px solid black; color: white">
-        <img src="{{ url_for('video_feed') }}">
-    </p>
-
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="{{ url_for('video_feed') }}" alt="...">
+          <div class="caption">
+            <h3>Camera Feed</h3>
+            <p>...</p>
+            <p><a href="#" class="btn btn-primary" role="button">Like</a> <a href="#" class="btn btn-default" role="button">Dislike</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock %}
 
+{#{% block content %}#}
+{#    <p style="text-align: center; border: 2px solid black; color: white">#}
+{#        <img src="{{ url_for('video_feed') }}">#}
+{#    </p>#}
+{#{% endblock %}#}
