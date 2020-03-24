@@ -2,6 +2,67 @@
 
 {% extends "parent_template.html" %}
 
+{% block app_content %}
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+      <!-- Indicators -->
+      <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+        <li data-target="#demo" data-slide-to="3"></li>
+        <li data-target="#demo" data-slide-to="4"></li>
+      </ul>
+
+      <!-- The slideshow -->
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="../static/images/img-1.jpg" alt="1">
+            <div class="carousel-caption">
+                <h3>Featured Images!</h3>
+                <p>Space</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../static/images/img-2.jpg" alt="2">
+            <div class="carousel-caption">
+                <h3>Featured Images!</h3>
+                <p>Constellation</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../static/images/img-3.jpg" alt="3">
+            <div class="carousel-caption">
+                <h3>Featured Images!</h3>
+                <p>Eclipse</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../static/images/img-4.jpg" alt="4">
+            <div class="carousel-caption">
+                <h3>Featured Images!</h3>
+                <p>Meteor Shower!</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../static/images/img-5.jpg" alt="5">
+            <div class="carousel-caption">
+                <h3>Featured Images!</h3>
+                <p>Stars</p>
+            </div>
+        </div>
+      </div>
+
+      <!-- Left and right controls -->
+      <a class="carousel-control-prev" data-slide="prev" href="#demo">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" data-slide="next" href="#demo">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+
+    </div>
+{% endblock %}
 {#
 {% block app_content %}
     <p style="color: white;">
@@ -78,7 +139,3 @@
 
 {% endblock %}
 #}
-
-{% block app_content %}
-
-{% endblock %}
