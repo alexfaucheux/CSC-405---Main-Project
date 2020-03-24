@@ -3,13 +3,18 @@
 
 {% block app_content %}
 
-    <div class="page-header text-white">
-      <h1>Live Feed:</h1>
-    </div>
+  <div class="container">
+      <blockquote class="blockquote text-center">
+          <div class="text-white-50 bg-primary">
+              <h1 class="display-4">Live Feed:</h1>
+          </div>
+      </blockquote>
+  </div>
+
     {# creates thumbnail block for live feed #}
     <div style="position: relative; left: 20%" class="row">
       <div class="col-sm-5 col-md-5">
-          <img src="{{ url_for('video_feed') }}" alt="...">
+          <img class="shadow-small p-2 mb-2 bg-danger" src="{{ url_for('video_feed') }}" alt="...">
       </div>
     </div>
 {% endblock %}
