@@ -54,7 +54,8 @@
                  class="rounded float-left shadow-small p-2 mb-2 bg-success" style="max-width:250px; height:auto">
 
             {% if current_user.is_authenticated %}
-                {# LIKE/DISLIKE IMAGE #}
+                {# like button instantiated #}
+                <button style="position: relative; left: 20px" type="button" class="btn btn-info">Like</button>
             {% endif %}
         </div>
         <br>
