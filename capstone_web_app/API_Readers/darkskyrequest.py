@@ -13,7 +13,7 @@ import sys
 sys.stdout = open("log.txt", "w")
 
 #if true, runs unit testing on calls
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 def parseRequest():
 
