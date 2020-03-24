@@ -42,10 +42,8 @@
 
 {% endblock %}
 
-{# Block for child templates to insert their code in #}
 {% block content %}
-    <body style="background-color: black">
-    <div class="container">
+    <div class="jumbotron text-white" style="background-color: #031526">
         {# Used to display flashed messages from routes.py. No real use except for debugging and error handling #}
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -55,6 +53,7 @@
             {% endif %}
         {% endwith %}
 
+        {# Block for child templates to insert their code in #}
         {% block app_content %} {% endblock %}
     </div>
     {# Script to maintain scroll position #}
@@ -63,7 +62,6 @@
     {# javascript block #}
     {% block JS %}
     {% endblock %}
-    </body>
 {% endblock %}
 
 
