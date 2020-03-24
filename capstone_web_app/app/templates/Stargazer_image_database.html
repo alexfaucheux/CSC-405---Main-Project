@@ -2,164 +2,69 @@
 
 {% extends "parent_template.html" %}
 
+
+
 {% block app_content %}
+
     <div id="demo" class="carousel slide" data-ride="carousel">
 
-      <!-- Indicators -->
-      <ul class="carousel-indicators">
-        <li data-target="#demo" data-slide-to="0" class="active"></li>
-        <li data-target="#demo" data-slide-to="1"></li>
-        <li data-target="#demo" data-slide-to="2"></li>
-        <li data-target="#demo" data-slide-to="3"></li>
-        <li data-target="#demo" data-slide-to="4"></li>
-      </ul>
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+            <li data-target="#demo" data-slide-to="2"></li>
+            <li data-target="#demo" data-slide-to="3"></li>
+            <li data-target="#demo" data-slide-to="4"></li>
+        </ul>
 
-      <!-- The slideshow -->
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="../static/images/img-1.jpg" width="1024" height="640" alt="1">
-            <div class="carousel-caption">
-                <h3>Featured Images!</h3>
-                <p>Space</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-          <img src="../static/images/img-2.jpg" width="1024" height="640" alt="2">
-            <div class="carousel-caption">
-                <h3>Featured Images!</h3>
-                <p>Constellation</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-          <img src="../static/images/img-3.jpg" width="1024" height="640" alt="3">
-            <div class="carousel-caption">
-                <h3>Featured Images!</h3>
-                <p>Eclipse</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-          <img src="../static/images/img-4.jpg" width="1024" height="640" alt="4">
-            <div class="carousel-caption">
-                <h3>Featured Images!</h3>
-                <p>Meteor Shower!</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-          <img src="../static/images/img-5.jpg" width="1024" height="640" alt="5">
-            <div class="carousel-caption">
-                <h3>Featured Images!</h3>
-                <p>Stars</p>
-            </div>
-        </div>
-      </div>
-
-      <!-- Left and right controls -->
-      <a class="carousel-control-prev" data-slide="prev" href="#demo">
-        <span class="carousel-control-prev-icon"></span>
-      </a>
-      <a class="carousel-control-next" data-slide="next" href="#demo">
-        <span class="carousel-control-next-icon"></span>
-      </a>
-
-    </div>
-
-
-    <div class="container">
-
-      <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Thumbnail Gallery</h1>
-
-      <hr class="mt-2 mb-5">
-
-      <div class="row text-center text-lg-left">
-          {% if images %}
-          <div class="col-lg-3 col-md-4 col-6">
-              {% for image in images %}
-              <a href="#" class="d-block mb-4 h-100">
-                    <img class="img-fluid img-thumbnail" src="{{ url_for('static',  filename=image.image_url) }}" width="800" height="450" alt="">
-                  </a>
-          </div>
-              {% endfor %}
-          {% endif %}
-
-      </div>
-
-    </div>
-<!-- /.container -->
-
-{% endblock %}
-{#
-{% block app_content %}
-    <p style="color: white;">
-        Featured Images:
-    </p>
-    #}
-{# creates images on website #}{#
-
-    <div class="gallery">
-      <div class="image-box active">
-          <img src="../static/images/img-1.jpg">
-      </div>
-
-      <div class="image-box">
-        <img src="../static/images/img-5.jpg">
-      </div>
-
-      <div class="image-box">
-        <img src="../static/images/img-3.jpg">
-      </div>
-
-      <div class="image-box">
-        <img src="../static/images/img-4.jpg">
-      </div>
-
-      <div class="image-box">
-        <img src="../static/images/img-2.jpg">
-      </div>
-
-    </div>
-
-    <p style="color: white;">
-        Images of Special Astrological Events:
-    </p>
-    #}
-{# class img is modified using the imported css file;
-       made to make all images the same size and go vertically down;
-       no idea how to make them space out though #}{#
-
-    {% if images %}
-    <div class="img">
-        {% for image in images %}
-#}
-{#            <img src="{{ url_for('static',  filename=image.image_url) }}" >#}{#
-
-            #}
-{# Display image as background image #}{#
-
-            <div class="img" style="background-image:url('{{ url_for('static',  filename=image.image_url) }}');">
-
-                #}
-{# Display like or unlike button beside image;
-                   will not display if user is not logged in #}{#
-
-                {% if not current_user.is_anonymous %}
-                    {% if not current_user.has_liked_image(image) %}
-                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="like")}}">Like</a>
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="container">
+                {% for image in images %}
+                    {% if loop.index == 1 %}
+                        <div class="carousel-item active">
+                            <img src="{{ url_for('static', filename=image.image_url) }}" alt="{{ loop.index }}"
+                                 style="margin-left:50px; width:1000px; height:600px" class="img-fluid">
+                            <div class="carousel-caption">
+                                <h3>Featured Images!</h3>
+                                <p>{{ image.image_name }}</p>
+                            </div>
+                        </div>
                     {% else %}
-                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="dislike")}}">Unlike</a>
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename=image.image_url) }}" alt="{{ loop.index }}"
+                                  style="margin-left:50px; width:1000px; height:600px" class="img-fluid">
+                            <div class="carousel-caption">
+                                <h3>Featured Images!</h3>
+                                <p>{{ image.image_name }}</p>
+                            </div>
+                        </div>
                     {% endif %}
-
-                {% endif %}
-
-                #}
-{# Display like counter beside like button #}{#
-
-                <p style="position: relative; left: 200px; color: white; background: black">
-                    {{ image.likes.count() }} likes
-                </p>
+                {% endfor %}
             </div>
-        {% endfor %}
 
-    {% endif %}
+        </div>
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" data-slide="prev" href="#demo">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" data-slide="next" href="#demo">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
 
+    <br>
+    <hr>
+    <br>
+    {% for image in images %}
+        <div class="clearfix">
+            <img src="{{ url_for('static', filename=image.image_url) }}" alt="Responsive image"
+                 class="img-thumbnail rounded float-left" style="max-width:250px; height:auto">
+
+            {% if current_user.is_authenticated %}
+
+            {% endif %}
+        </div>
+        <br>
+    {% endfor %}
 {% endblock %}
-#}
