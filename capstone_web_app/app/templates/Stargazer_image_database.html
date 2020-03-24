@@ -8,41 +8,43 @@
 
     <div id="demo" class="carousel slide" data-ride="carousel">
 
-    <!-- Indicators -->
-    <ul class="carousel-indicators">
-        <li data-target="#demo" data-slide-to="0" class="active"></li>
-        <li data-target="#demo" data-slide-to="1"></li>
-        <li data-target="#demo" data-slide-to="2"></li>
-        <li data-target="#demo" data-slide-to="3"></li>
-        <li data-target="#demo" data-slide-to="4"></li>
-    </ul>
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+            <li data-target="#demo" data-slide-to="2"></li>
+            <li data-target="#demo" data-slide-to="3"></li>
+            <li data-target="#demo" data-slide-to="4"></li>
+        </ul>
 
-    <!-- The slideshow -->
-    <div class="carousel-inner">
-        <div class="container">
-            {% for image in images %}
-                {% if loop.index == 1 %}
-                    <div class="carousel-item active">
-                {% else %}
-                    <div class="carousel-item">
-                {% endif %}
-                    <img src="{{ url_for('static', filename=image.image_url) }}" alt="{{ loop.index }}"
-                         style="margin-left:50px; width:1000px; height:600px" class="img-fluid shadow-small p-2 mb-2 bg-danger">
-                    <div class="carousel-caption">
-                        <h3>Featured Images!</h3>
-                        <p>{{ image.image_name }}</p>
-                    </div>
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="container">
+                {% for image in images %}
+                    {% if loop.index == 1 %}
+                        <div class="carousel-item active">
+                    {% else %}
+                        <div class="carousel-item">
+                    {% endif %}
+                <img src="{{ url_for('static', filename=image.image_url) }}" alt="{{ loop.index }}"
+                     style="margin-left:50px; width:1000px; height:600px"
+                     class="img-fluid shadow-small p-2 mb-2 bg-danger">
+                <div class="carousel-caption">
+                    <h3>Featured Images!</h3>
+                    <p>{{ image.image_name }}</p>
                 </div>
-            {% endfor %}
+                </div>
+                {% endfor %}
+                </div>
             </div>
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" data-slide="prev" href="#demo">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" data-slide="next" href="#demo">
+                <span class="carousel-control-next-icon"></span>
+            </a>
         </div>
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" data-slide="prev" href="#demo">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" data-slide="next" href="#demo">
-            <span class="carousel-control-next-icon"></span>
-        </a>
     </div>
 
     <br>
@@ -51,13 +53,21 @@
     {% for image in images %}
         <div class="clearfix">
             <img src="{{ url_for('static', filename=image.image_url) }}" alt="Responsive image"
-                 class="rounded float-left shadow-small p-2 mb-2 bg-success" style="max-width:250px; height:auto">
-
-            {% if current_user.is_authenticated %}
-                {# like button instantiated #}
-                <button style="position: relative; left: 20px" type="button" class="btn btn-info">Like</button>
-            {% endif %}
+                 class="rounded float-left shadow-small p-2 mb-2 bg-success" style="width:250px; height:152px">
         </div>
+        {% if current_user.is_authenticated %}
+            {% if current_user.has_liked_image(image) %}
+                <a class="btn btn-light btn-outline-secondary text-dark"
+                   href="{{ url_for('like_action', image_id=image.id, action="dislike") }}" role="button">Unlike</a>
+
+            {% else %}
+                <a class="btn btn-light btn-outline-secondary text-dark"
+                   href="{{ url_for('like_action', image_id=image.id, action="like") }}" role="button">Like</a>
+            {% endif %}
+            <strong class="text-white">{{ image.likes.count() }} Likes</strong>
+        {% endif %}
+        <br>
+        <br>
         <br>
     {% endfor %}
 {% endblock %}
