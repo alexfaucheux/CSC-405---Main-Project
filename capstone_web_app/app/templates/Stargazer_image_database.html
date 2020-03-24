@@ -53,9 +53,9 @@
                    will not display if user is not logged in #}
                 {% if not current_user.is_anonymous %}
                     {% if not current_user.has_liked_image(image) %}
-                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="like")}}">Like</a>
+                        <p><a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="like")}}" class="btn btn-primary" role="button">Like</a>
                     {% else %}
-                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="dislike")}}">Unlike</a>
+                         <p><a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="dislike")}}" class="btn btn-default" role="button">Dislike</a>
                     {% endif %}
 
                 {% endif %}
