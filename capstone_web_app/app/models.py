@@ -60,6 +60,14 @@ class UserImage(db.Model):
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'), index=True)
 
 
+class ObjectOfInterest(db.Model):
+    id = db.Column(db.Integer, primary_key = True) #id ranges are reserved for specific types of OOI. 0-4 = Visible ISS Passes
+    type = db.Column(db.String)
+    date_stored = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    vis_start = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    vis_end = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+
 class Weather(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_stored = db.Column(db.DateTime, index=True, default=datetime.utcnow)
