@@ -5,7 +5,6 @@ from app.models import User
 from app.routes import current_user
 
 
-
 class LoginForm(FlaskForm):
     username = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
