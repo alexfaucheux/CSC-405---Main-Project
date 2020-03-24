@@ -13,20 +13,7 @@
 {% block css %}
 {% endblock %}
 
-{# Script to maintain scroll position #}
-{# <script src="{{ url_for('static', filename='Javascript/maintain_scroll.js') }}"></script>#}
-
-{# javascript block #}
-{% block JS %}
-{% endblock %}
-
-
 {% block navbar %}
-
-<div class="page-header">
-  <h1 style="position: relative; left: 50px; color: dimgray; align-self: center"> Welcome to Stargazer! </h1>
-</div>
-
 <nav class="navbar navbar-default">
     <div class="container" >
         <div class="navbar-header">
@@ -63,44 +50,11 @@
 </nav>
 
 {% endblock %}
-{## current_user.is_anonymous == current user not logged in #}{#
-                        {% if (link == 'login' and current_user.is_anonymous) or
-                                (link == 'profile' and not current_user.is_anonymous) %}
-                            {% if not current_user.is_anonymous %}
-                                #}{# Displays who is currently logged in on top right of navigation bar #}{#
-                                <p style="color: white; position: absolute; right: 100px">Currently logged in as: {{ current_user.fname }} {{ current_user.lname }}</p>
-
-                                #}{# Create dropdown button for 'profile' #}{#
-                                <li class="dropdown">
-                                    <a href="javascript:void(0)" class="dropbtn">Profile</a>
-                                    <div class="dropdown-content">
-                                        <a href={{ url_for('account') }}>Account Settings</a>
-                                        <a href={{ url_for('logout') }}>{{ links['logout'] }}</a>
-                                    </div>
-                                </li>
-                            {% else %}
-                                #}{# Display a button on the top right of the header #}{#
-                                <li><a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a></li>
-
-                            {% endif %}
-
-
-
-                        {% elif link != 'login' and link != 'profile' and link != 'logout' %}
-                            #}{# Display a button on the top left of header #}{#
-                            <li><a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a></li>
-
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-    </nav>
-{% endblock %}#}
 
 <hr>
 {# Block for child templates to insert their code in #}
 {% block content %}
+    <body style="background-color: black">
     <div class = "container">
         {# Used to display flashed messages from routes.py. No real use except for debugging and error handling #}
         {% with messages = get_flashed_messages() %}
@@ -113,6 +67,13 @@
 
         {% block app_content %} {% endblock %}
     </div>
+    {# Script to maintain scroll position #}
+    <script src="{{ url_for('static', filename='Javascript/maintain_scroll.js') }}"></script>
+
+    {# javascript block #}
+    {% block JS %}
+    {% endblock %}
+    </body>
 {% endblock %}
 
 

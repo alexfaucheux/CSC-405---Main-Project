@@ -3,11 +3,16 @@
 {% extends "template.html" %}
 
 {% block app_content %}
-    <h1 style="border: 2px solid; border-color:black; color:white;">Stargazer</h1>
-    <div style="color: white; background: #100a2c">
+    <h1 style="border: 2px solid; border-color:black; color:white;">Ruston Weather</h1>
+    <div class="jumbotron"
+         style="background-image: url('{{ url_for("static", filename="images/backgroundSite1.jpg") }}');-webkit-background-size: cover;
+                 -moz-background-size: cover; background-size: cover; -o-background-size: cover; color:white">
+
         <p>
             Last Updated: {{ weather.date_stored.strftime('%A, %b %d @ %I:%M:%S %p') }}
-            <a style="color: white" href="{{ url_for("update") }}">update</a>
+            <button type="button" class="btn btn-info" href="{{ url_for("update") }}">
+                <a style="text-decoration: none; color: white" href="">update</a>
+            </button>
         </p>
         <p>Sunrise: {{ weather.sunrise.strftime('%I:%M %p') }} </p>
         <p>Sunset: {{ weather.sunset.strftime('%I:%M %p') }} </p>
@@ -18,8 +23,7 @@
         <p>Wind Direction: {{ weather.wind_dir }}</p>
         <p>Visibility: {{ weather.vis }} miles</p>
         <p>Current Condition: {{ weather.current }}</p>
-		<p>Powered by Dark Sky</p>
+        <p>Powered by Dark Sky</p>
     </div>
-    <img src="{{ url_for('static',  filename='images/darksky_api_example.jpg') }}" style="width:1250px; height:500px;">
 
 {% endblock %}

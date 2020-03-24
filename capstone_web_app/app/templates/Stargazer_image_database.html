@@ -2,17 +2,14 @@
 
 {% extends "template.html" %}
 
-{# insert css #}
-{% block css %}
-<link rel="stylesheet" href="{{ url_for('static',  filename='css/Image_database.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static',  filename='css/Image_gallery.css') }}">
-{% endblock %}
-
+{#
 {% block app_content %}
     <p style="color: white;">
         Featured Images:
     </p>
-    {# creates images on website #}
+    #}
+{# creates images on website #}{#
+
     <div class="gallery">
       <div class="image-box active">
           <img src="../static/images/img-1.jpg">
@@ -39,18 +36,26 @@
     <p style="color: white;">
         Images of Special Astrological Events:
     </p>
-    {# class img is modified using the imported css file;
+    #}
+{# class img is modified using the imported css file;
        made to make all images the same size and go vertically down;
-       no idea how to make them space out though #}
+       no idea how to make them space out though #}{#
+
     {% if images %}
     <div class="img">
         {% for image in images %}
-{#            <img src="{{ url_for('static',  filename=image.image_url) }}" >#}
-            {# Display image as background image #}
+#}
+{#            <img src="{{ url_for('static',  filename=image.image_url) }}" >#}{#
+
+            #}
+{# Display image as background image #}{#
+
             <div class="img" style="background-image:url('{{ url_for('static',  filename=image.image_url) }}');">
 
-                {# Display like or unlike button beside image;
-                   will not display if user is not logged in #}
+                #}
+{# Display like or unlike button beside image;
+                   will not display if user is not logged in #}{#
+
                 {% if not current_user.is_anonymous %}
                     {% if not current_user.has_liked_image(image) %}
                         <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="like")}}">Like</a>
@@ -60,7 +65,9 @@
 
                 {% endif %}
 
-                {# Display like counter beside like button #}
+                #}
+{# Display like counter beside like button #}{#
+
                 <p style="position: relative; left: 200px; color: white; background: black">
                     {{ image.likes.count() }} likes
                 </p>
@@ -68,5 +75,10 @@
         {% endfor %}
 
     {% endif %}
+
+{% endblock %}
+#}
+
+{% block app_content %}
 
 {% endblock %}

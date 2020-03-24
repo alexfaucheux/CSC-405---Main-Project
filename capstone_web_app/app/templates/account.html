@@ -2,10 +2,14 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>Account Settings</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
+    <h1 style="color:white">Account Settings</h1>
+    <div class="jumbotron"
+         style="background-image: url('{{ url_for("static", filename="images/backgroundSite1.jpg") }}');-webkit-background-size: cover;
+                 -moz-background-size: cover; background-size: cover; -o-background-size: cover;">
+        <div class="row">
+            <div class="col-md-4" style="color:white">
+                {{ wtf.quick_form(form) }}
+            </div>
         </div>
     </div>
 {% endblock %}
