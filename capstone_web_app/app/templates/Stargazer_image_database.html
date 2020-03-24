@@ -27,7 +27,7 @@
                     <div class="carousel-item">
                 {% endif %}
                     <img src="{{ url_for('static', filename=image.image_url) }}" alt="{{ loop.index }}"
-                         style="margin-left:50px; width:1000px; height:600px" class="img-fluid">
+                         style="margin-left:50px; width:1000px; height:600px" class="img-fluid shadow-small p-2 mb-2 bg-danger">
                     <div class="carousel-caption">
                         <h3>Featured Images!</h3>
                         <p>{{ image.image_name }}</p>
@@ -51,7 +51,7 @@
     {% for image in images %}
         <div class="clearfix">
             <img src="{{ url_for('static', filename=image.image_url) }}" alt="Responsive image"
-                 class="img-thumbnail rounded float-left" style="max-width:250px; height:auto">
+                 class="rounded float-left shadow-small p-2 mb-2 bg-success" style="max-width:250px; height:auto">
 
             {% if current_user.is_authenticated %}
                 {# LIKE/DISLIKE IMAGE #}
