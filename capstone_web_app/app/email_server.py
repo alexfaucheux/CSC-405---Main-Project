@@ -24,15 +24,10 @@ class Email(object):
 
         # Start tls connection with server and login
         # Open connection to host server
-        try:
-            self.connection = smtplib.SMTP(host=host_address, port=host_port)
-            self.connection.ehlo()
-            self.connection.starttls()
-            self.connection.login(self.USERNAME, self.PASSWORD)
-
-        except:
-            self.connection = -1
-            print("Unable to connect to email server")
+        self.connection = smtplib.SMTP(host=self.host_address, port=self.host_port)
+        self.connection.ehlo()
+        self.connection.starttls()
+        self.connection.login(self.USERNAME, self.PASSWORD)
 
     # Compiles a message that contains the from, to, subject, and body of an email
     def make_email_message(self, filename, subject, message=None):
@@ -64,20 +59,19 @@ class Email(object):
 
         del msg
 
-
     # Sends notification email to client
     def send_notification(self):
         msg = self.make_email_message('notification_email.txt', subject='Stargazer Notification')
-        if self.connection != -1:
-            self.connection.send_message(msg)
-            self.connection.quit()
+
+        self.connection.send_message(msg)
+        self.connection.quit()
 
         del msg
 
     # Sends customer message from contact us page to our email
     def send_customer_email(self, message):
         subject = 'Message from ' + self.client + ' (' + self.client_email + ')'
-        msg = self.make_email_message('notification_email.txt', subject='Stargazer Notification')
+        msg = self.make_email_message('support_email.txt', subject=subject, message=message)
         if self.connection != -1:
             self.connection.send_message(msg)
             self.connection.quit()
@@ -87,5 +81,5 @@ class Email(object):
 
 # Testing code
 if __name__ == "__main__":
-    client_email = Email('Alex', 'afaucheux78@gmail.com')
-    client_email.send_customer_email("HELLO")
+    client_email = Email('Alex', 'afaucheux99@gmail.com')
+    client_email.send_notification()

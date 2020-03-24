@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 from API_Readers import darkskyrequest
 
 # Names and links used for different pages in website
-links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
-         'account': 'Account Settings', 'login': 'Login', 'logout': 'Logout'}
+links = {'home': 'Weather', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
+         'login': 'Login', 'logout': 'Logout', 'account': 'Account Settings'}
 
 ''' ENDPOINT FOR HOME PAGE '''
 
@@ -25,7 +25,7 @@ def home(up=None):
         return redirect(url_for("update"))
 
     # Display home page
-    return render_template("Stargazer_website.html", title='Home', links=links, weather=weather1)
+    return render_template("Stargazer_website.html", title='Weather', links=links, weather=weather1)
 
 
 ''' ENDPOINT FOR UPDATING WEATHER '''
@@ -69,7 +69,7 @@ def login():
         return redirect(url_for('home'))
 
     # Displays login page
-    return render_template("Stargazer_login.html", title='Sign In', links=links, form=form)
+    return render_template("Stargazer_login.html", title="Login", links=links, form=form)
 
 
 ''' ENDPOINT FOR LOGGING OUT '''
