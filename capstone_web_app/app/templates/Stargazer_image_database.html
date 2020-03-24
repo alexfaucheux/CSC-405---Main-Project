@@ -2,11 +2,11 @@
 
 {% extends "template.html" %}
 
-{# insert css #}{#
+{# insert css #}
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static',  filename='css/Image_database.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',  filename='css/Image_gallery.css') }}">
-{% endblock %}#}
+{% endblock %}
 
 {% block app_content %}
     <p style="color: white;">
@@ -14,25 +14,25 @@
     </p>
     {# creates images on website #}
     <div class="gallery">
-        <div class="image-box active">
-            <img src="../static/images/img-1.jpg">
-        </div>
+      <div class="image-box active">
+          <img src="../static/images/img-1.jpg">
+      </div>
 
-        <div class="image-box">
-            <img src="../static/images/img-5.jpg">
-        </div>
+      <div class="image-box">
+        <img src="../static/images/img-5.jpg">
+      </div>
 
-        <div class="image-box">
-            <img src="../static/images/img-3.jpg">
-        </div>
+      <div class="image-box">
+        <img src="../static/images/img-3.jpg">
+      </div>
 
-        <div class="image-box">
-            <img src="../static/images/img-4.jpg">
-        </div>
+      <div class="image-box">
+        <img src="../static/images/img-4.jpg">
+      </div>
 
-        <div class="image-box">
-            <img src="../static/images/img-2.jpg">
-        </div>
+      <div class="image-box">
+        <img src="../static/images/img-2.jpg">
+      </div>
 
     </div>
 
@@ -43,9 +43,9 @@
        made to make all images the same size and go vertically down;
        no idea how to make them space out though #}
     {% if images %}
-        <div class="img">
+    <div class="img">
         {% for image in images %}
-            {#            <img src="{{ url_for('static',  filename=image.image_url) }}" >#}
+{#            <img src="{{ url_for('static',  filename=image.image_url) }}" >#}
             {# Display image as background image #}
             <div class="img" style="background-image:url('{{ url_for('static',  filename=image.image_url) }}');">
 
@@ -53,13 +53,9 @@
                    will not display if user is not logged in #}
                 {% if not current_user.is_anonymous %}
                     {% if not current_user.has_liked_image(image) %}
-                        <p><a style="position: relative; left: 100px"
-                              href="{{ url_for('like_action', image_id=image.id, action="like") }}"
-                              class="btn btn-primary" role="button">Like</a>
-                            {% else %}
-                        <p><a style="position: relative; left: 100px"
-                              href="{{ url_for('like_action', image_id=image.id, action="dislike") }}"
-                              class="btn btn-default" role="button">Dislike</a>
+                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="like")}}">Like</a>
+                    {% else %}
+                        <a style="position: relative; left: 100px" href="{{ url_for('like_action', image_id=image.id, action="dislike")}}">Unlike</a>
                     {% endif %}
 
                 {% endif %}

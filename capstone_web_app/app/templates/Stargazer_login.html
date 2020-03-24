@@ -4,14 +4,13 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <div class="jumbotron" style="background-image: url('{{ url_for("static", filename="images/backgroundSite1.jpg") }}'); background-repeat: no-repeat; background-position: center; background-size: cover">
-    <h1 style="color:white">Sign in</h1>
-        <div class="row">
-            <div class="col-md-4" style="color:white">
-                {{ wtf.quick_form(form) }}
-            </div>
+
+    <h1>Sign in</h1>
+    <div class="row">
+        <div class="col-md-4 text-muted">
+            {{ wtf.quick_form(form) }}
         </div>
-    <br>
-        <p style="color:white">New User? <a href="{{ url_for("signup") }}">Create Account</a></p>
     </div>
+    <br>
+    <p>New User? <a href="{{ url_for("signup") }}">Create Account</a></p>
 {% endblock %}

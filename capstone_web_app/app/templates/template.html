@@ -13,8 +13,20 @@
 {% block css %}
 {% endblock %}
 
+{# Script to maintain scroll position #}
+{# <script src="{{ url_for('static', filename='Javascript/maintain_scroll.js') }}"></script>#}
+
+{# javascript block #}
+{% block JS %}
+{% endblock %}
+
 
 {% block navbar %}
+
+<div class="page-header">
+  <h1 style="position: relative; left: 50px; color: dimgray; align-self: center"> Welcome to Stargazer! </h1>
+</div>
+
 <nav class="navbar navbar-default">
     <div class="container" >
         <div class="navbar-header">
@@ -49,9 +61,8 @@
         </div>
     </div>
 </nav>
+
 {% endblock %}
-
-
 {## current_user.is_anonymous == current user not logged in #}{#
                         {% if (link == 'login' and current_user.is_anonymous) or
                                 (link == 'profile' and not current_user.is_anonymous) %}
@@ -90,8 +101,7 @@
 <hr>
 {# Block for child templates to insert their code in #}
 {% block content %}
-    <body style="background-color: black">
-    <div class = "container" >
+    <div class = "container">
         {# Used to display flashed messages from routes.py. No real use except for debugging and error handling #}
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -103,13 +113,6 @@
 
         {% block app_content %} {% endblock %}
     </div>
-    {# Script to maintain scroll position #}
-    {# <script src="{{ url_for('static', filename='Javascript/maintain_scroll.js') }}"></script>#}
-
-    {# javascript block #}
-    {% block JS %}
-    {% endblock %}
-    </body>
 {% endblock %}
 
 
