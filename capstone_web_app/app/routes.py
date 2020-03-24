@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from API_Readers import darkskyrequest
 
 # Names and links used for different pages in website
-links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us', 'profile': 'Profile', \
+links = {'home': 'Home', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us', 'account': 'Profile', \
          'login': 'Login', 'logout': 'Logout'}
 
 ''' ENDPOINT FOR HOME PAGE '''

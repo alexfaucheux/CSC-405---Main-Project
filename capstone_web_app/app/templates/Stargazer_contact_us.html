@@ -1,67 +1,13 @@
 {# PAGE WITH CONTACT INFO #}
 
 {% extends "template.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block css %}
-<link rel="stylesheet" href="{{ url_for('static',  filename='css/contactus.css') }}">
-{% endblock %}
-
-{% block content %}
-    <h1 style="color: white">Contact Us:</h1>
-    <div class="container">
-      <form action="" method="post" novalidate>
-
-       {{ form.hidden_tag() }}
-        <p>
-            {{ form.fname.label }}<br>
-            {{ form.fname(size=32) }}
-            {% for error in form.fname.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>
-            {{ form.lname.label }}<br>
-            {{ form.lname(size=32) }}
-            {% for error in form.lname.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>
-            {{ form.text.label }}<br>
-            {{ form.text(size=1000) }}
-            {% for error in form.text.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <p>{{ form.submit() }} {{ form.submit.lable }}</p>
-
-
-
-
-       {# <input type="text" id="fname" name="firstname" placeholder="First Name">
-
-
-        <input type="text" id="lname" name="lastname" placeholder="Last Name">
-
-
-        <input type="text" id="email" name="email" placeholder="Email">
-
-
-        <textarea id="subject" name="subject" placeholder="Write something..." style="height:200px"></textarea>
-
-        <input style="" type="submit" value="Submit">#}
-
-      </form>
+{% block app_content %}
+    <h1>Contact Us</h1>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
     </div>
 {% endblock %}

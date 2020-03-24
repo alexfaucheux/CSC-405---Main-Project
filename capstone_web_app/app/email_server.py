@@ -1,3 +1,4 @@
+from socket import getaddrinfo
 from string import Template
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -17,17 +18,21 @@ class Email(object):
     host_address = 'smtp.gmail.com'
     host_port = 587
 
-    # Open connection to host server
-    connection = smtplib.SMTP(host=host_address, port=host_port)
-    connection.ehlo()
-
     def __init__(self, name, email):
         self.client = name
         self.client_email = email
 
         # Start tls connection with server and login
-        self.connection.starttls()
-        self.connection.login(self.USERNAME, self.PASSWORD)
+        # Open connection to host server
+        try:
+            self.connection = smtplib.SMTP(host=host_address, port=host_port)
+            self.connection.ehlo()
+            self.connection.starttls()
+            self.connection.login(self.USERNAME, self.PASSWORD)
+
+        except:
+            self.connection = -1
+            print("Unable to connect to email server")
 
     # Compiles a message that contains the from, to, subject, and body of an email
     def make_email_message(self, filename, subject, message=None):
@@ -53,24 +58,31 @@ class Email(object):
     # Sends verification email to client
     def send_verification(self):
         msg = self.make_email_message('verification_email.txt', subject='Stargazer Email Verification')
-        self.connection.send_message(msg)
+        if self.connection != -1:
+            self.connection.send_message(msg)
+            self.connection.quit()
+
         del msg
-        self.connection.quit()
+
 
     # Sends notification email to client
     def send_notification(self):
         msg = self.make_email_message('notification_email.txt', subject='Stargazer Notification')
-        self.connection.send_message(msg)
+        if self.connection != -1:
+            self.connection.send_message(msg)
+            self.connection.quit()
+
         del msg
-        self.connection.quit()
 
     # Sends customer message from contact us page to our email
     def send_customer_email(self, message):
         subject = 'Message from ' + self.client + ' (' + self.client_email + ')'
-        msg = self.make_email_message('support_email.txt', subject=subject, message=message)
-        self.connection.send_message(msg)
+        msg = self.make_email_message('notification_email.txt', subject='Stargazer Notification')
+        if self.connection != -1:
+            self.connection.send_message(msg)
+            self.connection.quit()
+
         del msg
-        self.connection.quit()
 
 
 # Testing code

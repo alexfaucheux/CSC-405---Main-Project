@@ -1,36 +1,16 @@
 {# PAGE USED TO LOG A USER IN #}
 
 {% extends "template.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block css %}
-<link rel="stylesheet" href="{{ url_for('static',  filename='css/forms.css') }}">
-{% endblock %}
+{% block app_content %}
 
-{% block content %}
-
-    <h1 style="color: white">Sign in</h1>
-    <form action="" method="post" style="color: white" novalidate >
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-            {% for error in form.username.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-            {% for error in form.password.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me.label }} {{ form.remember_me() }}</p>
-        <p>
-            {{ form.submit() }}
-            Don't have an account?
-            <a style="color: deepskyblue" href={{ url_for("signup") }}>Create One</a>
-        </p>`
-    </form>
-
+    <h1>Sign in</h1>
+    <div class="row">
+        <div class="col-mid-4 text-muted">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <br>
+    <p>New User? <a href="{{ url_for("signup") }}">Create Account</a></p>
 {% endblock %}

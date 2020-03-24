@@ -1,87 +1,113 @@
 {# PARENT TEMPLATE #}
+{# inherits from bootstrap framework #}
+{% extends 'bootstrap/base.html' %}
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
+{# Define title for website #}
+{% if title %}
+<title>{{ title }} - Stargazer</title>
+{% else %}
+<title>Welcome to Stargazer</title>
+{% endif %}
 
-        {# Define title for website #}
-        {% if title %}
-        <title>{{ title }} - Stargazer</title>
-        {% else %}
-        <title>Welcome to Stargazer</title>
-        {% endif %}
+{# Block to insert css for child templates #}
+{% block css %}
+{% endblock %}
 
-        {# CSS link for navigation header #}
-        <link rel="stylesheet" href="{{ url_for('static',  filename='css/navigation.css') }}">
+{# Script to maintain scroll position #}
+{# <script src="{{ url_for('static', filename='Javascript/maintain_scroll.js') }}"></script>#}
 
-        {# Block to insert css for child templates #}
-        {% block css %}
-        {% endblock %}
+{# javascript block #}
+{% block JS %}
+{% endblock %}
 
-        {# Script to maintain scroll position #}
-        <script src="{{ url_for('static', filename='Javascript/maintain_scroll.js') }}"></script>
 
-        {# javascript block #}
-        {% block JS %}
-        {% endblock %}
-
-    </head>
-
-    {# SETS BACKGROUND PICTURE #}
-    <body style="background-image: url({{ url_for('static', filename='images/backgroundSite1.jpg') }}); background-repeat: no-repeat; background-size: cover; background-attachment: fixed; background-color: black">
-        <div class = "topnav">
+{% block navbar %}
+<nav class="navbar navbar-default">
+    <div class="container" >
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-colapse-test" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('home') }}">Stargazer</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-colapse-test">
             {# CREATES DESIRED BUTTONS #}
             {# links is a dictionary with link:name pair, where "link" is the name of the view function in routes.py #}
             {% if links %}
                 {% for link in links %}
-                    {# current_user.is_anonymous == current user not logged in #}
-                    {% if (link == 'login' and current_user.is_anonymous) or
-                            (link == 'profile' and not current_user.is_anonymous) %}
-                        {% if not current_user.is_anonymous %}
-                            {# Displays who is currently logged in on top right of navigation bar #}
-                            <p style="color: white; position: absolute; right: 100px">Currently logged in as: {{ current_user.fname }} {{ current_user.lname }}</p>
-
-                            {# Create dropdown button for 'profile' #}
-                            <li class="dropdown">
-                                <a href="javascript:void(0)" class="dropbtn">Profile</a>
-                                <div class="dropdown-content">
-                                    <a href={{ url_for('account') }}>Account Settings</a>
-                                    <a href={{ url_for('logout') }}>{{ links['logout'] }}</a>
-                                </div>
-                            </li>
-                        {% else %}
-                            {# Display a button on the top right of the header #}
-                            <li><a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a></li>
-
-                        {% endif %}
-
-
-
-                    {% elif link != 'login' and link != 'profile' and link != 'logout' %}
-                        {# Display a button on the top left of header #}
-                       <li><a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a></li>
-
+                    {% if link != 'login' and link != 'account' and link != 'logout' %}
+                        <ul class="nav navbar-nav">
+                            <li><a href ="{{ url_for(link) }}">{{ links[link] }}</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if current_user.is_anonymous and link == 'login' %}
+                                <li><a href="{{ url_for(link) }}">{{ links['login'] }}</a></li>
+                            {% elif current_user.is_authenticated and link != 'login' %}
+                                <li><a href="{{ url_for(link) }}">{{ links[link] }}</a></li>
+                            {% endif %}
+                        </ul>
                     {% endif %}
                 {% endfor %}
             {% endif %}
         </div>
+    </div>
+</nav>
 
-        <hr>
-        {# Block for child templates to insert their code in #}
-        {% block content %}
-        {% endblock %}
+{% endblock %}
+{## current_user.is_anonymous == current user not logged in #}{#
+                        {% if (link == 'login' and current_user.is_anonymous) or
+                                (link == 'profile' and not current_user.is_anonymous) %}
+                            {% if not current_user.is_anonymous %}
+                                #}{# Displays who is currently logged in on top right of navigation bar #}{#
+                                <p style="color: white; position: absolute; right: 100px">Currently logged in as: {{ current_user.fname }} {{ current_user.lname }}</p>
 
+                                #}{# Create dropdown button for 'profile' #}{#
+                                <li class="dropdown">
+                                    <a href="javascript:void(0)" class="dropbtn">Profile</a>
+                                    <div class="dropdown-content">
+                                        <a href={{ url_for('account') }}>Account Settings</a>
+                                        <a href={{ url_for('logout') }}>{{ links['logout'] }}</a>
+                                    </div>
+                                </li>
+                            {% else %}
+                                #}{# Display a button on the top right of the header #}{#
+                                <li><a style="text-decoration: none; position: absolute; right: 10px" href={{ url_for(link) }}>{{ links[link] }}</a></li>
+
+                            {% endif %}
+
+
+
+                        {% elif link != 'login' and link != 'profile' and link != 'logout' %}
+                            #}{# Display a button on the top left of header #}{#
+                            <li><a style="text-decoration: none" href={{ url_for(link) }}>{{ links[link] }}</a></li>
+
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+{% endblock %}#}
+
+<hr>
+{# Block for child templates to insert their code in #}
+{% block content %}
+    <div class = "container">
         {# Used to display flashed messages from routes.py. No real use except for debugging and error handling #}
         {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li style="color: white">{{ message }}</li>
-            {% endfor %}
-        </ul>
-
-        {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
         {% endwith %}
-    </body>
-</html>
+
+        {% block app_content %} {% endblock %}
+    </div>
+{% endblock %}
+
+

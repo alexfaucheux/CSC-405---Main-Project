@@ -1,8 +1,0 @@
-{% extends "template.html" %}
-
-{% block content %}
-    <p style="color: white">FUTURE PROFILE PAGE AHHHH</p>
-    {% if not current_user.is_anonymous %}
-        <p style="color: white">Current user is: {{ current_user.fname }} {{ current_user.lname }}</p>
-    {% endif %}
-{% endblock %}
