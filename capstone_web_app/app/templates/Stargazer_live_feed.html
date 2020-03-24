@@ -1,14 +1,12 @@
 {# PAGE USED TO BROADCAST LIVE FEED #}
-
-
 {% extends 'template.html' %}
 
 {% block app_content %}
     <div class="page-header">
-      <h1 style="color: aqua">Live Feed:</h1>
+      <h1 style="color: darkgray">Live Feed:</h1>
     </div>
-
-    <div class="row">
+    {# creates thumbnail block for live feed #}
+    <div style="position: relative; left: 35%" class="row">
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
           <img src="{{ url_for('video_feed') }}" alt="...">
