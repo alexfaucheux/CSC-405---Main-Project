@@ -1,11 +1,17 @@
-# Jonah Landry
+## Jonah Landry
 # API Reader for Stargazer
-# 
+#
 
 import urllib.request
 import json
 import urllib.parse
+import urllib.error
 from datetime import datetime
+from datetime import timedelta
+from app.models import ObjectOfInterest
+from app import app, db
+import sys
+from testing import *
 
 
 # Class for each object of interest
@@ -37,7 +43,11 @@ class ISSPass(OOI):
 
 # Grabs info from open-notify about when the ISS will pass over Ruston Louisiana.
 def parseISS():
-    # Makes the request
+    #Checks that the oldest pass currently stored has already happened before parsing. If it has, continues to get five more
+    #Otherwise it stops
+
+
+    # Makes the request using Vienna Street in Ruston
     ISSURL = urllib.request.urlopen("http://api.open-notify.org/iss-pass.json?lat=32.532471&lon=-92.639061")
 
     # Takes the raw text and turns it into a json for easier reading.
@@ -55,7 +65,7 @@ def parseISS():
     # Iterates through each pass, recording them in the list 'passes'
     while (passCount < passNum):
         ### Debugging text
-        print("Pass number ", passCount + 1, ": ", ISSData['response'][passCount])
+        print("Pass number ", passCount + 1, ": ", ISSData['response'][passCount], "\npassCount = ", passCount)
         ###
         #
         # Saves the pass number, duration, and risetime to a temporary pass variable
@@ -72,8 +82,26 @@ def parseISS():
         # Iterate counter
         passCount = passCount + 1
 
-    return passes
+        #reset current
+        currentPass = ISSPass(0,0,0)
+
+    #Counter for passes
+    passDown = 4
+    while(passDown >= 0):
+        #Value manipulation in order to get the end time for visibility from the API's given duration
+        comRise = datetime.fromtimestamp(passes[passDown].riseTime)
+        print(comRise)
+        temp_vis_end = comRise + timedelta(seconds= passes[passDown].duration)
+        print(temp_vis_end)
+        passCommit = ObjectOfInterest(id=passDown, type="ISSPass", vis_start=comRise, vis_end = temp_vis_end)
+        db.session.add(passCommit)
+        db.session.commit()
+
+
+        passDown = passDown - 1
+
 
 
 # Temporary, just for the purpose of getting the function up and running
-ISSPassList = parseISS()
+
+parseISS()
