@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from API_Readers import darkskyrequest
 
 # Names and links used for different pages in website
-links = {'home': 'Weather', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
+links = {'about': 'About', 'home': 'Weather', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
          'login': 'Login', 'profile': 'Profile', 'account': 'Account Settings', 'logout': 'Logout'}
 
 ''' ENDPOINT FOR HOME PAGE '''
@@ -26,6 +26,11 @@ def home(up=None):
 
     # Display home page
     return render_template("Stargazer_website.html", title='Weather', links=links, weather=weather1)
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html", title="About", links=links)
 
 
 ''' ENDPOINT FOR UPDATING WEATHER '''
