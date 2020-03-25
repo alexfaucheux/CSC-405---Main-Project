@@ -9,8 +9,6 @@ from app.models import Weather
 from testing import *
 import sys
 
-#logfile for errors and unit testing
-sys.stdout = open("log.txt", "w")
 
 #if true, runs unit testing on calls
 DEBUG_MODE = False
@@ -18,9 +16,13 @@ DEBUG_MODE = False
 def parseRequest():
 
     if DEBUG_MODE:
+        #logfile for errors and unit testing
+        sys.stdout = open("log.txt", "w")
+        
         with open("log.txt", "w") as sys.stdout:
             DarkSky_Test = unittest.TestLoader().loadTestsFromTestCase(DarkSkyTesting)
             unittest.TextTestRunner(stream=sys.stdout).run(DarkSky_Test)
+            
     
     # Attempts to delete any pre-existing weather data before updating the database.
     try:
