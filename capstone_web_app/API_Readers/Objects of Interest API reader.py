@@ -48,7 +48,7 @@ def parseISS():
 
 
     # Makes the request using Vienna Street in Ruston
-    ISSURL = urllib.request.urlopen("http://api.open-notify.org/iss-pass.json?lat=32.532471&lon=-92.639061")
+    ISSURL = urllib.request.urlopen("http://api.open-notify.org/iss-pass.json?lat=32.532471&lon=-92.639061&n=5")
 
     # Takes the raw text and turns it into a json for easier reading.
     ISSText = ISSURL.read()  # text
