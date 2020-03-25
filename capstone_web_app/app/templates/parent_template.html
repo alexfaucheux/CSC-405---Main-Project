@@ -42,8 +42,20 @@
                             {% if link != 'profile' %}
                                 <a class="nav-item nav-link" href="{{ url_for(link) }}">{{ links[link] }}</a>
                             {% else %}
-                                <a class="nav-item nav-link"
-                                   href="{{ url_for(link, username=current_user.username) }}">{{ links[link] }}</a>
+                                {# dropdwon menu for profile button #}
+                                <div class="btn-group">
+                                  <a href="{{ url_for(link, username=current_user.username) }}" type="button" class="btn btn-danger nav-item">{{ links[link] }}</a>
+                                  <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                  </button>
+                                    {# links for dropdown menu #}
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                  </div>
+                                </div>
+
                             {% endif %}
                         {% endif %}
                     {% endif %}
