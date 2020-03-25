@@ -93,7 +93,7 @@ def parseISS():
         print(comRise)
         temp_vis_end = comRise + timedelta(seconds= passes[passDown].duration)
         print(temp_vis_end)
-        passCommit = ObjectOfInterest(id=passDown, type="ISSPass", vis_start=comRise, vis_end = temp_vis_end)
+        passCommit = ObjectOfInterest(id=passDown, type="ISSPass", vis_start=comRise, vis_end=temp_vis_end)
         db.session.add(passCommit)
         db.session.commit()
 
@@ -104,4 +104,5 @@ def parseISS():
 
 # Temporary, just for the purpose of getting the function up and running
 
-parseISS()
+if __name__ == "__main__":
+    parseISS()
