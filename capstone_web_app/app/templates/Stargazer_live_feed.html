@@ -3,21 +3,15 @@
 
 {% block app_content %}
 
-  <div class="container">
-      <blockquote class="blockquote text-center text-white">
-          <div>
-              <h1 class="display-4">Live Feed:</h1>
-          </div>
-      </blockquote>
-  </div>
+    <div class="container">
+        <blockquote class="blockquote text-center text-white">
+            <div>
+                <h1 class="display-4">Live Feed:</h1>
+            </div>
+        </blockquote>
+    </div>
 
     <div class="text-center">
         <img class="img-fluid ml-lg-5" src="{{ url_for('video_feed') }}" alt="Responsive image">
     </div>
 {% endblock %}
-
-{#{% block content %}#}
-{#    <p style="text-align: center; border: 2px solid black; color: white">#}
-{#        <img src="{{ url_for('video_feed') }}">#}
-{#    </p>#}
-{#{% endblock %}#}

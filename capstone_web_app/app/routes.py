@@ -10,7 +10,7 @@ from API_Readers import darkskyrequest
 
 # Names and links used for different pages in website
 links = {'home': 'Weather', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
-         'login': 'Login', 'logout': 'Logout', 'account': 'Account Settings'}
+         'login': 'Login', 'profile': 'Profile', 'account': 'Account Settings', 'logout': 'Logout'}
 
 ''' ENDPOINT FOR HOME PAGE '''
 
@@ -76,6 +76,7 @@ def login():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
 
@@ -112,6 +113,7 @@ def signup():
 
 
 @app.route("/account", methods=['GET', 'POST'])
+@login_required
 def account():
     form = AccountForm()
 
@@ -125,6 +127,16 @@ def account():
 
     # Displays profile page
     return render_template("account.html", title="Account Settings", links=links, form=form)
+
+
+''' END POINT FOR PROFILE PAGE '''
+
+
+@app.route("/profile/<username>")
+@login_required
+def profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('profile.html', user=user, links=links)
 
 
 ''' ENDPOINT FOR IMAGE GALLERY PAGE '''
@@ -222,4 +234,4 @@ def check_current_password(password):
 # Testing code
 if __name__ == "__main__":
     print(User)
-    #app.run(debug=True)
+    # app.run(debug=True)

@@ -4,39 +4,50 @@
 {% block navbar %}
 
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('home') }}">Stargazer</a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-test"
-                    aria-expanded="false">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar-collapse-test">
-                {# CREATES DESIRED BUTTONS #}
-                {# links is a dictionary with link:name pair, where "link" is the name of the view function in routes.py #}
-                <div class="navbar-nav mr-auto">
-                    {% for link in links %}
-                        {% if link != 'login' and link != 'logout' and link != 'account' %}
-                            {% if title == links[link] %}
-                                <a class="nav-item nav-link active" href="{{ url_for(link) }}">{{ links[link] }}<span
+
+        <a class="navbar-brand" href="{{ url_for('home') }}">Stargazer</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-test"
+                aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse-test">
+            {# CREATES DESIRED BUTTONS #}
+            {# links is a dictionary with link:name pair, where "link" is the name of the view function in routes.py #}
+            <div class="navbar-nav mr-auto">
+                {% for link in links %}
+                    {% if link != 'login' and link != 'logout' and link != 'account' and link != 'profile' %}
+                        {% if title == links[link] %}
+                            <a class="nav-item nav-link active" href="{{ url_for(link) }}">{{ links[link] }}<span
+                                    class="sr-only">(current)</span></a>
+                        {% else %}
+                            <a class="nav-item nav-link" href="{{ url_for(link) }}">{{ links[link] }}</a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="navbar-nav">
+                {% for link in links %}
+                    {% if link == 'login' or link == 'logout' or link == 'account' or link == 'profile' %}
+                        {% if title == links[link] %}
+                            {% if link != 'profile' %}
+                                <a class="nav-item nav-link active"
+                                   href="{{ url_for(link) }}">{{ links[link] }}<span
                                         class="sr-only">(current)</span></a>
                             {% else %}
-                                <a class="nav-item nav-link" href="{{ url_for(link) }}">{{ links[link] }}</a>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="navbar-nav">
-                    {% for link in links %}
-                        {% if link == 'login' or link == 'logout' or link == 'account' %}
-                            {% if title == links[link] %}
-                                <a class="nav-item nav-link active" href="{{ url_for(link) }}">{{ links[link] }}<span
+                                <a class="nav-item nav-link active"
+                                   href="{{ url_for(link, username=current_user.username) }}">{{ links[link] }}<span
                                         class="sr-only">(current)</span></a>
-                            {% elif (link == 'login' and current_user.is_anonymous) or ((link == 'logout' or link == 'account') and current_user.is_authenticated) %}
+                            {% endif %}
+                        {% elif (link == 'login' and current_user.is_anonymous) or ((link == 'logout' or link == 'account' or link == 'profile') and current_user.is_authenticated) %}
+                            {% if link != 'profile' %}
                                 <a class="nav-item nav-link" href="{{ url_for(link) }}">{{ links[link] }}</a>
+                            {% else %}
+                                <a class="nav-item nav-link"
+                                   href="{{ url_for(link, username=current_user.username) }}">{{ links[link] }}</a>
                             {% endif %}
                         {% endif %}
-                    {% endfor %}
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </nav>

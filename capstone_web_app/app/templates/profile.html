@@ -1,0 +1,15 @@
+{% extends "parent_template.html" %}
+
+{% block app_content %}
+
+    <div class="container-fluid">
+        <h1>Name: {{ user.fname }} {{ user.lname }}</h1>
+        <hr>
+        <p>Photos Liked: {{ user.images_liked.count() }}</p>
+        {% for photo in user.images_liked %}
+            <img src="{{ url_for('static', filename=photo.image.image_url) }}" alt="..."
+                 class="mr-3 mb-3 img-fluid" style="width:250px; height:152px">
+        {% endfor %}
+    </div>
+
+{% endblock %}
