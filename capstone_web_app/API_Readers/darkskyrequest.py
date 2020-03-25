@@ -9,7 +9,7 @@ from app.models import Weather
 from testing import *
 import sys
 
-def parseRequest():
+def parseRequest(DEBUG_MODE):
 
     if DEBUG_MODE:
         #logfile for errors and unit testing
@@ -105,6 +105,5 @@ if __name__ == "__main__":
     # logfile for errors and unit testing
     sys.stdout = open("log.txt", "w")
     # if true, runs unit testing on calls
-    DEBUG_MODE = False
-    parseRequest()
+    parseRequest(DEBUG_MODE=False)
     sys.stdout = sys.__stdout__
