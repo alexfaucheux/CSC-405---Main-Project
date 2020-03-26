@@ -151,9 +151,11 @@ def profile(username):
 def images():
     # query all images from database
     imgs = Image.query.all()
+    len_of_imgs = len(imgs)
 
     # displays image gallery page
-    return render_template("Stargazer_image_database.html", title='Images', links=links, images=imgs)
+    return render_template("Stargazer_image_database.html", title='Images', links=links, images=imgs,
+                           num_imgs=len_of_imgs)
 
 
 ''' ENDPOINT FOR LIKING/DISLIKING AN IMAGE '''

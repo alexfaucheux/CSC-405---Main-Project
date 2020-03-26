@@ -3,7 +3,6 @@
 {% extends "parent_template.html" %}
 
 
-
 {% block app_content %}
 
     <div id="demo" class="carousel slide" data-ride="carousel">
@@ -20,6 +19,7 @@
         <!-- The slideshow -->
         <div class="carousel-inner">
             <div class="container">
+                <h3 class="text-white text-center">Featured Images</h3>
                 {% for image in images %}
                     {% if loop.index == 1 %}
                         <div class="carousel-item active">
@@ -27,10 +27,9 @@
                         <div class="carousel-item">
                     {% endif %}
                 <img src="{{ url_for('static', filename=image.image_url) }}" alt="{{ loop.index }}"
-                     style="margin-left:50px; width:1000px; height:600px"
+                     style="margin-left:60px; width:1000px; height:600px"
                      class="img-fluid shadow-small p-1 mb-2 bg-danger">
                 <div class="carousel-caption">
-                    <h3>Featured Images!</h3>
                     <p>{{ image.image_name }}</p>
                 </div>
                 </div>
@@ -48,26 +47,54 @@
     </div>
 
     <br>
-    <hr>
+    <h3 class="text-white text-center">Image Gallery</h3>
+    <hr style="background-color: white">
     <br>
-    {% for image in images %}
-        <div class="clearfix">
-            <img src="{{ url_for('static', filename=image.image_url) }}" alt="Responsive image"
-                 class="rounded float-left shadow-small p-1 mb-2 bg-white" style="width:250px; height:152px">
-        </div>
-        {% if current_user.is_authenticated %}
-            {% if current_user.has_liked_image(image) %}
-                <a class="btn btn-light btn-outline-secondary text-dark"
-                   href="{{ url_for('like_action', image_id=image.id, action="dislike") }}" role="button">Unlike</a>
 
-            {% else %}
-                <a class="btn btn-light btn-outline-secondary text-dark"
-                   href="{{ url_for('like_action', image_id=image.id, action="like") }}" role="button">Like</a>
+    {% for i in range(0, num_imgs, 4) %}
+        <div class="clearfix">
+            {% for x in range(4) %}
+                {% if (x+i) < num_imgs %}
+                    <img src="{{ url_for('static', filename=images[x+i].image_url) }}" alt="Responsive image"
+                         class="rounded float-left shadow-small p-1 mx-5 bg-white"
+                         style="width:250px; height:152px">
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% for x in range(4) %}
+            {% if (x+i) < num_imgs %}
+                {# Like and Unlike Button #}
+                {% if current_user.is_authenticated %}
+                    {% with left_margin = 47 %}
+                        {% if current_user.has_liked_image(images[x+i]) %}
+                            {# Unike Button #}
+                            <a class="btn btn-light btn-outline-secondary text-dark"
+                               href="{{ url_for('like_action', image_id=images[x+i].id, action="dislike") }}"
+                               role="button" style="position:absolute; left:{{ (299 * x) + (1+x) * left_margin }}px">
+                                Unlike
+                            </a>
+                        {% else %}
+                            {# Like Button #}
+                            <a class="btn btn-light btn-outline-secondary text-dark"
+                               href="{{ url_for('like_action', image_id=images[x+i].id, action="like") }}"
+                               role="button" style="position:absolute; left:{{ (299 * x) + (1+x) * left_margin }}px">
+                                Like
+                            </a>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+
+                {# Like counter #}
+                <strong class="text-white" style="position: absolute; left:{{ (99 * x) + (1 + x) * 247 }}px">
+                    {{ images[x+i].likes.count() }} Likes
+                </strong>
+
             {% endif %}
-            <strong class="text-white">{{ image.likes.count() }} Likes</strong>
-        {% endif %}
+        {% endfor %}
         <br>
         <br>
         <br>
+
     {% endfor %}
 {% endblock %}
