@@ -16,11 +16,14 @@
             <li data-target="#demo" data-slide-to="4"></li>
         </ul>
 
-        <!-- The slideshow -->
+        {# The Slideshow #}
         <div class="carousel-inner">
             <div class="container">
                 <h3 class="text-white text-center">Featured Images</h3>
+                {# Iterates through images #}
+                {# Future feature: Include a featured tag to distinguish pictures #}
                 {% for image in images %}
+                    {# First image is made active; All others are not #}
                     {% if loop.index == 1 %}
                         <div class="carousel-item active">
                     {% else %}
@@ -51,34 +54,44 @@
     <hr style="background-color: white">
     <br>
 
-    {% for i in range(0, num_imgs, 4) %}
-        <div class="clearfix">
-            {% for x in range(4) %}
-                {% if (x+i) < num_imgs %}
-                    <img src="{{ url_for('static', filename=images[x+i].image_url) }}" alt="Responsive image"
+    {# Prints the entire image collection #}
+    {# Feature to be added: pagination #}
+    {# This for loop iterates every 4 images #}
+    {% for row in range(0, num_imgs, 4) %}
+        {# Prints images #}
+        <div class="clearfix"> {# clearfix adds essentially a <br> (break) after the divider #}
+            {# 4 columns of images #}
+            {% for column in range(4) %}
+                {% if (row+column) < num_imgs %}
+                    <img src="{{ url_for('static', filename=images[row+column].image_url) }}" alt="Responsive image"
                          class="rounded float-left shadow-small p-1 mx-5 bg-white"
                          style="width:250px; height:152px">
                 {% endif %}
             {% endfor %}
         </div>
 
-        {% for x in range(4) %}
-            {% if (x+i) < num_imgs %}
+        {# After images are printed #}
+        {# Adds like and unlike buttons and like counter #}
+        {# 4 columns of buttons/like counters #}
+        {% for column in range(4) %}
+            {% if (row+column) < num_imgs %}
                 {# Like and Unlike Button #}
+                {# Won't display buttons unless user is logged in. May change in the future #}
                 {% if current_user.is_authenticated %}
+                    {# Also spacing = 299px #}
                     {% with left_margin = 47 %}
-                        {% if current_user.has_liked_image(images[x+i]) %}
+                        {% if current_user.has_liked_image(images[row+column]) %}
                             {# Unike Button #}
                             <a class="btn btn-light btn-outline-secondary text-dark"
-                               href="{{ url_for('like_action', image_id=images[x+i].id, action="dislike") }}"
-                               role="button" style="position:absolute; left:{{ (299 * x) + (1+x) * left_margin }}px">
+                               href="{{ url_for('like_action', image_id=images[row+column].id, action="dislike") }}"
+                               role="button" style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">
                                 Unlike
                             </a>
                         {% else %}
                             {# Like Button #}
                             <a class="btn btn-light btn-outline-secondary text-dark"
-                               href="{{ url_for('like_action', image_id=images[x+i].id, action="like") }}"
-                               role="button" style="position:absolute; left:{{ (299 * x) + (1+x) * left_margin }}px">
+                               href="{{ url_for('like_action', image_id=images[row+column].id, action="like") }}"
+                               role="button" style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">
                                 Like
                             </a>
                         {% endif %}
@@ -86,8 +99,9 @@
                 {% endif %}
 
                 {# Like counter #}
-                <strong class="text-white" style="position: absolute; left:{{ (99 * x) + (1 + x) * 247 }}px">
-                    {{ images[x+i].likes.count() }} Likes
+                {# left_margin = 247px; spacing = 99px #}
+                <strong class="text-white" style="position: absolute; left:{{ (99 * column) + (1 + column) * 247 }}px">
+                    {{ images[row+column].likes.count() }} Likes
                 </strong>
 
             {% endif %}
