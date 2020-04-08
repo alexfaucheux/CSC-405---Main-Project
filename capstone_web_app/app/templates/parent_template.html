@@ -71,6 +71,35 @@
         {# Block for child templates to insert their code in #}
         {% block app_content %} {% endblock %}
     </div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small unique-color-dark pt-4">
+
+      <!-- Footer Elements -->
+      <div class="container">
+
+        <!-- Call to action -->
+        <ul class="list-unstyled list-inline text-center py-2">
+          <li class="list-inline-item">
+            <h5 class="mb-1" style="color: darkgray">Dont Have an account?</h5>
+          </li>
+          <li class="list-inline-item">
+            <a href="{{ url_for("signup") }}" class="btn btn-outline-primary btn-rounded waves-effect">Sign up!</a>
+          </li>
+        </ul>
+        <!-- Call to action -->
+
+      </div>
+      <!-- Footer Elements -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3" style="color: dimgray">© 2020 Copyright:
+        <a href="https://mdbootstrap.com/"> Team UNTITLED</a>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
     {# Script to maintain scroll position #}
     <script src="{{ url_for('static', filename='Javascript/maintain_scroll.js') }}"></script>
 

@@ -66,9 +66,24 @@
                     <img src="{{ url_for('static', filename=images[row+column].image_url) }}" alt="Responsive image"
                          class="rounded float-left shadow-small p-1 mx-5 bg-white"
                          style="width:250px; height:152px">
+
                 {% endif %}
             {% endfor %}
         </div>
+
+        {#<div class="container" id="tourpackages-carousel">
+
+        <div class="col-xs-18 col-sm-6 col-md-3">
+          <div class="thumbnail">
+            <img src="http://placehold.it/500x300" alt="">
+              <div class="caption">
+                <h4>Thumbnail label</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                <p><a href="#" class="btn btn-info btn-xs" role="button">Button</a> <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
+            </div>
+          </div>
+        </div>
+        </div>#}
 
         {# After images are printed #}
         {# Adds like and unlike buttons and like counter #}
@@ -82,18 +97,12 @@
                     {% with left_margin = 47 %}
                         {% if current_user.has_liked_image(images[row+column]) %}
                             {# Unike Button #}
-                            <a class="btn btn-light btn-outline-secondary text-dark"
-                               href="{{ url_for('like_action', image_id=images[row+column].id, action="dislike") }}"
-                               role="button" style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">
-                                Unlike
-                            </a>
+                            <a href="{{ url_for('like_action', image_id=images[row+column].id, action="dislike") }}" class="btn btn-info btn-xs" role="button"
+                               style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">Dislike</a>
                         {% else %}
                             {# Like Button #}
-                            <a class="btn btn-light btn-outline-secondary text-dark"
-                               href="{{ url_for('like_action', image_id=images[row+column].id, action="like") }}"
-                               role="button" style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">
-                                Like
-                            </a>
+                            <a href="{{ url_for('like_action', image_id=images[row+column].id, action="like") }}" class="btn btn-info btn-xs" role="button"
+                               style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">Like</a>
                         {% endif %}
                     {% endwith %}
                 {% endif %}
