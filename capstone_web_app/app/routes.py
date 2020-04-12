@@ -18,8 +18,8 @@ links = {'about': 'About', 'home': 'Weather', 'images': 'Images', 'live_feed': '
 @app.route("/")
 @app.route("/<up>")
 def home(up=None):
-    currentCon = Weather.query.get(0)
-    nightCon = Weather.query.get(1)
+    currentCon = Weather.query.filter_by(id=1).first()
+    nightCon = Weather.query.filter_by(id=2).first()
 
     # If weather not not updated yet, attempt to update it
     if up is None:
@@ -39,7 +39,7 @@ def about():
 
 @app.route("/update-weather/")
 def update():
-    date_stored = Weather.query.filter_by(id=0).date_stored
+    date_stored = Weather.query.filter_by(id=0).first().date_stored
     date = datetime.now()
 
     # Only allowed to update within a time frame
