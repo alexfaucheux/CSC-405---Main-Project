@@ -18,14 +18,15 @@ links = {'about': 'About', 'home': 'Weather', 'images': 'Images', 'live_feed': '
 @app.route("/")
 @app.route("/<up>")
 def home(up=None):
-    weather1 = Weather.query.get(1)
+    currentCon = Weather.query.get(0)
+    nightCon = Weather.query.get(1)
 
     # If weather not not updated yet, attempt to update it
     if up is None:
         return redirect(url_for("update"))
 
     # Display home page
-    return render_template("Stargazer_website.html", title='Weather', links=links, weather=weather1)
+    return render_template("Stargazer_website.html", title='Weather', links=links, weather=currentCon)
 
 
 @app.route("/about")
@@ -38,7 +39,7 @@ def about():
 
 @app.route("/update-weather/")
 def update():
-    date_stored = Weather.query.get(1).date_stored
+    date_stored = Weather.query.filter_by(id=0).date_stored
     date = datetime.now()
 
     # Only allowed to update within a time frame

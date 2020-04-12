@@ -25,8 +25,7 @@ def parseRequest():
 
     # Attempts to delete any pre-existing weather data before updating the database.
     try:
-        var = Weather.query.get(1)
-        db.session.delete(var)
+        Weather.query.delete()
         db.session.commit()
     except Exception as err:
         print("Unable to find Weather object for deletion (Perhaps one hasn't been created?)")
@@ -49,13 +48,15 @@ def parseRequest():
         weathertxt = weather.read()
         weatherjson = json.loads(weathertxt)
 
-        # Retrieve basic weather data needed for Stargazer App
+        # Retrieve current conditions before getting daily
         clouds = (weatherjson["currently"]["cloudCover"])  # 0-1, needs to be converted to a percent
         vis = (weatherjson["currently"]["visibility"])  # Visibility in Miles
         wind = (weatherjson["currently"]["windSpeed"])  # MPH
         wind_dir = (weatherjson["currently"]["windBearing"])  # Compass direction of which the wind is blowing FROM
-        temp = (weatherjson["currently"]["temperature"])  # Fahrenheit
+        highTemp = (weatherjson["currently"]["temperature"])  # Fahrenheit
+        lowTemp = 0 #Arbitrary value since current shows the temperature read at the last update.
         time = (weatherjson["currently"]["time"])  # UNIX format current time (as of call)
+        current = (weatherjson["currently"]["icon"]) # string value that corresponds to an image
 
         # Retrieve sunset and sunrise times in UNIX format
         sunrise = (weatherjson["daily"]["data"][0]["sunriseTime"])
@@ -90,14 +91,67 @@ def parseRequest():
         elif m_phase == 0:
             m_phase = "New Moon"
 
-        # Current conditions
-        current = (weatherjson["currently"]["summary"])
 
         # Take the parsed data and send it to the Weather class in "models" and save it to the database
-        currentWeather = Weather(id=1, date_stored=time, sunset=sunset, sunrise=sunrise, temp=temp, m_phase=m_phase,
-                                 clouds=clouds, wind=wind, wind_dir=wind_dir, vis=vis, current=current)
+        currentWeather = Weather(id=0, date_stored=time, sunset=sunset, sunrise=sunrise, high=highTemp, low = lowTemp,
+                                 m_phase=m_phase,clouds=clouds, wind=wind, wind_dir=wind_dir, vis=vis, current=current)
         db.session.add(currentWeather)
         db.session.commit()
+
+        #Parses the next seven days' conditions.
+        dayCount = 1
+        while (dayCount <= 7 ):
+            clouds = (weatherjson["daily"]["data"][dayCount]["cloudCover"])
+            vis = (weatherjson["daily"]["data"][dayCount]["visibility"])  # Visibility in Miles
+            wind = (weatherjson["daily"]["data"][dayCount]["windSpeed"])  # MPH
+            wind_dir = (weatherjson["daily"]["data"][dayCount]["windBearing"])  # Compass direction of which the wind is blowing FROM
+            highTemp = (weatherjson["daily"]["data"][dayCount]["temperatureHigh"])  # Fahrenheit
+            lowTemp = (weatherjson["daily"]["data"][dayCount]["temperatureLow"]) # float value for the predicted low temperature
+            current = (weatherjson["daily"]["data"][dayCount]["icon"])  # string value that corresponds to an image
+
+            # Retrieve sunset and sunrise times in UNIX format
+            sunrise = (weatherjson["daily"]["data"][dayCount]["sunriseTime"])
+            sunset = (weatherjson["daily"]["data"][dayCount]["sunsetTime"])
+
+            # Converting to datetime type
+            sunrise = datetime.fromtimestamp(sunrise)
+            sunset = datetime.fromtimestamp(sunset)
+
+            # Converting clouds to percentage
+            clouds = clouds * 100
+
+            # retrieve Moon Phase data and convert it
+            m_phase = (weatherjson["daily"]["data"][dayCount]["moonPhase"])
+
+            # Moon phase data is returned as a decimal 0-1.
+            if m_phase < 0.25:
+                m_phase = "Waxing Crescent"
+            elif m_phase == 0.25:
+                m_phase = "First Quarter"
+            elif 0.25 < m_phase < 0.5:
+                m_phase = "Waxing Gibbous"
+            elif m_phase == 0.5:
+                m_phase = "Full Moon"
+            elif 0.5 < m_phase < 0.75:
+                m_phase = "Waning Gibbous"
+            elif m_phase == 0.75:
+                m_phase = "Last Quarter"
+            elif m_phase > 0.75:
+                m_phase = "Waning Crescent"
+            elif m_phase == 0:
+                m_phase = "New Moon"
+
+
+            # Take the parsed data and send it to the Weather class in "models" and save it to the database
+            currentWeather = Weather(id=dayCount , date_stored=time, sunset=sunset, sunrise=sunrise, high=highTemp,
+                                     low=lowTemp, m_phase=m_phase,clouds=clouds, wind=wind, wind_dir=wind_dir, vis=vis,
+                                     current=current)
+            db.session.add(currentWeather)
+            db.session.commit()
+
+            dayCount = dayCount + 1
+
+
     else:
         print(weather)
 
