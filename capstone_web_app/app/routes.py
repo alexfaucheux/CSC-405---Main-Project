@@ -18,15 +18,23 @@ links = {'about': 'About', 'home': 'Weather', 'images': 'Images', 'live_feed': '
 @app.route("/")
 @app.route("/<up>")
 def home(up=None):
+    #Each id corresponds to a different time. 1 = current, 2= tonight, 3= tomorrow night, 4 = day after that night, etc.
     currentCon = Weather.query.filter_by(id=1).first()
     nightCon = Weather.query.filter_by(id=2).first()
+    weather2 = Weather.query.filter_by(id=3).first()
+    weather3 = Weather.query.filter_by(id=4).first()
+    weather4 = Weather.query.filter_by(id=5).first()
+    weather5 = Weather.query.filter_by(id=6).first()
+    weather6 = Weather.query.filter_by(id=7).first()
+
 
     # If weather not not updated yet, attempt to update it
     if up is None:
         return redirect(url_for("update"))
 
     # Display home page
-    return render_template("Stargazer_website.html", title='Weather', links=links, weather=currentCon)
+    return render_template("Stargazer_website.html", title='Weather', links=links, weather=currentCon, weatherN=nightCon,
+                           weather2=weather2, weather3=weather3, weather4=weather4, weather5=weather5, weather6=weather6)
 
 
 @app.route("/about")
