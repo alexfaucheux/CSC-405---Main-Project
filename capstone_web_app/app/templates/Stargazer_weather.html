@@ -11,11 +11,11 @@
             <div class="navbar-nav">
                 {% for day in weatherlinks %}
                     {% if currentday == day %}
-                        <a class="nav-item nav-link active"
+                        <a class="nav-item nav-link active ml-2"
                            href="{{ url_for("weather", day=day) }}">{{ weatherlinks[day] }}<span
                                 class="sr-only">(current)</span></a>
                     {% else %}
-                        <a class="nav-item nav-link"
+                        <a class="nav-item nav-link ml-2"
                            href="{{ url_for("weather", day=day) }}">{{ weatherlinks[day] }}</a>
                     {% endif %}
                 {% endfor %}
@@ -23,4 +23,30 @@
         </div>
     </nav>
 
+{% endblock %}
+
+{% block weather_content %}
+    <div class="jumbotron"
+         style="background-image: url('{{ url_for("static", filename="images/thunderstorm-3441687_1920.jpg") }}');-webkit-background-size: cover;
+                 -moz-background-size: cover; background-size: cover; -o-background-size: cover; color:white">
+
+
+        <p>
+            Last Updated: {{ weather.date_stored.strftime('%A, %b %d @ %I:%M:%S %p') }}
+            <button type="button" class="btn btn-info" href="{{ url_for("update") }}">
+                <a style="text-decoration: none; color: white" href="">update</a>
+            </button>
+        </p>
+
+        <p>Sunrise: {{ weather.sunrise.strftime('%I:%M %p') }} </p>
+        <p>Sunset: {{ weather.sunset.strftime('%I:%M %p') }} </p>
+        <p>Temperature: {{ weather.high }} &#176;F</p>
+        <p>Moon Phase: {{ weather.m_phase }}</p>
+        <p>Cloud Coverage: {{ weather.clouds }} %</p>
+        <p>Winds: {{ weather.wind }} mph</p>
+        <p>Wind Direction: {{ weather.wind_dir }}</p>
+        <p>Visibility: {{ weather.vis }} miles</p>
+        <p>Current Condition: {{ weather.current }}</p>
+        <p>Powered by Dark Sky</p>
+    </div>
 {% endblock %}

@@ -3,7 +3,7 @@
 
 {% block navbar %}
 
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar align-top navbar-expand-lg navbar-light bg-light">
 
         <a class="navbar-brand" href="{{ url_for('home') }}">Stargazer</a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-test"
@@ -73,27 +73,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="page-footer font-small unique-color-dark pt-4">
-
-      <!-- Footer Elements -->
-      <div class="container">
-
-          {% if not current_user.is_authenticated %}
-
-            <!-- Call to action -->
-            <ul class="list-unstyled list-inline text-center py-2">
-              <li class="list-inline-item">
-                <h5 class="mb-1" style="color: darkgray">Dont Have an account?</h5>
-              </li>
-              <li class="list-inline-item">
-                <a href="{{ url_for("signup") }}" class="btn btn-outline-primary btn-rounded waves-effect">Sign up!</a>
-              </li>
-            </ul>
-        <!-- Call to action -->
-          {% endif %}
-
-      </div>
-      <!-- Footer Elements -->
+    <footer class="page-footer font-small unique-color-dark pt-4 align-bottom" style="background-color: white;">
 
       <!-- Copyright -->
       <div class="footer-copyright text-center py-3" style="color: dimgray">© 2020 Copyright:

@@ -3,31 +3,31 @@
 {% extends "parent_template.html" %}
 
 {% block app_content %}
-    <h1>Ruston Weather</h1>
-    <div class="jumbotron"
-         style="background-image: url('{{ url_for("static", filename="images/backgroundSite1.jpg") }}');-webkit-background-size: cover;
-                 -moz-background-size: cover; background-size: cover; -o-background-size: cover; color:white">
-				 
-		{% block weathernavbar %}
-		{% endblock %}
-		
-        <p>
-            Last Updated: {{ weather.date_stored.strftime('%A, %b %d @ %I:%M:%S %p') }}
-            <button type="button" class="btn btn-info" href="{{ url_for("update") }}">
-                <a style="text-decoration: none; color: white" href="">update</a>
-            </button>
-        </p>
-		
-        <p>Sunrise: {{ weather.sunrise.strftime('%I:%M %p') }} </p>
-        <p>Sunset: {{ weather.sunset.strftime('%I:%M %p') }} </p>
-        <p>Temperature: {{ weather.high }} &#176;F</p>
-        <p>Moon Phase: {{ weather.m_phase }}</p>
-        <p>Cloud Coverage: {{ weather.clouds }} %</p>
-        <p>Winds: {{ weather.wind }} mph</p>
-        <p>Wind Direction: {{ weather.wind_dir }}</p>
-        <p>Visibility: {{ weather.vis }} miles</p>
-        <p>Current Condition: {{ weather.current }}</p>
-        <p>Powered by Dark Sky</p>
+    <style>
+        @media (min-width: 1200px) {
+            #Weather.col-lg {
+                max-width: 800px;
+            }
+
+            #OOI.col-lg {
+                max-width: 400px;
+                margin-left: 50px;
+            }
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg" id="Weather">
+                <h3>Ruston Weather</h3>
+                {% block weathernavbar %}{% endblock %}
+                {% block weather_content %}{% endblock %}
+            </div>
+            <div class="col-lg" id="OOI">
+                <h3>Objects of Interest</h3>
+                {% block OOI_content %}
+                {% endblock %}
+            </div>
+        </div>
     </div>
 
 {% endblock %}
