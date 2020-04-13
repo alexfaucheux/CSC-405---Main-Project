@@ -85,7 +85,7 @@ class Weather(db.Model):
     current = db.Column(db.String)
 
     def __repr__(self):
-        return '<Date {}>'.format(self.date_stored)
+        return '<id {}, Date {}>'.format(self.id, self.date_stored)
 
 
 @login.user_loader

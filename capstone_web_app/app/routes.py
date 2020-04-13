@@ -18,7 +18,7 @@ links = {'about': 'About', 'home': 'Weather', 'images': 'Images', 'live_feed': '
 @app.route("/")
 @app.route("/<up>")
 def home(up=None):
-    #Each id corresponds to a different time. 1 = current, 2= tonight, 3= tomorrow night, 4 = day after that night, etc.
+    # Each id corresponds to a different time. 1 = current, 2= tonight, 3= tomorrow night, 4 = day after that night, etc.
     currentCon = Weather.query.filter_by(id=1).first()
     nightCon = Weather.query.filter_by(id=2).first()
     weather2 = Weather.query.filter_by(id=3).first()
@@ -27,14 +27,15 @@ def home(up=None):
     weather5 = Weather.query.filter_by(id=6).first()
     weather6 = Weather.query.filter_by(id=7).first()
 
-
     # If weather not not updated yet, attempt to update it
     if up is None:
         return redirect(url_for("update"))
 
     # Display home page
-    return render_template("Stargazer_website.html", title='Weather', links=links, weather=currentCon, weatherN=nightCon,
-                           weather2=weather2, weather3=weather3, weather4=weather4, weather5=weather5, weather6=weather6)
+    return render_template("Stargazer_website.html", title='Weather', links=links, weather=currentCon,
+                           weatherN=nightCon,
+                           weather2=weather2, weather3=weather3, weather4=weather4, weather5=weather5,
+                           weather6=weather6)
 
 
 @app.route("/about")
@@ -47,13 +48,21 @@ def about():
 
 @app.route("/update-weather/")
 def update():
-    date_stored = Weather.query.filter_by(id=0).first().date_stored
-    date = datetime.now()
-
-    # Only allowed to update within a time frame
-    if (20 > date.hour > 7 and date >= date_stored + timedelta(hours=1)) or \
-            ((date.hour >= 20 or date.hour <= 7) and date >= date_stored + timedelta(minutes=20)):
+    weather = Weather.query.first()
+    print(weather)
+    if weather == "None":
+        print("HI")
         darkskyrequest.parseRequest()
+
+    else:
+        print("HI2")
+        date_stored = weather.date_stored
+        date = datetime.now()
+
+        # Only allowed to update within a time frame
+        if (20 > date.hour > 7 and date >= date_stored + timedelta(hours=1)) or \
+                ((date.hour >= 20 or date.hour <= 7) and date >= date_stored + timedelta(minutes=20)):
+            darkskyrequest.parseRequest()
 
     # Redirects to home page
     return redirect(url_for("home", up="index"))
