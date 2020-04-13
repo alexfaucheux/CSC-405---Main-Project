@@ -7,13 +7,17 @@
     <div class="jumbotron"
          style="background-image: url('{{ url_for("static", filename="images/backgroundSite1.jpg") }}');-webkit-background-size: cover;
                  -moz-background-size: cover; background-size: cover; -o-background-size: cover; color:white">
-
+				 
+		{% block weathernavbar %}
+		{% endblock %}
+		
         <p>
             Last Updated: {{ weather.date_stored.strftime('%A, %b %d @ %I:%M:%S %p') }}
-            <button type="button" class="btn btn-info" href="{{ url_for("update") }}">
+            <button type="button" class="btn btn-info" href="{{ url_for("update", day=1) }}">
                 <a style="text-decoration: none; color: white" href="">update</a>
             </button>
         </p>
+		
         <p>Sunrise: {{ weather.sunrise.strftime('%I:%M %p') }} </p>
         <p>Sunset: {{ weather.sunset.strftime('%I:%M %p') }} </p>
         <p>Temperature: {{ weather.high }} &#176;F</p>
