@@ -49,13 +49,10 @@ def about():
 @app.route("/update-weather/")
 def update():
     weather = Weather.query.first()
-    print(weather)
-    if weather == "None":
-        print("HI")
+    if weather is None:
         darkskyrequest.parseRequest()
 
     else:
-        print("HI2")
         date_stored = weather.date_stored
         date = datetime.now()
 
