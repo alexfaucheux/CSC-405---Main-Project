@@ -12,23 +12,28 @@ from API_Readers import darkskyrequest
 links = {'about': 'About', 'home': 'Weather', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
          'login': 'Login', 'profile': 'Profile', 'account': 'Account Settings', 'logout': 'Logout'}
 
-weatherlinks = {1: "Today", 2: "Tomorrow", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"}
+weatherlinks = {"1": "Today", "2": "Tomorrow", "3": "Wednesday", "4": "Thursday", "5": "Friday", "6": "Saturday",
+                "7": "Sunday"}
 
 ''' ENDPOINT FOR HOME PAGE '''
 
 
 @app.route("/")
-@app.route("/<up>/<day>")
-def home(up=None, day=1):
-    # Each id corresponds to a different time. 1 = current, 2= tonight, 3= tomorrow night, 4 = day after that night, etc.
-    currentCon = Weather.query.get(int(day))
-
+@app.route("/<up>")
+def home(up=None):
     # If weather not not updated yet, attempt to update it
     if up is None:
-        return redirect(url_for("update", day=day))
-    
+        return redirect(url_for("update"))
+    return redirect(url_for("weather", day=1))
+
+
+@app.route("/weather/day/<day>")
+def weather(day):
+    currentCon = Weather.query.get(int(day))
+
     # Display home page
-    return render_template("Stargazer_weather.html", title='Weather', links=links, weatherlinks=weatherlinks, weather=currentCon, currentday=day)
+    return render_template("Stargazer_weather.html", currentday=day, title='Weather', links=links,
+                           weatherlinks=weatherlinks, weather=currentCon)
 
 
 @app.route("/about")
@@ -39,10 +44,10 @@ def about():
 ''' ENDPOINT FOR UPDATING WEATHER '''
 
 
-@app.route("/update-weather/<day>")
-def update(day):
-    #Updates the weather data on the page for the current requested day
-    weather = Weather.query.get(day)
+@app.route("/update-weather/")
+def update():
+    # Updates the weather data on the page for the current requested day
+    weather = Weather.query.get(1)
     if weather is None:
         darkskyrequest.parseRequest()
 
@@ -56,7 +61,7 @@ def update(day):
             darkskyrequest.parseRequest()
 
     # Redirects to home page
-    return redirect(url_for("home", up="weather", day=day))
+    return redirect(url_for("home", up="success"))
 
 
 ''' ENDPOINT FOR LOGIN PAGE '''
