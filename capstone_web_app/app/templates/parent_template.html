@@ -78,16 +78,19 @@
       <!-- Footer Elements -->
       <div class="container">
 
+          {% if not current_user.is_authenticated %}
+
+            <!-- Call to action -->
+            <ul class="list-unstyled list-inline text-center py-2">
+              <li class="list-inline-item">
+                <h5 class="mb-1" style="color: darkgray">Dont Have an account?</h5>
+              </li>
+              <li class="list-inline-item">
+                <a href="{{ url_for("signup") }}" class="btn btn-outline-primary btn-rounded waves-effect">Sign up!</a>
+              </li>
+            </ul>
         <!-- Call to action -->
-        <ul class="list-unstyled list-inline text-center py-2">
-          <li class="list-inline-item">
-            <h5 class="mb-1" style="color: darkgray">Dont Have an account?</h5>
-          </li>
-          <li class="list-inline-item">
-            <a href="{{ url_for("signup") }}" class="btn btn-outline-primary btn-rounded waves-effect">Sign up!</a>
-          </li>
-        </ul>
-        <!-- Call to action -->
+          {% endif %}
 
       </div>
       <!-- Footer Elements -->
