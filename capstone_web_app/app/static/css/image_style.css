@@ -1,0 +1,48 @@
+.img-wrapper {
+    position: relative;
+    width: 233px !important;
+    height: 152px !important;
+}
+
+.img-responsive {
+    width: 233px !important;
+    height: 152px !important;
+    z-index: 1;
+}
+
+#like.img-overlay {
+    position: absolute;
+    top: 125px;
+    bottom: 0;
+    left: 120px;
+    right: 0;
+    text-align: center;
+    z-index: 3;
+}
+
+
+#dislike.img-overlay {
+    position: absolute;
+    top: 125px;
+    bottom: 0;
+    left: 200px;
+    right: 0;
+    text-align: center;
+    z-index: 3;
+}
+
+#text.img-overlay {
+    position: absolute;
+    top: 125px;
+    bottom: 0;
+    left: 160px;
+    right: 0;
+    text-align: center;
+    z-index: 2;
+}
+
+
+.img-overlay:before {
+    content: ' ';
+    display: block;
+}

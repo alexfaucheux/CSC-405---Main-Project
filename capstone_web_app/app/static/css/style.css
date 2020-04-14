@@ -20,6 +20,9 @@
     left: 0;
     z-index: 0;
 }
+#Main{
+    background-image: url("../images/night_sky.jpg");
+}
 
 #overlay {
     position: relative;

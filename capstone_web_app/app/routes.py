@@ -7,13 +7,19 @@ from app.camera_opencv import Camera
 from app.email_server import Email
 from datetime import datetime, timedelta
 from API_Readers import darkskyrequest
+import calendar
 
 # Names and links used for different pages in website
 links = {'about': 'About', 'home': 'Weather', 'images': 'Images', 'live_feed': 'Live Feed', 'contact': 'Contact Us',
          'login': 'Login', 'profile': 'Profile', 'account': 'Account Settings', 'logout': 'Logout'}
 
-weatherlinks = {"1": "Today", "2": "Tomorrow", "3": "Wednesday", "4": "Thursday", "5": "Friday", "6": "Saturday",
-                "7": "Sunday"}
+weatherlinks = {"1": "Today", "2": "Tomorrow"}
+
+today = datetime.now()
+
+for i in range(3, 8):
+    day = today + timedelta(days=i-1)
+    weatherlinks[str(i)] = calendar.day_name[day.weekday()]
 
 ''' ENDPOINT FOR HOME PAGE '''
 
@@ -178,13 +184,27 @@ def images():
 @app.route("/like/<int:image_id>/<action>")
 @login_required
 def like_action(image_id, action):
-    image = Image.query.filter_by(id=image_id).first()
+    image = Image.query.get(image_id)
     if action == "like":
-        current_user.like_image(image)
+        if current_user.has_liked_image(image):
+            current_user.unlike_image(image)
+
+        elif current_user.has_disliked_image(image):
+            current_user.unlike_image(image)
+            current_user.like_image(image)
+
+        else:
+            current_user.like_image(image)
         db.session.commit()
 
     elif action == "dislike":
-        current_user.dislike_image(image)
+        if current_user.has_disliked_image(image):
+            current_user.unlike_image(image)
+        elif current_user.has_liked_image(image):
+            current_user.unlike_image(image)
+            current_user.dislike_image(image)
+        else:
+            current_user.dislike_image(image)
         db.session.commit()
 
     return redirect(request.referrer)

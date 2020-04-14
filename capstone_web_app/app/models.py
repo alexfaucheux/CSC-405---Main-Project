@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     creation_date = db.Column(db.DateTime, default=datetime.utcnow)
     password_hash = db.Column(db.String(128))
     images_liked = db.relationship('UserImage', back_populates='user', lazy='dynamic')
+    images_disliked = db.relationship('DisUserImage', back_populates='user', lazy='dynamic')
 
     def like_image(self, image):
         if not self.has_liked_image(image):
@@ -20,6 +21,11 @@ class User(UserMixin, db.Model):
             db.session.add(liked_image)
 
     def dislike_image(self, image):
+        if not self.has_disliked_image(image):
+            disliked_image = DisUserImage(user_id=self.id, image_id=image.id)
+            db.session.add(disliked_image)
+
+    def unlike_image(self, image):
         if self.has_liked_image(image):
             liked_image = UserImage.query.filter_by(
                 user_id=self.id,
@@ -27,8 +33,21 @@ class User(UserMixin, db.Model):
             ).first()
             db.session.delete(liked_image)
 
+        elif self.has_disliked_image(image):
+            disliked_image = DisUserImage.query.filter_by(
+                user_id=self.id,
+                image_id=image.id
+            ).first()
+            db.session.delete(disliked_image)
+
     def has_liked_image(self, image):
         return UserImage.query.filter_by(
+            user_id=self.id,
+            image_id=image.id
+        ).count() > 0
+
+    def has_disliked_image(self, image):
+        return DisUserImage.query.filter_by(
             user_id=self.id,
             image_id=image.id
         ).count() > 0
@@ -49,6 +68,7 @@ class Image(db.Model):
     image_url = db.Column(db.String, unique=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     likes = db.relationship('UserImage', back_populates='image', lazy='dynamic')
+    dislikes = db.relationship('DisUserImage', back_populates='image', lazy='dynamic')
 
     def __repr__(self):
         return '<Image {}>'.format(self.image_name)
@@ -62,8 +82,17 @@ class UserImage(db.Model):
     image = db.relationship("Image", back_populates="likes")
 
 
+class DisUserImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
+    image_id = db.Column(db.Integer, db.ForeignKey('image.id'), index=True)
+    user = db.relationship("User", back_populates="images_disliked")
+    image = db.relationship("Image", back_populates="dislikes")
+
+
 class ObjectOfInterest(db.Model):
-    id = db.Column(db.Integer,primary_key=True)  # id ranges are reserved for specific types of OOI. 0-4 = Visible ISS Passes
+    id = db.Column(db.Integer,
+                   primary_key=True)  # id ranges are reserved for specific types of OOI. 0-4 = Visible ISS Passes
     type = db.Column(db.String)
     date_stored = db.Column(db.DateTime, index=True, default=datetime.now)
     vis_start = db.Column(db.DateTime, index=True, default=datetime.now)
