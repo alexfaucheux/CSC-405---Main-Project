@@ -1,20 +1,5 @@
 <!doctype html>
 <html lang="en">
-<style>
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-    }
-
-    .background {
-        position: absolute;
-        display: block;
-        top: 0;
-        left: 0;
-        z-index: 0;
-    }
-</style>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -36,16 +21,8 @@
 
     {% block CSS %}
     {% endblock %}
-
-    <script>
-        window.onload = function () {
-            Particles.init({
-                selector: '.background'
-            });
-        };
-    </script>
 </head>
-<body>
+<body style="background-color: #031526">
 {% block navbar %}
 {% endblock %}
 
@@ -54,10 +31,6 @@
 
 {% block JS %}
 {% endblock %}
-
-<canvas class="background"></canvas>
-
-<script src="{{ url_for('static', filename='Javascript/particles.js-master/dist/particles.js/particles.min.js') }}"></script>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
