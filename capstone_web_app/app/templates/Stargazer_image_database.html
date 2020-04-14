@@ -3,9 +3,7 @@
 {% extends "parent_template.html" %}
 
 {% block CSS %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-    <link href="../static/css/lc_lightbox.min.css" rel="stylesheet"/>
-    <link href="../static/css/dark.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/lightbox.css"/>
     <link href="../static/css/image_style.css" rel="stylesheet"/>
 {% endblock %}
 
@@ -78,9 +76,8 @@
         {% endfor %}
     </div>
 
-
-    </div>
-
+    <script src="../static/Javascript/jquery-3.3.1.min.js"></script>
+    <script src="../static/Javascript/lightbox.js"></script>
 
     {#{% for column in range(numcol) %}
             {% if (row+column) < num_imgs %}

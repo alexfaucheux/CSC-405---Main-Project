@@ -3,7 +3,34 @@
 
 {% block app_content %}
 
-    <div class="container">
+    <link rel="stylesheet" type="text/css" href="../static/css/lightbox.css"/>
+
+    <section id="main" class="p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="../static/images/img-3.jpg" data-lightbox="gallery">
+                        <img src="../static/images/img-3.jpg" class="img-fluid" alt="Image">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="../static/images/img-2.jpg" data-lightbox="gallery">
+                        <img src="../static/images/img-2.jpg" class="img-fluid" alt="Image">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="../static/images/img-4.jpg" data-lightbox="gallery">
+                        <img src="../static/images/img-4.jpg" class="img-fluid" alt="Image">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../static/Javascript/jquery-3.3.1.min.js"></script>
+    <script src="../static/Javascript/lightbox.js"></script>
+
+    {#<div class="container">
         <blockquote class="blockquote text-center text-white">
             <div>
                 <h1 class="display-4">Live Feed:</h1>
@@ -13,5 +40,5 @@
 
     <div class="text-center">
         <img class="img-fluid ml-lg-5" src="{{ url_for('video_feed') }}" alt="Responsive image">
-    </div>
+    </div>#}
 {% endblock %}
