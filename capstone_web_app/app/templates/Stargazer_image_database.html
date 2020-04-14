@@ -5,109 +5,48 @@
 
 {% block app_content %}
 
-    <div id="demo" class="carousel slide" data-ride="carousel">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link href="../static/css/lc_lightbox.min.css" rel="stylesheet"/>
+    <link href="../static/css/dark.css" rel="stylesheet"/>
 
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0" class="active"></li>
-            <li data-target="#demo" data-slide-to="1"></li>
-            <li data-target="#demo" data-slide-to="2"></li>
-            <li data-target="#demo" data-slide-to="3"></li>
-            <li data-target="#demo" data-slide-to="4"></li>
-        </ul>
+    <header class="bg-info text-center py-5 mb-4">
+      <div class="container">
+          <h1 class="font-weight-light text-white">Image Gallery:</h1>
+      </div>
+    </header>
 
-        {# The Slideshow #}
-        <div class="carousel-inner">
-            <div class="container">
-                <h3 class="text-white text-center">Featured Images</h3>
-                {# Iterates through images #}
-                {# Future feature: Include a featured tag to distinguish pictures #}
-                {% for image in images %}
-                    {# First image is made active; All others are not #}
-                    {% if loop.index == 1 %}
-                        <div class="carousel-item active">
-                    {% else %}
-                        <div class="carousel-item">
-                    {% endif %}
-                <img src="{{ url_for('static', filename=image.image_url) }}" alt="{{ loop.index }}"
-                     style="margin-left:60px; width:1000px; height:600px"
-                     class="img-fluid shadow-small p-1 mb-2 bg-danger">
-                <div class="carousel-caption">
-                    <p>{{ image.image_name }}</p>
-                </div>
-                </div>
-                {% endfor %}
-                </div>
-            </div>
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" data-slide="prev" href="#demo">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" data-slide="next" href="#demo">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
-    </div>
-
-    <br>
-    <h3 class="text-white text-center">Image Gallery</h3>
-    <hr style="background-color: white">
-    <br>
-
-    {# Prints the entire image collection #}
-    {# Feature to be added: pagination #}
-    {# This for loop iterates every 4 images #}
     {% for row in range(0, num_imgs, 4) %}
-        {# Prints images #}
-        <div class="clearfix"> {# clearfix adds essentially a <br> (break) after the divider #}
-            {# 4 columns of images #}
+
+        <div class="mybox clearfix">
             {% for column in range(4) %}
                 {% if (row+column) < num_imgs %}
                     <img src="{{ url_for('static', filename=images[row+column].image_url) }}" alt="Responsive image"
-                         class="rounded float-left shadow-small p-1 mx-5 bg-white"
+                         class="mb-2"
                          style="width:250px; height:152px">
 
                 {% endif %}
             {% endfor %}
         </div>
 
-        {#<div class="container" id="tourpackages-carousel">
 
-        <div class="col-xs-18 col-sm-6 col-md-3">
-          <div class="thumbnail">
-            <img src="http://placehold.it/500x300" alt="">
-              <div class="caption">
-                <h4>Thumbnail label</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                <p><a href="#" class="btn btn-info btn-xs" role="button">Button</a> <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
-            </div>
-          </div>
-        </div>
-        </div>#}
-
-        {# After images are printed #}
-        {# Adds like and unlike buttons and like counter #}
-        {# 4 columns of buttons/like counters #}
         {% for column in range(4) %}
             {% if (row+column) < num_imgs %}
-                {# Like and Unlike Button #}
-                {# Won't display buttons unless user is logged in. May change in the future #}
                 {% if current_user.is_authenticated %}
-                    {# Also spacing = 299px #}
+
                     {% with left_margin = 47 %}
                         {% if current_user.has_liked_image(images[row+column]) %}
-                            {# Unike Button #}
+
                             <a href="{{ url_for('like_action', image_id=images[row+column].id, action="dislike") }}" class="btn btn-info btn-xs" role="button"
                                style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">Dislike</a>
                         {% else %}
-                            {# Like Button #}
+
                             <a href="{{ url_for('like_action', image_id=images[row+column].id, action="like") }}" class="btn btn-info btn-xs" role="button"
                                style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">Like</a>
                         {% endif %}
                     {% endwith %}
                 {% endif %}
 
-                {# Like counter #}
+
                 {# left_margin = 247px; spacing = 99px #}
                 <strong class="text-white" style="position: absolute; left:{{ (99 * column) + (1 + column) * 247 }}px">
                     {{ images[row+column].likes.count() }} Likes
@@ -120,4 +59,152 @@
         <br>
 
     {% endfor %}
+
+    {# hardcoded images where javascript/download works #}
+    
+    <div class="container mt-5 mb-5">
+    <a class="mybox" href="../static/images/img-3.jpg" title="Title 1" data-lcl-txt="Description 1"
+       data-lcl-author="Tedir Ghazali">
+        <img src="../static/images/img-3.jpg" class="mb-2" width="200" alt="..">
+    </a>
+
+    <a class="mybox" href="../static/images/img-2.jpg" title="Title 1" data-lcl-txt="Description 1"
+       data-lcl-author="Tedir Ghazali">
+        <img src="../static/images/img-3.jpg" class="mb-2" width="200" alt="..">
+    </a>
+
+    <a class="mybox" href="../static/images/img-4.jpg" title="Title 1" data-lcl-txt="Description 1"
+       data-lcl-author="Tedir Ghazali">
+        <img src="../static/images/img-3.jpg" class="mb-2" width="200" alt="..">
+    </a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../static/lib/alloy_finger.min.js"></script>
+    <script src="../static/Javascript/lc_lightbox.lite.min.js"></script>
+
+    <script>
+        lc_lightbox('.mybox', {
+            wrap_class: 'lcl_fade_oc',
+            gallery: true,
+            skin: 'dark',
+            counter: true,
+            fullscreen: true,
+            download: true,
+            socials: true,
+            autoplay: true,
+            ol_opacity: true,
+            ol_color: '#333',
+            border_w: 5,
+            border_col: '#ddd',
+            radius: 5
+        })
+    </script>
+   {# <header class="bg-info text-center py-5 mb-4">
+      <div class="container">
+          <h1 class="font-weight-light text-white">Featured Images:</h1>
+      </div>
+    </header>
+
+    <header>
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <!-- Slide One - Set the background image for this slide in the line below -->
+          {% for image in images %}
+            {% if loop.index == 1 %}
+                <div class="carousel-item active">
+            {% else %}
+                <div class="carousel-item">
+            {% endif %}
+
+            <img src="{{ url_for('static', filename=image.image_url) }}" alt="{{ loop.index }}"
+                 style="margin-left: 100px; width:1000px; height:600px"
+                 class="img-fluid shadow-small p-1 mb-2 bg-primary">
+            <div class="carousel-caption">
+                <p><strong>{{ image.image_name }}</strong></p>
+            </div>
+            </div>
+            {% endfor %}
+            </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+      </div>
+      </div>
+    </header>
+
+
+    <br>
+    <header class="bg-info text-center py-5 mb-4">
+      <div class="container">
+          <h1 class="font-weight-light text-white">Image Gallery:</h1>
+      </div>
+    </header>
+    <br>
+
+    #}{# Prints the entire image collection #}{#
+    #}{# Feature to be added: pagination #}{#
+    #}{# This for loop iterates every 4 images #}{#
+    {% for row in range(0, num_imgs, 4) %}
+        #}{# Prints images #}{#
+        <div class="clearfix"> #}{# clearfix adds essentially a <br> (break) after the divider #}{#
+            #}{# 4 columns of images #}{#
+            {% for column in range(4) %}
+                {% if (row+column) < num_imgs %}
+                    <img src="{{ url_for('static', filename=images[row+column].image_url) }}" alt="Responsive image"
+                         class="rounded float-left shadow-small p-1 mx-5 bg-white"
+                         style="width:250px; height:152px">
+
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+        {% for column in range(4) %}
+            {% if (row+column) < num_imgs %}
+                #}{# Like and Unlike Button #}{#
+                #}{# Won't display buttons unless user is logged in. May change in the future #}{#
+                {% if current_user.is_authenticated %}
+                    #}{# Also spacing = 299px #}{#
+                    {% with left_margin = 47 %}
+                        {% if current_user.has_liked_image(images[row+column]) %}
+                            #}{# Unike Button #}{#
+                            <a href="{{ url_for('like_action', image_id=images[row+column].id, action="dislike") }}" class="btn btn-info btn-xs" role="button"
+                               style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">Dislike</a>
+                        {% else %}
+                            #}{# Like Button #}{#
+                            <a href="{{ url_for('like_action', image_id=images[row+column].id, action="like") }}" class="btn btn-info btn-xs" role="button"
+                               style="position:absolute; left:{{ (299 * column) + (1 + column) * left_margin }}px">Like</a>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+
+                #}{# Like counter #}{#
+                #}{# left_margin = 247px; spacing = 99px #}{#
+                <strong class="text-white" style="position: absolute; left:{{ (99 * column) + (1 + column) * 247 }}px">
+                    {{ images[row+column].likes.count() }} Likes
+                </strong>
+
+            {% endif %}
+        {% endfor %}
+        <br>
+        <br>
+        <br>
+
+    {% endfor %}#}
 {% endblock %}
