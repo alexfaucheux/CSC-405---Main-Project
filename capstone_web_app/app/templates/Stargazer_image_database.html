@@ -3,7 +3,6 @@
 {% extends "parent_template.html" %}
 
 {% block CSS %}
-    <link rel="stylesheet" type="text/css" href="../static/css/lightbox.css"/>
     <link href="../static/css/image_style.css" rel="stylesheet"/>
 {% endblock %}
 
@@ -76,82 +75,4 @@
         {% endfor %}
     </div>
 
-    <script src="../static/Javascript/jquery-3.3.1.min.js"></script>
-    <script src="../static/Javascript/lightbox.js"></script>
-
-    {#{% for column in range(numcol) %}
-            {% if (row+column) < num_imgs %}
-                {% if current_user.is_authenticated %}
-
-                    {% with left_margin = 80 %}
-                        {% if current_user.has_liked_image(images[row+column]) %}
-
-                            <a href="{{ url_for('like_action', image_id=images[row+column].id, action="dislike") }}"
-                               class="btn btn-info btn-xs" role="button"
-                               style="position:absolute; left:{{ (250 * column) + (1 + column) * left_margin }}px">Dislike</a>
-                        {% else %}
-
-                            <a href="{{ url_for('like_action', image_id=images[row+column].id, action="like") }}"
-                               class="btn btn-info btn-xs" role="button"
-                               style="position:absolute; left:{{ (250 * column) + (1 + column) * left_margin }}px">Like</a>
-                        {% endif %}
-                    {% endwith %}
-                {% endif %}
-
-
-                #}{# left_margin = 247px; spacing = 99px #}{#
-                <strong class="text-white" style="position: absolute; left:{{ (80 * column) + (1 + column) * 250 }}px">
-                    {{ images[row+column].likes.count() }} Likes
-                </strong>
-
-            {% endif %}
-        {% endfor %}
-        <br>
-        <br>
-        <br>
-
-    {% endfor %}
-
-    #}{# hardcoded images where javascript/download works #}{#
-
-    <div class="container mt-5 mb-5">
-        <a class="mybox" href="../static/images/img-3.jpg" title="Title 1" data-lcl-txt="Description 1"
-           data-lcl-author="Tedir Ghazali">
-            <img src="../static/images/img-3.jpg" class="mb-2" width="200" alt="..">
-        </a>
-
-        <a class="mybox" href="../static/images/img-2.jpg" title="Title 1" data-lcl-txt="Description 1"
-           data-lcl-author="Tedir Ghazali">
-            <img src="../static/images/img-3.jpg" class="mb-2" width="200" alt="..">
-        </a>
-
-        <a class="mybox" href="../static/images/img-4.jpg" title="Title 1" data-lcl-txt="Description 1"
-           data-lcl-author="Tedir Ghazali">
-            <img src="../static/images/img-3.jpg" class="mb-2" width="200" alt="..">
-        </a>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="../static/lib/alloy_finger.min.js"></script>
-    <script src="../static/Javascript/lc_lightbox.lite.min.js"></script>
-
-    <script>
-        lc_lightbox('.mybox', {
-            wrap_class: 'lcl_fade_oc',
-            gallery: true,
-            skin: 'dark',
-            counter: true,
-            fullscreen: true,
-            download: true,
-            socials: true,
-            autoplay: true,
-            ol_opacity: true,
-            ol_color: '#333',
-            border_w: 5,
-            border_col: '#ddd',
-            radius: 5
-        })
-    </script>#}
 {% endblock %}
