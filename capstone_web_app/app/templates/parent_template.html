@@ -3,7 +3,7 @@
 
 {% block navbar %}
 
-    <nav class="navbar align-top navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light" id="main_nav">
 
         <a class="navbar-brand" href="{{ url_for('home') }}">Stargazer</a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-test"
@@ -58,33 +58,24 @@
 {% endblock %}
 
 {% block content %}
-    <div class="jumbotron text-white" style="background-color: #031526">
-        {# Used to display flashed messages from routes.py. No real use except for debugging and error handling #}
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-info" role="alert">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+    <div class="jumbotron text-white body-particles">
+        <div id="particles-js"></div>
+        <div id="overlay">
+            {# Used to display flashed messages from routes.py. No real use except for debugging and error handling #}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info" role="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
-        {# Block for child templates to insert their code in #}
-        {% block app_content %} {% endblock %}
-    </div>
-
-    <!-- Footer -->
-    <footer class="page-footer font-small unique-color-dark pt-4 align-bottom" style="background-color: white;">
-
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3" style="color: dimgray">© 2020 Copyright:
-            <a href="https://mdbootstrap.com/"> Team UNTITLED</a>
+            {# Block for child templates to insert their code in #}
+            {% block app_content %} {% endblock %}
         </div>
-        <!-- Copyright -->
 
-    </footer>
-    <!-- Footer -->
-    {# Script to maintain scroll position #}
-    <script src="{{ url_for('static', filename='Javascript/maintain_scroll.js') }}"></script>
+
+    </div>
 
     {# javascript block #}
     {% block JS %}
