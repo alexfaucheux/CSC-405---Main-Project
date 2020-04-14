@@ -20,9 +20,9 @@
         {% for image in images %}
             <div class="col-md-3 my-5">
                 <div class="img-wrapper">
-                    <img class="img-responsive"
-                         src="{{ url_for('static', filename=image.image_url) }}" alt="Responsive image">
-
+                    <a href="{{ url_for('static', filename=image.image_url) }}" data-lightbox="gallery">
+                        <img src="{{ url_for('static', filename=image.image_url) }}" class="img-fluid img-responsive" alt="Image">
+                    </a>
                     <div class="img-overlay" id="like">
                         <a href="{{ url_for('like_action', image_id=image.id, action="like") }}"
                            role="button">
