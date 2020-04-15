@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from app.commands import create_tables
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -32,6 +33,7 @@ def create_app(config_class=Config):
         # FUTURE AUTOMATED TEST LOGGING HERE
         pass
 
+    app.cli.add_command(create_tables)
     return app
 
 
