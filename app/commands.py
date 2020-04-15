@@ -19,7 +19,7 @@ def fill_image_table():
               "images/img-5.jpg", "images/meteor.jpg", "images/moon.jpg", "images/stars.jpg"]
 
     for i in range(len(images)):
-        img_obj = Image(image_name="Image {}".format(i), image_url=url_for('static', filename=images[i]))
+        img_obj = Image(image_name="Image {}".format(i), image_url="static/" + images[i])
         db.session.add(img_obj)
 
     db.session.commit()
