@@ -3,15 +3,12 @@
 #
 
 import urllib.request
-import json
 import urllib.parse
 import urllib.error
-from datetime import datetime
 from datetime import timedelta
 from app.models import ObjectOfInterest
-from app import app, db
-import sys
-from testing import *
+from app import db
+from API_Readers.testing import *
 
 DEBUG = False
 
@@ -100,9 +97,11 @@ def parseISS():
     while(passDown >= 0):
         #Value manipulation in order to get the end time for visibility from the API's given duration
         comRise = datetime.fromtimestamp(passes[passDown].riseTime)
-        print(comRise)
+        if DEBUG:
+            print(comRise)
         temp_vis_end = comRise + timedelta(seconds= passes[passDown].duration)
-        print(temp_vis_end)
+        if DEBUG:
+            print(temp_vis_end)
         passCommit = ObjectOfInterest(id=passDown, type="ISSPass", vis_start=comRise, vis_end=temp_vis_end)
         db.session.add(passCommit)
         db.session.commit()

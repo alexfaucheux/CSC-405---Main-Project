@@ -2,11 +2,9 @@
 import urllib.request
 import urllib.parse
 import urllib.error
-import json
-from datetime import datetime
-from app import app, db
+from app import db
 from app.models import Weather
-from testing import *
+from API_Readers.testing import *
 import sys
 
 DEBUG_MODE = False
