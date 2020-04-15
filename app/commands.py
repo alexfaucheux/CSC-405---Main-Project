@@ -1,8 +1,6 @@
 import click
 from flask.cli import with_appcontext
-
-from app import db
-from app.models import User, Image, UserImage, DisUserImage, ObjectOfInterest
+from app.extensions import db
 
 
 @click.command(name='create_tables')
