@@ -12,11 +12,11 @@
                 {% for day in weatherlinks %}
                     {% if currentday == day %}
                         <a class="nav-item nav-link active ml-2"
-                           href="{{ url_for("weather", day=day) }}">{{ weatherlinks[day] }}<span
+                           href="{{ url_for("main.weather", day=day) }}">{{ weatherlinks[day] }}<span
                                 class="sr-only">(current)</span></a>
                     {% else %}
                         <a class="nav-item nav-link ml-2"
-                           href="{{ url_for("weather", day=day) }}">{{ weatherlinks[day] }}</a>
+                           href="{{ url_for("main.weather", day=day) }}">{{ weatherlinks[day] }}</a>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -33,7 +33,7 @@
 
         <p>
             Last Updated: {{ weather.date_stored.strftime('%A, %b %d @ %I:%M:%S %p') }}
-            <button type="button" class="btn btn-info" href="{{ url_for("update") }}">
+            <button type="button" class="btn btn-info" href="{{ url_for("main.update") }}">
                 <a style="text-decoration: none; color: white" href="">update</a>
             </button>
         </p>

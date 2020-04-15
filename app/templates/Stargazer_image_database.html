@@ -23,7 +23,7 @@
                         <img src="{{ url_for('static', filename=image.image_url) }}" class="img-fluid img-responsive" alt="Image">
                     </a>
                     <div class="img-overlay" id="like">
-                        <a href="{{ url_for('like_action', image_id=image.id, action="like") }}"
+                        <a href="{{ url_for('main.like_action', image_id=image.id, action="like") }}"
                            role="button">
                             {% if current_user.is_anonymous or not current_user.has_liked_image(image) %}
                                 {# Bootstrap icon for caret-up no fill #}
@@ -46,7 +46,7 @@
 
                     <div class="img-overlay" id="dislike">
                         {# Bootstrap icon for caret-up no fill #}
-                        <a href="{{ url_for('like_action', image_id=image.id, action="dislike") }}"
+                        <a href="{{ url_for('main.like_action', image_id=image.id, action="dislike") }}"
                            role="button">
                             {% if  current_user.is_anonymous or not current_user.has_disliked_image(image)%}
                                 {# Bootstrap icon for caret-down no fill #}

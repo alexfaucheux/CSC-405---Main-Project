@@ -8,7 +8,7 @@ import urllib.error
 from datetime import timedelta
 from app.models import ObjectOfInterest
 from app import db
-from API_Readers.testing import *
+from app.API_Readers.testing import *
 
 DEBUG = False
 
