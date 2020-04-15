@@ -3,7 +3,7 @@ from config import Config
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
-from app.commands import create_tables
+from app.commands import create_tables, fill_image_table
 from app.extensions import db
 
 migrate = Migrate()
@@ -33,6 +33,8 @@ def create_app(config_class=Config):
         pass
 
     app.cli.add_command(create_tables)
+    app.cli.add_command(fill_image_table)
+
     return app
 
 
