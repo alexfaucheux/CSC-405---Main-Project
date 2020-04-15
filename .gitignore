@@ -1,5 +1,7 @@
-capstone_web_app/__pycache__
-capstone_web_app/app/__pycache__
-capstone_web_app/venv
+
 capstone_web_app/migrations
+capstone_web_app/__pycache__
 capstone_web_app/.idea
+capstone_web_app/app/__pycache__
+*.xml
+*.pyc

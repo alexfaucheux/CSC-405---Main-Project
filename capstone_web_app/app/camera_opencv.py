@@ -1,6 +1,8 @@
 import os
 import cv2
 from app.base_camera import BaseCamera
+from app.models import Image
+
 
 # Class used to capture frames from camera
 class Camera(BaseCamera):
@@ -26,6 +28,5 @@ class Camera(BaseCamera):
         while True:
             # read current frame
             _, img = camera.read()
-
             # encode as a jpeg image and return it
             yield cv2.imencode('.jpg', img)[1].tobytes()
