@@ -47,6 +47,7 @@ def parseRequest():
         weathertxt = weather.read()
         weatherjson = json.loads(weathertxt)
 
+        day_num = 1
         weather_data = weatherjson["daily"]["data"]
         # Parses the next seven days' conditions.
         for day in weather_data:
@@ -91,9 +92,10 @@ def parseRequest():
                 m_phase = "New Moon"
 
             # Take the parsed data and send it to the Weather class in "models" and save it to the database
-            weather = Weather(sunset=sunset, sunrise=sunrise, high=highTemp, low=lowTemp, m_phase=m_phase,
+            weather = Weather(id=day_num, sunset=sunset, sunrise=sunrise, high=highTemp, low=lowTemp, m_phase=m_phase,
                               clouds=clouds, wind=wind, wind_dir=wind_dir, vis=vis, current=current)
             db.session.add(weather)
+            day_num += 1
 
         db.session.commit()
 
