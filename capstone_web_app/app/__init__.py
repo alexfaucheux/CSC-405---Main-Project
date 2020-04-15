@@ -14,4 +14,7 @@ bootstrap = Bootstrap(app)
 
 login.login_view = "login"
 
+def getApp():
+    return app
+
 from app import routes, models
