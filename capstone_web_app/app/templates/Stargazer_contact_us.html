@@ -3,15 +3,29 @@
 {% extends "parent_template.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+{% block CSS %}
+    <link href="../static/css/image_style.css" rel="stylesheet"/>
+{% endblock %}
+
 {% block app_content %}
-    <h1>Contact Us</h1>
-    <div class="jumbotron"
-         style="background-image: url('{{ url_for("static", filename="images/backgroundSite1.jpg") }}');-webkit-background-size: cover;
-                 -moz-background-size: cover; background-size: cover; -o-background-size: cover">
+
+    <body>
+      <div class="container">
         <div class="row">
-            <div class="col-md-4" style="color:white">
-                {{ wtf.quick_form(form) }}
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div style="background-color: whitesmoke" class="card card-signin my-5">
+              <div class="card-body">
+                <h5 style="color: #252525" class="card-title text-center">Contact Us</h5>
+                    <div class="form-label-group" style="color: #484848">
+                        {{ wtf.quick_form(form) }}
+                    </div>
+                  <hr class="my-4">
+                  <button class="btn btn-lg btn-info btn-block text-uppercase" type="submit">Send</button>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
+    </body>
+
 {% endblock %}
