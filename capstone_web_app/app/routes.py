@@ -2,11 +2,11 @@ from flask import render_template, redirect, url_for, flash, request, Response
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
 from app.forms import LoginForm, RegisterForm, ContactUsForm, AccountForm
-from app.models import User, Image, Weather
+from app.models import User, Image, Weather, ObjectOfInterest
 from app.camera_opencv import Camera
 from app.email_server import Email
 from datetime import datetime, timedelta
-from API_Readers import darkskyrequest
+from API_Readers import darkskyrequest, OOIreader
 import calendar
 
 # Names and links used for different pages in website
@@ -37,9 +37,17 @@ def home(up=None):
 def weather(day):
     currentCon = Weather.query.get(int(day))
 
+    #In addition to updating the weather, update the OOI Table
+    OOIreader.parseISS()
+    object1 = ObjectOfInterest.query.get(0)
+    object2 = ObjectOfInterest.query.get(1)
+    object3 = ObjectOfInterest.query.get(2)
+    object4 = ObjectOfInterest.query.get(3)
+    object5 = ObjectOfInterest.query.get(4)
+
     # Display home page
     return render_template("Stargazer_weather.html", currentday=day, title='Weather', links=links,
-                           weatherlinks=weatherlinks, weather=currentCon)
+                           weatherlinks=weatherlinks, weather=currentCon, object1=object1, object2=object2, object3=object3, object4=object4, object5=object5)
 
 
 @app.route("/about")
