@@ -3,15 +3,12 @@
 #
 
 import urllib.request
-import json
 import urllib.parse
 import urllib.error
-from datetime import datetime
 from datetime import timedelta
 from app.models import ObjectOfInterest
-from app import app, db
-import sys
-from testing import *
+from app import db
+from API_Readers.testing import *
 
 DEBUG = False
 
