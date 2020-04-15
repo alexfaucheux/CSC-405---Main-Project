@@ -4,7 +4,6 @@ from app import db
 from app.main import bp
 from app.main.forms import ContactUsForm, AccountForm
 from app.models import User, Image, Weather, ObjectOfInterest
-from app.camera_opencv import Camera
 from app.email_server import Email
 from datetime import datetime, timedelta
 from app.API_Readers import darkskyrequest, OOIreader
@@ -143,11 +142,11 @@ def live_feed():
 ''' ENDPOINT FOR VIDEO FEED '''
 
 
-@bp.route("/video_feed")
-def video_feed():
-    # a continuous response from the generator function
-    return Response(gen(Camera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+# @bp.route("/video_feed")
+# def video_feed():
+#     # a continuous response from the generator function
+#     return Response(gen(Camera()),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 ''' ENDPOINT FOR CONTACT US PAGE '''
