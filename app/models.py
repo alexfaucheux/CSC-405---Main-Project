@@ -3,9 +3,6 @@ from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import db, login
-import pytz
-
-tz = pytz.timezone('US/Central')
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -68,7 +65,7 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_name = db.Column(db.String(64), unique=True)
     image_url = db.Column(db.String, unique=True)
-    timestamp = db.Column(db.DateTime, default=datetime.now(tz))
+    timestamp = db.Column(db.DateTime, default=datetime.now)
     likes = db.relationship('UserImage', back_populates='image', lazy='dynamic')
     dislikes = db.relationship('DisUserImage', back_populates='image', lazy='dynamic')
 
@@ -96,14 +93,14 @@ class ObjectOfInterest(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True)  # id ranges are reserved for specific types of OOI. 0-4 = Visible ISS Passes
     type = db.Column(db.String)
-    date_stored = db.Column(db.DateTime, index=True, default=datetime.now(tz))
-    vis_start = db.Column(db.DateTime, index=True, default=datetime.now(tz))
-    vis_end = db.Column(db.DateTime, index=True, default=datetime.now(tz))
+    date_stored = db.Column(db.DateTime, index=True, default=datetime.now)
+    vis_start = db.Column(db.DateTime, index=True, default=datetime.now)
+    vis_end = db.Column(db.DateTime, index=True, default=datetime.now)
 
 
 class Weather(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date_stored = db.Column(db.DateTime, index=True, default=datetime.now(tz))
+    date_stored = db.Column(db.DateTime, index=True, default=datetime.now)
     sunset = db.Column(db.DateTime)
     sunrise = db.Column(db.DateTime)
     high = db.Column(db.FLOAT)
