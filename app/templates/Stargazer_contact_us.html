@@ -4,27 +4,34 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block CSS %}
-    <link href="../static/css/image_style.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/login.css"/>
 {% endblock %}
 
 {% block app_content %}
 
     <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                <div style="background-color: whitesmoke" class="card card-signin my-5">
-                    <div class="card-body">
-                        <h5 style="color: #252525" class="card-title text-center">Contact Us</h5>
-                        <div class="form-label-group" style="color: #484848">
-                            {{ wtf.quick_form(form) }}
+    <form method="post" role="form" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div style="background-color: whitesmoke" class="card card-signin my-5">
+                        <div class="card-body">
+                            <h5 style="color: #252525" class="card-title text-center">Contact Us</h5>
+                            <div style="color: #484848">
+                                {{ wtf.form_errors(form, hiddens="only") }}
+                                {{ wtf.form_field(form.fname) }}
+                                {{ wtf.form_field(form.lname) }}
+                                {{ wtf.form_field(form.username) }}
+                                {{ wtf.form_field(form.text) }}
+                            </div>
+                            {{ wtf.form_field(form.submit, class="btn btn-lg btn-primary btn-block") }}
                         </div>
-                        <hr class="my-4">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     </body>
 
 {% endblock %}
