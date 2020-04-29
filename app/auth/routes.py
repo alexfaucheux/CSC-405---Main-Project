@@ -52,10 +52,12 @@ def signup():
     # Form used to register user.
     form = RegisterForm()
 
+    print('HI')
     # When form is submitted with all fields correctly filled
     # NOTE: username verification uses a method inside the class RegisterForm in forms.py
     if form.validate_on_submit():
         # Create new user entry
+        print("HI")
         user = User(username=form.username.data, fname=form.fname.data, lname=form.lname.data)
         user.set_password(form.password.data)
         db.session.add(user)
