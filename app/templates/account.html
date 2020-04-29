@@ -6,26 +6,29 @@
 {% endblock %}
 
 {% block app_content %}
-    {{ form.hidden_tag() }}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                <div style="background-color: whitesmoke" class="card card-signin my-5">
-                    <div class="card-body">
-                        <h5 style="color: #252525" class="card-title text-center">Account Settings</h5>
-                        <div style="color: #484848">
-                            {{ wtf.form_errors(form, hiddens="only") }}
-                            {{ wtf.form_field(form.new_username) }}
-                            {{ wtf.form_field(form.new_password) }}
-                            {{ wtf.form_field(form.confirm_password) }}
-                            {{ wtf.form_field(form.current_password) }}
+
+    <body>
+    <form method="post" role="form" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div style="background-color: whitesmoke" class="card card-signin my-5">
+                        <div class="card-body">
+                            <h5 style="color: #252525" class="card-title text-center">Account Settings</h5>
+                            <div style="color: #484848">
+                                {{ wtf.form_errors(form, hiddens="only") }}
+                                {{ wtf.form_field(form.new_username) }}
+                                {{ wtf.form_field(form.new_password) }}
+                                {{ wtf.form_field(form.confirm_password) }}
+                                {{ wtf.form_field(form.current_password) }}
+                            </div>
+                            {{ wtf.form_field(form.submit, class="btn btn-lg btn-primary btn-block") }}
                         </div>
-                        {{ wtf.form_field(form.submit, class="btn btn-lg btn-primary btn-block") }}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </form>
     </body>
 {% endblock %}
