@@ -1,7 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request, Response
 from flask_login import current_user, login_user, logout_user, login_required
 from app import db
-from app.camera_opencv import Camera
 from app.main import bp
 from app.main.forms import ContactUsForm, AccountForm
 from app.models import User, Image, Weather, ObjectOfInterest
@@ -146,6 +145,7 @@ def live_feed():
 
 
 if not HEROKU:
+    from app.camera_opencv import Camera
     @bp.route("/video_feed")
     def video_feed():
         # a continuous response from the generator function
