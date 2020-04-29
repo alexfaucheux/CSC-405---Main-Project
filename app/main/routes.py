@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, Response
 from flask_login import current_user, login_user, logout_user, login_required
 from app import db
+from app.camera_opencv import Camera
 from app.main import bp
 from app.main.forms import ContactUsForm, AccountForm
 from app.models import User, Image, Weather, ObjectOfInterest
@@ -8,6 +9,8 @@ from app.email_server import Email
 from datetime import datetime, timedelta
 from app.API_Readers import darkskyrequest, OOIreader
 import calendar
+
+HEROKU = True
 
 weatherlinks = {"1": "Today", "2": "Tomorrow"}
 
@@ -136,17 +139,18 @@ def gen(camera):
 @bp.route("/live_feed")
 def live_feed():
     # Display Live Feed page
-    return render_template("Stargazer_live_feed.html", title='Live Feed')
+    return render_template("Stargazer_live_feed.html", title='Live Feed', HEROKU=HEROKU)
 
 
 ''' ENDPOINT FOR VIDEO FEED '''
 
 
-# @bp.route("/video_feed")
-# def video_feed():
-#     # a continuous response from the generator function
-#     return Response(gen(Camera()),
-#                     mimetype='multipart/x-mixed-replace; boundary=frame')
+if not HEROKU:
+    @bp.route("/video_feed")
+    def video_feed():
+        # a continuous response from the generator function
+        return Response(gen(Camera()),
+                        mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 ''' ENDPOINT FOR CONTACT US PAGE '''
