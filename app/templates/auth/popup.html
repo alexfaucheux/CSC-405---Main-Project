@@ -1,0 +1,13 @@
+{% extends prev_temp %}
+
+{% block popup %}
+    {# USE HTML TO CREATE POPUP HERE #}
+    {# WHICH MEANS DELETE THE MODALE HTML FROM THE OTHER FILES #}
+    {% block form %}
+    {% endblock %}
+{% endblock %}
+
+{% block JS %}
+    {# PLEASE STOP USING "../../".  It can cause issues with flask! #}
+    <script src="{{ url_for('static', filename='Javascript/login_modal.js') }}"></script>
+{% endblock %}

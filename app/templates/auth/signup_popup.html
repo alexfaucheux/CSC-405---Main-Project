@@ -1,0 +1,34 @@
+{% extends "auth/popup.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{# form for new account #}
+
+{# COMMENTED OUT BECAUSE IT IS POPUP CODE #}
+
+{#  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-title text-center">
+                        <h5 style="color: #252525" class="card-title text-center">Register for a new account!</h5>
+                        <hr>
+                        <br>
+                    </div>
+                    <div class="d-flex flex-column text-center">#}
+{% block form %}
+    <form method="post" role="form" novalidate>
+        {{ form.hidden_tag() }}
+        <div style="color: #484848">
+            {{ wtf.form_errors(form, hiddens="only") }}
+            {{ wtf.form_field(form.username) }}
+            {{ wtf.form_field(form.password) }}
+        </div>
+        {{ wtf.form_field(form.submit, class="btn btn-lg btn-info btn-block") }}
+    </form>
+{% endblock %}

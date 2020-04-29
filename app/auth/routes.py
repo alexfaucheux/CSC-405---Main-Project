@@ -7,6 +7,7 @@ from app.models import User
 
 ''' ENDPOINT FOR LOGIN PAGE '''
 
+{"/images" : "Stargazer_image_database.html", "/live_feed" : "Stargazer_live_feed.html", "/contact" : "Stargazer_contact_us.html", "/about" : ""}
 
 @bp.route("/login", methods=['GET', 'POST'])
 def login():
