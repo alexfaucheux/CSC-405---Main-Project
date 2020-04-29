@@ -34,7 +34,6 @@ def weather(day):
     currentCon = Weather.query.get(int(day))
 
     #In addition to updating the weather, update the OOI Table
-    OOIreader.parseISS()
     object1 = ObjectOfInterest.query.get(0)
     object2 = ObjectOfInterest.query.get(1)
     object3 = ObjectOfInterest.query.get(2)
@@ -69,6 +68,7 @@ def update():
         if (20 > date.hour > 7 and date >= date_stored + timedelta(hours=1)) or \
                 ((date.hour >= 20 or date.hour <= 7) and date >= date_stored + timedelta(minutes=20)):
             darkskyrequest.parseRequest()
+            OOIreader.parseISS()
 
     # Redirects to home page
     return redirect(url_for("main.home", up="success"))
