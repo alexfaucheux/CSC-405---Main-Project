@@ -28,6 +28,7 @@ def get_html_file(url):
 
 @bp.route("/login", methods=['GET', 'POST'])
 def login():
+    name_button = 'Login'
     html_file = get_html_file(request.referrer)
 
     # If user is already logged in
@@ -49,7 +50,7 @@ def login():
         return redirect(url_for('main.home'))
 
     # Displays login page
-    return render_template("auth/login_popup.html", title="Login", form=form, prev_temp=html_file)
+    return render_template("auth/login_popup.html", title="Login", form=form, prev_temp=html_file, name_button=name_button)
 
 
 ''' ENDPOINT FOR LOGGING OUT '''
@@ -69,6 +70,7 @@ def logout():
 
 @bp.route("/signup", methods=['GET', 'POST'])
 def signup():
+    name_button = 'Sign Up'
     html_file = get_html_file(request.referrer)
 
     # Form used to register user.
@@ -88,4 +90,4 @@ def signup():
         return redirect(url_for('auth.login'))
 
     # Display signup page
-    return render_template("auth/signup_popup.html", title='Create Account', form=form, prev_temp=html_file)
+    return render_template("auth/signup_popup.html", title='Create Account', form=form, prev_temp=html_file, name_button=name_button)
