@@ -50,7 +50,7 @@ def login():
         return redirect(url_for('main.home'))
 
     # Displays login page
-    return render_template("auth/login_popup.html", title="Login", form=form, prev_temp=html_file, name_button=name_button)
+    return render_template("auth/Stargazer_login.html", title="Login", form=form, prev_temp=html_file, name_button=name_button)
 
 
 ''' ENDPOINT FOR LOGGING OUT '''
@@ -90,4 +90,4 @@ def signup():
         return redirect(url_for('auth.login'))
 
     # Display signup page
-    return render_template("auth/signup_popup.html", title='Create Account', form=form, prev_temp=html_file, name_button=name_button)
+    return render_template("auth/Stargazer_signup.html", title='Create Account', form=form, prev_temp=html_file, name_button=name_button)
