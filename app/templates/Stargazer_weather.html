@@ -31,33 +31,53 @@
                  -moz-background-size: cover; background-size: cover; -o-background-size: cover; color:white">
 
 
-        <p>
+        <p class ="text-center">
             Last Updated: {{ weather.date_stored.strftime('%A, %b %d @ %I:%M:%S %p') }}
             <button type="button" class="btn btn-info" href="{{ url_for("main.update") }}">
                 <a style="text-decoration: none; color: white" href="">update</a>
             </button>
         </p>
-
-        <p>Sunrise: {{ weather.sunrise.strftime('%I:%M %p') }} </p>
-        <p>Sunset: {{ weather.sunset.strftime('%I:%M %p') }} </p>
-        <p>Temperature: {{ weather.high }} &#176;F</p>
-        <p>Moon Phase: {{ weather.m_phase }}</p>
-        <p>Cloud Coverage: {{ weather.clouds }} %</p>
-        <p>Winds: {{ weather.wind }} mph</p>
-        <p>Wind Direction: {{ weather.wind_dir }}</p>
-        <p>Visibility: {{ weather.vis }} miles</p>
-        <p>Current Condition: {{ weather.current }}</p>
-        <p>Powered by Dark Sky</p>
+		
+		<div>
+			<h1 class="text-center" style="font-size:400%">
+			{% if weather.current == 'rain' %}
+				<img src="../../../static/weatherimg/rain.gif" alt=" {{weather.current}} " class="rounded text-left" style="width:128px;height:128px;">
+			{% endif %}
+			{% if weather.current == 'clear-day' %}
+				<img src="../../../static/weatherimg/sun.gif" alt=" {{weather.current}} " class="rounded text-left" style="width:128px;height:128px;">
+			{% endif %}
+			{% if weather.current == 'partly-cloudy-day' %}
+				<img src="../../../static/weatherimg/cloudy.gif" alt=" {{weather.current}} " class="rounded text-left" style="width:128px;height:128px;">
+			{% endif %}
+			{% if weather.current == 'cloudy' %}
+				<img src="../../../static/weatherimg/cloudy.gif" alt=" {{weather.current}} " class="rounded text-left" style="width:128px;height:128px;">
+			{% endif %}
+			{% if weather.current == 'thunderstorm' %}
+				<img src="../../../static/weatherimg/storm.gif" alt=" {{weather.current}} " class="rounded text-left" style="width:128px;height:128px;">
+			{% endif %}
+			{% if weather.current != 'cloudy' and weather.current != 'clear-day' and weather.current != 'partly-cloudy-day' and weather.current != 'rain' and weather.current != 'thunderstorm' %}
+				<img src="../../../static/weatherimg/cloudy.gif" alt=" {{weather.current}} " class="rounded text-left" style="width:128px;height:128px;">
+			{% endif %}			
+			{{ weather.high }} &#176;F
+			</h1>
+		</div>
+		<h2 class="text-center text-capitalize">{{ weather.current }}</h2>
+		<p></p>
+        <p class="text-center">Sunrise: {{ weather.sunrise.strftime('%I:%M %p') }} Cloud Coverage: {{ weather.clouds }} % Winds: {{ weather.wind }} mph</p>
+        <p class="text-center">Sunset: {{ weather.sunset.strftime('%I:%M %p') }} Visibility: {{ weather.vis }} mi Wind Direction: {{ weather.wind_dir }}</p>
+        <p class="text-center">Moon Phase: {{ weather.m_phase }}</p><br>
+        <p class="text-center" style="font-size:x-small">Powered by Dark Sky</p>
     </div>
 {% endblock %}
 
 {% block OOI_content %}
-    <table class="table table-striped table-dark table-bordered">
+    <table class="table table-striped table-dark table-bordered table-hover">
         <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Event</th>
             <th scope="col">Time</th>
+			<th scope="col">Duration (HH:MM:SS) </th>
         </tr>
         </thead>
         <tbody>
@@ -65,26 +85,31 @@
             <th scope="row">1</th>
             <td>{{ object1.type }}</td>
             <td>{{ object1.vis_start }}</td>
+			<td>{{ object1.vis_end - object1.vis_start}}</td>
         </tr>
         <tr>
             <th scope="row">2</th>
             <td>{{ object2.type }}</td>
             <td>{{ object2.vis_start }}</td>
+			<td>{{ object2.vis_end - object2.vis_start}}</td>
         </tr>
         <tr>
             <th scope="row">3</th>
             <td>{{ object3.type }}</td>
             <td>{{ object3.vis_start }}</td>
+			<td>{{ object3.vis_end - object3.vis_start}}</td>
         </tr>
         <tr>
             <th scope="row">4</th>
             <td>{{ object4.type }}</td>
             <td>{{ object4.vis_start }}</td>
+			<td>{{ object4.vis_end - object4.vis_start}}</td>
         </tr>
         <tr>
             <th scope="row">5</th>
             <td>{{ object5.type }}</td>
             <td>{{ object5.vis_start }}</td>
+			<td>{{ object5.vis_end - object5.vis_start}}</td>
         </tr>
         </tbody>
     </table>
