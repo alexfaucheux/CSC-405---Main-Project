@@ -43,9 +43,24 @@ def logout():
     # Go to home page
     return redirect(url_for("main.home"))
 
+''' ENDPOINT FOR ACCOUNT DELETION'''
+
+@bp.route('/delete')
+@login_required
+def delete():
+    #save the current user's ID (primary key)
+    UID = current_user.id
+    #log them out before attempting a deletion
+    logout_user()
+    #filter the db by their unique UID and delete it
+    User.query.filter_by(id = UID).delete()
+    db.session.commit()
+
+    #Return to home
+    return redirect(url_for('main.home'))
+
 
 ''' ENDPOINT FOR SIGNUP PAGE'''
-
 
 @bp.route("/signup", methods=['GET', 'POST'])
 def signup():

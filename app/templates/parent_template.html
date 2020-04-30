@@ -33,7 +33,7 @@
                                 {% if link != 'main.profile' %}
                                     <a class="nav-item nav-link" href="{{ url_for(link) }}">{{ links[link] }}</a>
                                 {% else %}
-                                    {# dropdwon menu for profile button #}
+                                    {# dropdown menu for profile button #}
                                     <div class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -48,7 +48,6 @@
                                             <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
                                         </div>
                                     </div>
-
                                 {% endif %}
                             {% endif %}
                         {% endif %}

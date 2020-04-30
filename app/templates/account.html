@@ -29,6 +29,30 @@
                 </div>
             </div>
         </div>
-    </form>
+	</form>
+		<div class="container text-center" style="color:black">
+		<button type="button" class="btn btn-danger text-center" data-toggle="modal" data-target="#exampleModalCenter">
+			Delete Account
+		</button>
+		</div>
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle" style="color:black">Account Deletion</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p style="color:black">Are you sure you want to delete your account? This cannot be undone.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<a href="{{ url_for('auth.delete') }}" class="btn btn-danger" role="button">Delete Account</a>
+					</div>
+				</div>
+			</div>
+		</div>
     </body>
 {% endblock %}
