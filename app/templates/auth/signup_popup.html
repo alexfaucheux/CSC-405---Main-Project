@@ -22,13 +22,19 @@
                     </div>
                     <div class="d-flex flex-column text-center">#}
 {% block form %}
+    <h5 class="text-center" style="color: #252525">Login!</h5>
+    <hr>
+    <br>
     <form method="post" role="form" novalidate>
         {{ form.hidden_tag() }}
         <div style="color: #484848">
             {{ wtf.form_errors(form, hiddens="only") }}
-            {{ wtf.form_field(form.username) }}
-            {{ wtf.form_field(form.password) }}
-        </div>
-        {{ wtf.form_field(form.submit, class="btn btn-lg btn-info btn-block") }}
+                {{ wtf.form_field(form.fname) }}
+                {{ wtf.form_field(form.lname) }}
+                {{ wtf.form_field(form.username) }}
+                {{ wtf.form_field(form.password) }}
+                {{ wtf.form_field(form.password_confirm) }}
+            </div>
+            {{ wtf.form_field(form.submit, class="btn btn-lg btn-info btn-block") }}
     </form>
 {% endblock %}

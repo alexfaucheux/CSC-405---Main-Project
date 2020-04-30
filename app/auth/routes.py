@@ -12,7 +12,8 @@ html_files = {
     "/live_feed": "Stargazer_live_feed.html",
     "/contact": "Stargazer_contact_us.html",
     "/about": "about.html",
-    "/weather": "Stargazer_weather.html"
+    "/weather": "Stargazer_weather.html",
+
 }
 
 
@@ -48,7 +49,7 @@ def login():
         return redirect(url_for('main.home'))
 
     # Displays login page
-    return render_template("auth/Stargazer_login.html", title="Login", form=form, prev_temp=html_file)
+    return render_template("auth/login_popup.html", title="Login", form=form, prev_temp=html_file)
 
 
 ''' ENDPOINT FOR LOGGING OUT '''
@@ -87,4 +88,4 @@ def signup():
         return redirect(url_for('auth.login'))
 
     # Display signup page
-    return render_template("auth/Stargazer_signup.html", title='Create Account', form=form, prev_temp=html_file)
+    return render_template("auth/signup_popup.html", title='Create Account', form=form, prev_temp=html_file)
