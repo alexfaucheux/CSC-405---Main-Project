@@ -31,9 +31,7 @@
                         {% if link == 'auth.login' or link == 'auth.logout' or link == 'main.account' or link == 'main.profile' %}
                             {% if (link == 'auth.login' and current_user.is_anonymous) or (link == 'main.profile' and current_user.is_authenticated) %}
                                 {% if link != 'main.profile' %}
-                                    <a class="button nav-item nav-link" href="{{ url_for(link) }}">{{ links[link] }}</a>
-
-
+                                    <a class="nav-item nav-link" href="{{ url_for(link) }}">{{ links[link] }}</a>
                                 {% else %}
                                     {# dropdown menu for profile button #}
                                     <div class="nav-item dropdown">
@@ -76,7 +74,6 @@
 
             {# Block for child templates to insert their code in #}
             {% block app_content %} {% endblock %}
-            {% block popup %} {% endblock %}
         </div>
 
 

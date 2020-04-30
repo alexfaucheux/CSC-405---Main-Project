@@ -3,7 +3,6 @@
 {% block app_content %}
 
     <div class="container-fluid">
-        <td><img src="{{ user.avatar(128) }}"></td>
         <h1>Name: {{ user.fname }} {{ user.lname }}</h1>
         <hr>
         <p>Photos Liked: {{ user.images_liked.count() }}</p>

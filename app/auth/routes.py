@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from app import db
 from app.auth import bp
@@ -7,30 +7,9 @@ from app.models import User
 
 ''' ENDPOINT FOR LOGIN PAGE '''
 
-html_files = {
-    "/images": "Stargazer_image_database.html",
-    "/live_feed": "Stargazer_live_feed.html",
-    "/contact": "Stargazer_contact_us.html",
-    "/about": "about.html",
-    "/weather": "Stargazer_weather.html",
-
-}
-
-
-def get_html_file(url):
-    html_file = ""
-    for route in html_files:
-        if route in url:
-            html_file = html_files[route]
-
-    return html_file
-
 
 @bp.route("/login", methods=['GET', 'POST'])
 def login():
-    name_button = 'Login'
-    html_file = get_html_file(request.referrer)
-
     # If user is already logged in
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
@@ -50,7 +29,7 @@ def login():
         return redirect(url_for('main.home'))
 
     # Displays login page
-    return render_template("auth/Stargazer_login.html", title="Login", form=form, prev_temp=html_file, name_button=name_button)
+    return render_template("auth/Stargazer_login.html", title="Login", form=form)
 
 
 ''' ENDPOINT FOR LOGGING OUT '''
@@ -85,9 +64,6 @@ def delete():
 
 @bp.route("/signup", methods=['GET', 'POST'])
 def signup():
-    name_button = 'Sign Up'
-    html_file = get_html_file(request.referrer)
-
     # Form used to register user.
     form = RegisterForm()
 
@@ -105,5 +81,4 @@ def signup():
         return redirect(url_for('auth.login'))
 
     # Display signup page
-    return render_template("auth/Stargazer_signup.html", title='Create Account', form=form, prev_temp=html_file, name_button=name_button)
-
+    return render_template("auth/Stargazer_signup.html", title='Create Account', form=form)

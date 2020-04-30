@@ -1,4 +1,4 @@
-HEROKU = False
+HEROKU = True
 
 if not HEROKU:
     import time
