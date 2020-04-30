@@ -36,5 +36,7 @@
                 {{ wtf.form_field(form.password_confirm) }}
             </div>
             {{ wtf.form_field(form.submit, class="btn btn-lg btn-info btn-block") }}
+            <hr class="my-4">
+            <p class="text-center" style="color: #252525">Have an account? <a href="{{ url_for("auth.login") }}">Login!</a></p>
     </form>
 {% endblock %}
