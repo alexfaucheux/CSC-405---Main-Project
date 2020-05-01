@@ -14,12 +14,12 @@ def create_tables():
 @click.command(name='fill_image_table')
 @with_appcontext
 def fill_image_table():
-    from app.models import Image
+    from app.models import Image, User
     images = ["images/img-1.jpg", "images/img-2.jpg", "images/img-3.jpg", "images/img-4.jpg",
               "images/img-5.jpg", "images/meteor.jpg", "images/moon.jpg", "images/stars.jpg"]
 
     for i in range(len(images)):
-        img_obj = Image(image_name="Image {}".format(i), image_url=images[i])
+        img_obj = Image(image_name="Image {}".format(i), image_url=images[i], owner=User.query.get(1))
         db.session.add(img_obj)
 
     db.session.commit()

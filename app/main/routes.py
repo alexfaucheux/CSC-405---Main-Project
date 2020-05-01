@@ -231,7 +231,7 @@ def profile(username):
 def upload():
     if 'photo' in request.files:
         filename = photos.save(request.files['photo'])
-        new_image = Image(image_name="Randomness", image_url="user_images/{}".format(filename),
+        new_image = Image(image_name=filename, image_url="user_images/{}".format(filename),
                           owner=current_user)
         db.session.add(new_image)
         db.session.commit()
