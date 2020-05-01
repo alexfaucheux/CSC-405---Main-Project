@@ -16,7 +16,7 @@ weatherlinks = {"1": "Today", "2": "Tomorrow"}
 today = datetime.now()
 
 for i in range(3, 8):
-    day = today + timedelta(days=i-1)
+    day = today + timedelta(days=i - 1)
     weatherlinks[str(i)] = calendar.day_name[day.weekday()]
 
 ''' ENDPOINT FOR HOME PAGE '''
@@ -35,7 +35,7 @@ def home(up=None):
 def weather(day):
     currentCon = Weather.query.get(int(day))
 
-    #In addition to updating the weather, update the OOI Table
+    # In addition to updating the weather, update the OOI Table
     object1 = ObjectOfInterest.query.get(0)
     object2 = ObjectOfInterest.query.get(1)
     object3 = ObjectOfInterest.query.get(2)
@@ -44,7 +44,8 @@ def weather(day):
 
     # Display home page
     return render_template("Stargazer_weather.html", currentday=day, title='Weather',
-                           weatherlinks=weatherlinks, weather=currentCon, object1=object1, object2=object2, object3=object3, object4=object4, object5=object5)
+                           weatherlinks=weatherlinks, weather=currentCon, object1=object1, object2=object2,
+                           object3=object3, object4=object4, object5=object5)
 
 
 @bp.route("/about")
@@ -59,8 +60,12 @@ def about():
 def update():
     # Updates the weather data on the page for the current requested day
     weather = Weather.query.get(1)
-    if weather is None:
-        darkskyrequest.parseRequest()
+    OOI = ObjectOfInterest.query.get(1)
+    if weather is None or OOI is None:
+        if weather is None:
+            darkskyrequest.parseRequest()
+        else:
+            OOIreader.parseISS()
 
     else:
         date_stored = weather.date_stored
@@ -91,6 +96,11 @@ def images():
 
 
 ''' ENDPOINT FOR LIKING/DISLIKING AN IMAGE '''
+
+
+@bp.route("/publish/comment/<int:image_id>/<string:comment>")
+def comment_action(image_id, comment):
+    pass
 
 
 @bp.route("/like/<int:image_id>/<action>")
@@ -143,15 +153,15 @@ def live_feed():
 
 ''' ENDPOINT FOR VIDEO FEED '''
 
-
 if not HEROKU:
     from app.camera_opencv import Camera
+
+
     @bp.route("/video_feed")
     def video_feed():
         # a continuous response from the generator function
         return Response(gen(Camera()),
                         mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 ''' ENDPOINT FOR CONTACT US PAGE '''
 
@@ -184,6 +194,7 @@ def contact():
 
 def check_current_password(password):
     return current_user.check_password(password)
+
 
 ''' ENDPOINT FOR ACCOUNT PAGE '''
 
