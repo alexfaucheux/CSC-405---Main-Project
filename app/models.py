@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from app import db, login, cache
+from app import db, login
 from hashlib import md5
 
 
@@ -20,19 +20,16 @@ class User(UserMixin, db.Model):
     comments_liked = db.relationship('LikeUserComment', back_populates='user', lazy='dynamic')
     comments_disliked = db.relationship('DislikeUserComment', back_populates='user', lazy='dynamic')
 
-    @cache.cached(timeout=50)
     def like_image(self, image):
         if not self.has_liked_image(image):
             liked_image = UserImage(user_id=self.id, image_id=image.id)
             db.session.add(liked_image)
 
-    @cache.cached(timeout=50)
     def dislike_image(self, image):
         if not self.has_disliked_image(image):
             disliked_image = DisUserImage(user_id=self.id, image_id=image.id)
             db.session.add(disliked_image)
 
-    @cache.cached(timeout=50)
     def unlike_image(self, image):
         if self.has_liked_image(image):
             liked_image = UserImage.query.filter_by(
@@ -61,7 +58,6 @@ class User(UserMixin, db.Model):
         ).count() > 0
 
     # here comment is a string
-    @cache.cached(timeout=500)
     def add_comment(self, image, comments):
         comment = UserComments(
             user_id=self.id,
@@ -71,7 +67,6 @@ class User(UserMixin, db.Model):
         db.session.add(comment)
         db.session.commit()
 
-    @cache.cached(timeout=500)
     def delete_comment(self, comment):
         comment = UserComments.query.filter_by(
             user_id=self.id,
@@ -95,7 +90,6 @@ class User(UserMixin, db.Model):
             comment_id=comment.id
         ).count() > 0
 
-    @cache.cached(timeout=50)
     def like_comment(self, comment):
         if not self.has_liked_comment(comment):
             liked_comment = LikeUserComment(
@@ -105,7 +99,6 @@ class User(UserMixin, db.Model):
             db.session.add(liked_comment)
             db.session.commit()
 
-    @cache.cached(timeout=50)
     def dislike_comment(self, comment):
         if not self.has_disliked_comment(comment):
             disliked_comment = DislikeUserComment(
@@ -115,7 +108,6 @@ class User(UserMixin, db.Model):
             db.session.add(disliked_comment)
             db.session.commit()
 
-    @cache.cached(timeout=50)
     def unlike_comment(self, comment):
         if self.has_liked_comment(comment):
             liked_comment = LikeUserComment.query.filter_by(
@@ -131,10 +123,8 @@ class User(UserMixin, db.Model):
             ).first()
             db.session.delete(disliked_comment)
 
-    @cache.cached(timeout=500)
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
-
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

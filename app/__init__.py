@@ -4,7 +4,6 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_compress import Compress
-from flask_caching import Cache
 from app.commands import create_tables, fill_image_table
 from app.extensions import db
 
@@ -19,9 +18,6 @@ COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml', 'application/json', '
 COMPRESS_LEVEL = 6
 COMPRESS_MIN_SIZE = 500
 
-#Cache settings
-cache = Cache(config={'CACHE_TYPE' : 'simple'})
-
 #Compression Preempt
 compress = Compress()
 
@@ -29,8 +25,6 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    #Initialize secondary flask add-ons like the database, cache and compression
-    cache.init_app(app)
     compress.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
