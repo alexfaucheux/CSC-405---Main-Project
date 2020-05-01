@@ -67,11 +67,10 @@ class User(UserMixin, db.Model):
         db.session.add(comment)
         db.session.commit()
 
-    def delete_comment(self, image, comment):
+    def delete_comment(self, comment):
         comment = UserComments.query.filter_by(
             user_id=self.id,
-            image_id=image.id,
-            comment=comment
+            comment=comment.id
         ).first()
 
         print(comment)
