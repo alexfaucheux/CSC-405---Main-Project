@@ -3,6 +3,7 @@ from config import Config
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask_compress import Compress
 from app.commands import create_tables, fill_image_table
 from app.extensions import db
 
@@ -12,11 +13,19 @@ bootstrap = Bootstrap()
 login.login_view = "auth.login"
 login.login_message = 'Please log in.'
 
+#Compression settings
+COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml', 'application/json', 'application/javascript']
+COMPRESS_LEVEL = 6
+COMPRESS_MIN_SIZE = 500
+
+#Compression Preempt
+compress = Compress()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    compress.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)

@@ -39,6 +39,7 @@ Werkzeug = "==1.0.1"
 WTForms = "==2.2.1"
 psycopg2 = "*"
 pytz = "*"
+flask-compress = "*"
 
 [requires]
 python_version = "3.8"
