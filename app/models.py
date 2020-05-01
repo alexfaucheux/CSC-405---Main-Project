@@ -142,7 +142,7 @@ class User(UserMixin, db.Model):
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    image_name = db.Column(db.String(64))
+    image_name = db.Column(db.String)
     image_url = db.Column(db.String, unique=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
