@@ -40,6 +40,7 @@
 		
 		<div>
 			<h1 class="text-center" style="font-size:350%">
+            {# Weather Icons to use when certain weather conditions are met. #}
 			{% if weather.current == 'rain' %}
 				<img src="../../../static/weatherimg/rain.png" alt=" {{weather.current}} " class="rounded text-left" style="width:100px;height:100px;">
 			{% endif %}
@@ -57,15 +58,37 @@
 			{% endif %}
 			{% if weather.current != 'cloudy' and weather.current != 'clear-day' and weather.current != 'partly-cloudy-day' and weather.current != 'rain' and weather.current != 'thunderstorm' %}
 				<img src="../../../static/weatherimg/partCloud.png" alt=" {{weather.current}} " class="rounded text-left" style="width:100px;height:100px;">
-			{% endif %}			
+			{% endif %}
+            {# Moon Phases #}
+             {% if weather.m_phase == 'Waxing Crescent'%}
+				<img src="../../../static/weatherimg/waxingC.png" alt=" {{weather.m_phase}} " class="rounded text-left" style="width:75px;height:75px;">
+			{% endif %}
+             {% if weather.m_phase == 'First Quarter'%}
+				<img src="../../../static/weatherimg/firstQ.png" alt=" {{weather.m_phase}} " class="rounded text-left"style="width:75px;height:75px;">
+			{% endif %}
+             {% if weather.m_phase == 'Waxing Gibbous'%}
+				<img src="../../../static/weatherimg/waxingG.png" alt=" {{weather.m_phase}} " class="rounded text-left" style="width:75px;height:75px;">
+			{% endif %}
+             {% if weather.m_phase == 'Full Moon'%}
+				<img src="../../../static/weatherimg/fullM.png" alt=" {{weather.m_phase}} " class="rounded text-left" style="width:75px;height:75px;">
+			{% endif %}
+             {% if weather.m_phase == 'Waning Gibbous'%}
+				<img src="../../../static/weatherimg/waningG.png" alt=" {{weather.m_phase}} " class="rounded text-left" style="width:75px;height:75px;">
+			{% endif %}
+             {% if weather.m_phase == 'Last Quarter'%}
+				<img src="../../../static/weatherimg/lastQ.png" alt=" {{weather.m_phase}} " class="rounded text-left" style="width:75px;height:75px;">
+			{% endif %}
+             {% if weather.m_phase == 'Waning Crescent'%}
+				<img src="../../../static/weatherimg/waningC.png" alt=" {{weather.m_phase}} " class="rounded text-left" style="width:75px;height:75px;">
+			{% endif %}
 			{{ weather.high }} &#176;F
 			</h1>
 		</div>
 		<h2 class="text-center text-capitalize">{{ weather.current }}</h2>
 		<p></p>
+        <p class="text-center"><strong>Moon Phase:</strong> {{ weather.m_phase }}</p>
         <p class="text-center"><strong>Sunrise:</strong> {{ weather.sunrise.strftime('%I:%M %p') }} <strong>Cloud Coverage:</strong> {{ weather.clouds }} % <strong>Winds:</strong> {{ weather.wind }} mph</p>
-        <p class="text-center"><strong>Sunset:</strong> {{ weather.sunset.strftime('%I:%M %p') }} <strong>Visibility:</strong> {{ weather.vis }} mi <strong>Wind Direction:</strong> {{ weather.wind_dir }}&#176;</p>
-        <p class="text-center"><strong>Moon Phase:</strong> {{ weather.m_phase }}</p><br>
+        <p class="text-center"><strong>Sunset:</strong> {{ weather.sunset.strftime('%I:%M %p') }} <strong>Visibility:</strong> {{ weather.vis }} mi <strong>Wind Direction:</strong> {{ weather.wind_dir }}&#176;</p><br>
         <p class="text-center" style="font-size:x-small">Powered by Dark Sky</p>
     </div>
 {% endblock %}
