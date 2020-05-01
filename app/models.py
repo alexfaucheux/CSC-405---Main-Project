@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from app import db, login
 from hashlib import md5
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), index=True, unique=True)  # Username is Email
@@ -12,8 +13,12 @@ class User(UserMixin, db.Model):
     lname = db.Column(db.String(64), index=True)
     creation_date = db.Column(db.DateTime, default=datetime.utcnow)
     password_hash = db.Column(db.String(128))
+
     images_liked = db.relationship('UserImage', back_populates='user', lazy='dynamic')
     images_disliked = db.relationship('DisUserImage', back_populates='user', lazy='dynamic')
+    comments = db.relationship('UserComments', back_populates='user', lazy='dynamic')
+    comments_liked = db.relationship('LikeUserComment', back_populates='user', lazy='dynamic')
+    comments_disliked = db.relationship('DislikeUserComment', back_populates='user', lazy='dynamic')
 
     def like_image(self, image):
         if not self.has_liked_image(image):
@@ -52,6 +57,72 @@ class User(UserMixin, db.Model):
             image_id=image.id
         ).count() > 0
 
+    # here comment is a string
+    def add_comment(self, image, comments):
+        comment = UserComments(
+            user_id=self.id,
+            image_id=image.id,
+            comment=comments
+        )
+        db.session.add(comment)
+        db.session.commit()
+
+    def delete_comment(self, comment):
+        comment = UserComments.query.filter_by(
+            user_id=self.id,
+            comment=comment.id
+        ).first()
+
+        print(comment)
+        if comment is not None:
+            db.session.delete(comment)
+            db.session.commit()
+
+    def has_liked_comment(self, comment):
+        return LikeUserComment.query.filter_by(
+            user_id=self.id,
+            comment_id=comment.id
+        ).count() > 0
+
+    def has_disliked_comment(self, comment):
+        return DislikeUserComment.query.filter_by(
+            user_id=self.id,
+            comment_id=comment.id
+        ).count() > 0
+
+    def like_comment(self, comment):
+        if not self.has_liked_comment(comment):
+            liked_comment = LikeUserComment(
+                user_id=self.id,
+                comment_id=comment.id
+            )
+            db.session.add(liked_comment)
+            db.session.commit()
+
+    def dislike_comment(self, comment):
+        if not self.has_disliked_comment(comment):
+            disliked_comment = DislikeUserComment(
+                user_id=self.id,
+                comment_id=comment.id
+            )
+            db.session.add(disliked_comment)
+            db.session.commit()
+
+    def unlike_comment(self, comment):
+        if self.has_liked_comment(comment):
+            liked_comment = LikeUserComment.query.filter_by(
+                user_id=self.id,
+                comment_id=comment.id
+            ).first()
+            db.session.delete(liked_comment)
+
+        elif self.has_disliked_comment(comment):
+            disliked_comment = DislikeUserComment.query.filter_by(
+                user_id=self.id,
+                comment_id=comment.id
+            ).first()
+            db.session.delete(disliked_comment)
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -72,8 +143,10 @@ class Image(db.Model):
     image_name = db.Column(db.String(64), unique=True)
     image_url = db.Column(db.String, unique=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
+
     likes = db.relationship('UserImage', back_populates='image', lazy='dynamic')
     dislikes = db.relationship('DisUserImage', back_populates='image', lazy='dynamic')
+    comments = db.relationship('UserComments', back_populates='image', lazy='dynamic')
 
     def __repr__(self):
         return '<Image {}>'.format(self.image_name)
@@ -83,6 +156,7 @@ class UserImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'), index=True)
+
     user = db.relationship("User", back_populates="images_liked")
     image = db.relationship("Image", back_populates="likes")
 
@@ -91,8 +165,39 @@ class DisUserImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'), index=True)
+
     user = db.relationship("User", back_populates="images_disliked")
     image = db.relationship("Image", back_populates="dislikes")
+
+
+class UserComments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
+    image_id = db.Column(db.Integer, db.ForeignKey('image.id'), index=True)
+
+    user = db.relationship("User", back_populates="comments")
+    image = db.relationship("Image", back_populates="comments")
+    likes = db.relationship("LikeUserComment", back_populates="comment")
+    dislikes = db.relationship("DislikeUserComment", back_populates="comment")
+
+
+class LikeUserComment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
+    comment_id = db.Column(db.Integer, db.ForeignKey('user_comments.id'), index=True)
+
+    user = db.relationship("User", back_populates="comments_liked")
+    comment = db.relationship("UserComments", back_populates="likes")
+
+
+class DislikeUserComment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
+    comment_id = db.Column(db.Integer, db.ForeignKey('user_comments.id'), index=True)
+
+    user = db.relationship("User", back_populates="comments_disliked")
+    comment = db.relationship("UserComments", back_populates="dislikes")
 
 
 class ObjectOfInterest(db.Model):
