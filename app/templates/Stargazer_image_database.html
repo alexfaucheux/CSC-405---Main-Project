@@ -1,11 +1,11 @@
 {# USED TO DISPLAY IMAGES IN DATABASE #}
 
 {% extends "parent_template.html" %}
-
+<head>
 {% block CSS %}
     <link href="../static/css/image_style.css" rel="stylesheet"/>
 {% endblock %}
-
+</head>
 
 {% block app_content %}
 
@@ -15,7 +15,7 @@
         </div>
     </header>
 
-
+    <div class="sharethis-inline-share-buttons"></div>
     <div class="row ml-1">
         {% for image in images %}
             <div class="col-md-3 my-5">
