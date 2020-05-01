@@ -40,6 +40,7 @@ WTForms = "==2.2.1"
 psycopg2 = "*"
 pytz = "*"
 flask-compress = "*"
+flask-cache = "*"
 
 [requires]
 python_version = "3.8"
