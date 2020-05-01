@@ -62,9 +62,7 @@ def update():
     weather = Weather.query.get(1)
     OOI = ObjectOfInterest.query.get(1)
     if weather is None or OOI is None:
-        if weather is None:
             darkskyrequest.parseRequest()
-        if OOI is None:
             OOIreader.parseISS()
 
     else:
