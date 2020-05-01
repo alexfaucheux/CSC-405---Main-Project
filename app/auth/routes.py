@@ -69,12 +69,9 @@ def logout():
 @bp.route('/delete')
 @login_required
 def delete():
-    #save the current user's ID (primary key)
-    UID = current_user.id
-    #log them out before attempting a deletion
-    logout_user()
-    #filter the db by their unique UID and delete it
-    User.query.filter_by(id = UID).delete()
+    temp_user = User.query.get(current_user.id)
+    logout()
+    db.session.delete(temp_user)
     db.session.commit()
 
     #Return to home
