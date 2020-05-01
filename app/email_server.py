@@ -42,7 +42,7 @@ class Email(object):
 
         # setup the parameters of the message
         msg['From'] = self.USERNAME
-        msg['To'] = self.client_email if temp_msg is None else self.USERNAME
+        msg['To'] = self.client_email if temp_msg is None else "stargazercontact2020@gmail.com"
         msg['Subject'] = subject
 
         # add in the message body

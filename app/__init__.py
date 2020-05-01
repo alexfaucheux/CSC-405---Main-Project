@@ -4,26 +4,31 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_compress import Compress
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 from app.commands import create_tables, fill_image_table
 from app.extensions import db
 
 migrate = Migrate()
 login = LoginManager()
 bootstrap = Bootstrap()
+photos = UploadSet('photos', IMAGES)
 login.login_view = "auth.login"
 login.login_message = 'Please log in.'
 
-#Compression settings
+# Compression settings
 COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml', 'application/json', 'application/javascript']
 COMPRESS_LEVEL = 6
 COMPRESS_MIN_SIZE = 500
 
-#Compression Preempt
+# Compression Preempt
 compress = Compress()
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    app.config['UPLOADED_PHOTOS_DEST'] = 'app/static/user_images'
+    configure_uploads(app, photos)
 
     compress.init_app(app)
     db.init_app(app)

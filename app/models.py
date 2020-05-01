@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     creation_date = db.Column(db.DateTime, default=datetime.utcnow)
     password_hash = db.Column(db.String(128))
 
+    owned_images = db.relationship('Image', back_populates='owner')
     images_liked = db.relationship('UserImage', back_populates='user', lazy='dynamic')
     images_disliked = db.relationship('DisUserImage', back_populates='user', lazy='dynamic')
     comments = db.relationship('UserComments', back_populates='user', lazy='dynamic')
@@ -140,10 +141,12 @@ class User(UserMixin, db.Model):
 
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image_name = db.Column(db.String(64), unique=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    image_name = db.Column(db.String(64))
     image_url = db.Column(db.String, unique=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
+    owner = db.relationship('User', back_populates='owned_images')
     likes = db.relationship('UserImage', back_populates='image', lazy='dynamic')
     dislikes = db.relationship('DisUserImage', back_populates='image', lazy='dynamic')
     comments = db.relationship('UserComments', back_populates='image', lazy='dynamic')

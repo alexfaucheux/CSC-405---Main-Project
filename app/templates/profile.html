@@ -8,59 +8,64 @@
 
     <body class="profile-page">
 
-        <div class="page-header header-filter"></div>
-        <div class="main main-raised">
-            <div class="profile-content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 ml-auto mr-auto">
-                           <div class="profile">
-                                <div class="avatar">
-                                    <img src="{{ user.avatar(128) }}" alt="Circle Image" class="img-raised rounded-circle img-fluid border border-dark">
-                                </div>
-                                <div class="name">
-                                    <h3 class="title">{{ user.fname }} {{ user.lname }}</h3>
-                                    <h6 class="text-dark">User</h6>
-                                </div>
+    <div class="page-header header-filter"></div>
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto">
+                        <div class="profile">
+                            <div class="avatar">
+                                <img src="{{ user.avatar(128) }}" alt="Circle Image"
+                                     class="img-raised rounded-circle img-fluid border border-dark">
+                            </div>
+                            <div class="name">
+                                <h3 class="title">{{ user.fname }} {{ user.lname }}</h3>
+                                <h6 class="text-dark">User</h6>
                             </div>
                         </div>
                     </div>
-                    <div class="description text-center">
-                        <p>Above is your profile dashboard! Below, is a list of all of the images you have liked on our image database — along with the number of images liked. Thank you for using Stargazer!</p>
-                        <hr>
-                        <p>Photos Liked: {{ user.images_liked.count() }}</p>
-                        <br>
-                        {% for photo in user.images_liked %}
-                            <img src="{{ url_for('static', filename=photo.image.image_url) }}" alt="..."
-                                 class="mr-3 mb-3 img-fluid" style="width:250px; height:152px">
-                        {% endfor %}
-                        <hr>
-                        <br>
-                    </div>
-
-
+                </div>
+                <div class="description text-center">
+                    <p>Above is your profile dashboard! Below, is a list of all of the images you have liked on our
+                        image database — along with the number of images liked. Thank you for using Stargazer!</p>
+                    <br>
+                    <p>Photos Liked: {{ user.images_liked.count() }}</p>
+                    <hr>
+                    {% for photo in user.images_liked %}
+                        <img src="{{ url_for('static', filename=photo.image.image_url) }}" alt="..."
+                             class="mr-3 mb-3 img-fluid" style="width:250px; height:152px">
+                    {% endfor %}
+                    <br>
+                    <br>
+                    <p>Photos you uploaded:</p>
+                    <hr>
+                    {% for photo in user.owned_images %}
+                        <img src="{{ url_for('static', filename=photo.image_url) }}" alt="..."
+                             class="mr-3 mb-3 img-fluid" style="width:250px; height:152px">
+                    {% endfor %}
                 </div>
 
-
+                <div>
+                    <div class="text-dark">
+                        <form method=POST enctype=multipart/form-data action="{{ url_for('main.upload') }}">
+                            <input type="file" class="form-control-file" name="photo">
+                            <button type="submit" class="btn btn-link text-dark">Upload</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-
+        </div>
+    </div>
     </body>
-
-    {#<div class="container-fluid">
-        <td><img src="{{ user.avatar(128) }}"></td>
-        <h1>Name: {{ user.fname }} {{ user.lname }}</h1>
-        <hr>
-        <p>Photos Liked: {{ user.images_liked.count() }}</p>
-        {% for photo in user.images_liked %}
-            <img src="{{ url_for('static', filename=photo.image.image_url) }}" alt="..."
-                 class="mr-3 mb-3 img-fluid" style="width:250px; height:152px">
-        {% endfor %}
-    </div>#}
 
 {% endblock %}
 
 {% block JS %}
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+            integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+            crossorigin="anonymous"></script>
 {% endblock %}

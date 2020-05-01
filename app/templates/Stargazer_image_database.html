@@ -1,11 +1,11 @@
 {# USED TO DISPLAY IMAGES IN DATABASE #}
 
 {% extends "parent_template.html" %}
-<head>
+
 {% block CSS %}
     <link href="../static/css/image_style.css" rel="stylesheet"/>
 {% endblock %}
-</head>
+
 
 {% block app_content %}
 
@@ -19,9 +19,11 @@
     <div class="row ml-1">
         {% for image in images %}
             <div class="col-md-3 my-5">
+                <strong>Owner: {{ image.owner.fname }} {{ image.owner.lname }}</strong>
                 <div class="img-wrapper">
                     <a href="{{ url_for('static', filename=image.image_url) }}" data-lightbox="gallery">
-                        <img src="{{ url_for('static', filename=image.image_url) }}" class="img-fluid img-responsive" alt="Image">
+                        <img src="{{ url_for('static', filename=image.image_url) }}" class="img-fluid img-responsive"
+                             alt="Image">
 
                         <a href="{{ url_for('static', filename=image.image_url) }}"
                            role="button" download="{{ url_for('static', filename=image.image_url) }}">Download
@@ -31,9 +33,7 @@
                                 <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"></path>
                             </svg>
                         </a>
-
-
-                         </a>
+                    </a>
                     <div class="img-overlay" id="like">
                         <a href="{{ url_for('main.like_action', image_id=image.id, action="like") }}"
                            role="button">
@@ -48,7 +48,8 @@
                                 </svg>
                             {% else %}
                                 {# Bootstrap icon for caret-up fill #}
-                                <svg class="bi bi-caret-up-fill text-success" width="1em" height="1em" viewBox="0 0 16 16"
+                                <svg class="bi bi-caret-up-fill text-success" width="1em" height="1em"
+                                     viewBox="0 0 16 16"
                                      fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 00.753-1.659l-4.796-5.48a1 1 0 00-1.506 0z"></path>
                                 </svg>
@@ -60,7 +61,7 @@
                         {# Bootstrap icon for caret-up no fill #}
                         <a href="{{ url_for('main.like_action', image_id=image.id, action="dislike") }}"
                            role="button">
-                            {% if  current_user.is_anonymous or not current_user.has_disliked_image(image)%}
+                            {% if  current_user.is_anonymous or not current_user.has_disliked_image(image) %}
                                 {# Bootstrap icon for caret-down no fill #}
                                 <svg class="bi bi-caret-down text-danger" width="1em" height="1em" viewBox="0 0 16 16"
                                      fill="currentColor"
@@ -71,7 +72,8 @@
                                 </svg>
                             {% else %}
                                 {# Bootstrap icon for caret-down fill #}
-                                <svg class="bi bi-caret-down-fill text-danger" width="1em" height="1em" viewBox="0 0 16 16"
+                                <svg class="bi bi-caret-down-fill text-danger" width="1em" height="1em"
+                                     viewBox="0 0 16 16"
                                      fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"></path>
                                 </svg>

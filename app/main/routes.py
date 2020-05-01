@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request, Response
 from flask_login import current_user, login_user, logout_user, login_required
-from app import db
+from app import photos, db
 from app.main import bp
 from app.main.forms import ContactUsForm, AccountForm
 from app.models import User, Image, Weather, ObjectOfInterest
@@ -224,6 +224,26 @@ def account():
 def profile(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('profile.html', user=user)
+
+
+@bp.route("/upload", methods=['POST'])
+@login_required
+def upload():
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        new_image = Image(image_name="Randomness", image_url="user_images/{}".format(filename),
+                          owner=current_user)
+        db.session.add(new_image)
+        db.session.commit()
+        return redirect(request.referrer)
+    return redirect(request.referrer)
+
+
+@bp.route("/delete_image/<image>")
+@login_required
+def deleteImage(image):
+    db.session.delete(image)
+    db.session.commit()
 
 
 # Testing code
