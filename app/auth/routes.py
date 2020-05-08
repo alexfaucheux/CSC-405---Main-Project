@@ -69,6 +69,10 @@ def logout():
 @bp.route('/delete')
 @login_required
 def delete():
+    images = current_user.owned_images
+    for image in images:
+        db.session.delete(image)
+        db.session.commit()
     temp_user = User.query.get(current_user.id)
     logout()
     db.session.delete(temp_user)
