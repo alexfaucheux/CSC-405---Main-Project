@@ -9,7 +9,7 @@ verify_ssl = true
 gunicorn = "==20.0.4"
 alembic = "==1.4.2"
 appdirs = "==1.4.3"
-certifi = "==2020.4.5.1"
+certifi = "==2022.12.7"
 click = "==7.1.1"
 distlib = "==0.3.0"
 dominate = "==2.5.1"
